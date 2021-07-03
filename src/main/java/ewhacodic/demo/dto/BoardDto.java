@@ -48,11 +48,4 @@ public class BoardDto {
         this.modifiedDate = modifiedDate;
     }
 
-    public void updateView(){
-        this.view++;
-    }
-
-    public void updateRecommend(){
-        this.recommend++;
-    }
 }

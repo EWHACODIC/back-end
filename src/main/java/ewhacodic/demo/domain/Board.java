@@ -34,7 +34,7 @@ public class Board {
     @Column(name="recommend")
     private int recommend;
   
-    private String userId;
+    private String user_id;
 
     @CreatedDate
     @Column(name="created_at", updatable = false)
@@ -53,5 +53,14 @@ public class Board {
         this.recommend = recommend;
         this.view = view;
         this.user_id = user_id;
+    }
+
+
+    public void updateView(){
+        this.view++;
+    }
+
+    public void updateRecommend(){
+        this.recommend++;
     }
 }

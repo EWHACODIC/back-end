@@ -37,10 +37,10 @@ public class BoardService{
                 .tag(board.getTag())
                 .view(board.getView())
                 .user_id(board.getUser_id())
-                .createDate(board.getCreatedDate())
-                .modifiedDate(board.getModifiedDate())
+                .createDate(board.getCreatedAt())
+                .modifiedDate(board.getModifiedAt())
                 .build();
-        boardDto.updateView();
+        board.updateView();
 
         return boardDto;
     }
@@ -71,8 +71,8 @@ public class BoardService{
                     .view(board.getView())
                     .recommend(board.getRecommend())
                     .user_id(board.getUser_id())
-                    .createDate(board.getCreatedDate())
-                    .modifiedDate(board.getModifiedDate())
+                    .createDate(board.getCreatedAt())
+                    .modifiedDate(board.getModifiedAt())
                     .build();
 
             boardDtoList.add(boardDto);
