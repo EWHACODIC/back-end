@@ -45,6 +45,7 @@ public class BoardService{
         return boardDto;
     }
 
+
     @Transactional
     public List<BoardDto> getBoardList(String order){
         List<Board> boardList;

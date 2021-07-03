@@ -22,5 +22,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @Query("select u From Post order by u.reply")
     List<Board> OrderByReply();
+
 }
 
