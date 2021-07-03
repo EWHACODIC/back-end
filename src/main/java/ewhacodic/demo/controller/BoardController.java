@@ -61,7 +61,8 @@ public class BoardController {
 
     //게시글 수정
     @PutMapping(value="/edit/{postId}")
-    public void update(BoardDto boardDto){
+    public void update(@PathVariable("postId") Long id, BoardDto boardDto){
+        BoardDto boardDto = boardService.getPost(id);
         boardService.savePost(boardDto);
     }
 
@@ -69,5 +70,12 @@ public class BoardController {
     @DeleteMapping(value="/{postId}")
     public void delete(@PathVariable("postId") Long id){
         boardService.deletePost(id);
+    }
+
+    //게시글 추천
+    @GetMapping(value="/{postId}/recommend")
+    public void updateRecommend(@PathVariable("postId") Long id){
+        BoardDto boardDto = boardService.getPost(id);
+        boardDto.updateRecommend();
     }
 }

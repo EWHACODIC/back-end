@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Table(name="post")
+@Table(name="Post")
 public class Board {
     @Id
     @GeneratedValue
@@ -33,8 +33,7 @@ public class Board {
 
     @Column(name="recommend")
     private int recommend;
-
-
+  
     private String userId;
 
     @CreatedDate
@@ -46,12 +45,13 @@ public class Board {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Board(Long id, String title, String content, String tag, int view, String userId){
+    public Board(Long id, String title, String content, String tag, int view, int recommend, String user_id){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag = tag;
+        this.recommend = recommend;
         this.view = view;
-        this.userId = userId;
+        this.user_id = user_id;
     }
 }
