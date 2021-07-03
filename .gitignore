@@ -32,7 +32,3 @@ greenribbon-service/src/main/generated/*
 
 ### VS Code ###
 .vscode/
-
-
-
-git remote set-url origin https://YOURUSERNAME@github.com/USERNAME/REPOSITORY.git
