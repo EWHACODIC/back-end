@@ -37,46 +37,46 @@ public class BoardService{
                 .tag(board.getTag())
                 .view(board.getView())
                 .userId(board.getUserId())
-                .createDate(board.getCreatedDate())
-                .modifiedDate(board.getModifiedDate())
+                .createDate(board.getCreatedAt())
+                .modifiedDate(board.getModifiedAt())
                 .build();
 
         return boardDto;
     }
 
-    @Transactional
-    public List<BoardDto> getBoardList(String order){
-        List<Board> boardList;
-        if(order.equals("latest")){
-            boardList = boardRepository.OrderByLatest();
-        } else if(order.equals("recommend")){
-            boardList = boardRepository.OrderByRecommend();
-        } else if(order.equals("view")){
-            boardList = boardRepository.OrderByView();
-        } else if(order.equals("reply")){
-            boardList = boardRepository.OrderByReply();
-        } else {
-            boardList = boardRepository.findPosts();
-        }
-        List<BoardDto> boardDtoList = new ArrayList<>();
-
-        for(Board board:boardList){
-            BoardDto boardDto = BoardDto.builder()
-                    .id(board.getId())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .tag(board.getTag())
-                    .view(board.getView())
-                    .userId(board.getUserId())
-                    .createDate(board.getCreatedDate())
-                    .modifiedDate(board.getModifiedDate())
-                    .build();
-
-            boardDtoList.add(boardDto);
-        }
-
-        return boardDtoList;
-    }
+//    @Transactional
+//    public List<BoardDto> getBoardList(String order){
+//        List<Board> boardList;
+//        if(order.equals("latest")){
+//            boardList = boardRepository.OrderByLatest();
+//        } else if(order.equals("recommend")){
+//            boardList = boardRepository.OrderByRecommend();
+//        } else if(order.equals("view")){
+//            boardList = boardRepository.OrderByView();
+//        } else if(order.equals("reply")){
+//            boardList = boardRepository.OrderByReply();
+//        } else {
+//            boardList = boardRepository.findPosts();
+//        }
+//        List<BoardDto> boardDtoList = new ArrayList<>();
+//
+//        for(Board board:boardList){
+//            BoardDto boardDto = BoardDto.builder()
+//                    .id(board.getId())
+//                    .title(board.getTitle())
+//                    .content(board.getContent())
+//                    .tag(board.getTag())
+//                    .view(board.getView())
+//                    .userId(board.getUserId())
+//                    .createDate(board.getCreatedDate())
+//                    .modifiedDate(board.getModifiedDate())
+//                    .build();
+//
+//            boardDtoList.add(boardDto);
+//        }
+//
+//        return boardDtoList;
+//    }
 
     @Transactional
     public void deletePost(Long id){

@@ -8,34 +8,39 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
-@Table(name="post")
-public class Board {
+@Table(name="tech")
+public class Tech {
     @Id
     @GeneratedValue
-    @Column(name="id")
+    @Column(name="id") // 게시글 번호
     private Long id;
 
-    @Column(name="title")
+    @Column(name="title") // 게시글 제목
     private String title;
 
-    @Column(name="content")
+    @Column(name="content") // 게시글 내용
     private String content;
 
-    @Column(name="tag")
+    @Column(name="tag") // 태그
     private String tag;
 
-    @Column(name="view")
-    private int view;
+    @Column(name="view") // 조회수
+    private Long view;
 
-    @Column(name="recommend")
-    private int recommend;
+    @Column(name="recommend") // 추천수
+    private Long recommend;
 
+    @Column(name="user_code") // 작성자 아이디
+    private Long userCode;
 
-    private String userId;
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinColumn(name="comment_id")
+    private List<TechComment> comments;
 
     @CreatedDate
     @Column(name="created_at", updatable = false)
@@ -46,12 +51,13 @@ public class Board {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Board(Long id, String title, String content, String tag, int view, String userId){
+    public Tech(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag = tag;
         this.view = view;
-        this.userId = userId;
+        this.recommend = recommend;
+        this.userCode = userCode;
     }
 }
