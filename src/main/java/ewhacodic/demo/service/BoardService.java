@@ -96,6 +96,11 @@ public class BoardService {
         });
     }
 
+    public List<BoardListDto> searchPosts(String keyword) {
+        List<Board> boardList = boardRepository.findByTitleContaining(keyword);
+
+        return boardList.stream().map(BoardListDto::of).collect(Collectors.toList());
+    }
 
     @Transactional
     public List<BoardDto> getBoardList(String order){
@@ -152,4 +157,6 @@ public class BoardService {
     public void deleteComment(Long commentId, Long postId) {
         boardCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
     }
+
+
 }
