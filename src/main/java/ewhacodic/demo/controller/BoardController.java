@@ -131,5 +131,11 @@ public class BoardController {
         return ResponseEntity.ok("ok");
     }
 
+    @GetMapping("/list/key")
+    public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
+        return boardService.searchPosts(keyword);
+    }
+
+
 
 }
