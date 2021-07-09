@@ -1,7 +1,9 @@
 package ewhacodic.demo.domain;
 
+import ewhacodic.demo.dto.BoardCommentDto;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,8 +14,9 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-@Table(name="community_comment")
-public class CommunityComment {
+@NoArgsConstructor
+@Table(name="board_comment")
+public class BoardComment {
     @Id
     @GeneratedValue
     @Column(name = "id") // 댓글 번호
@@ -38,11 +41,18 @@ public class CommunityComment {
     private Long postId;
 
     @Builder
-    public CommunityComment(Long id, String content, Long userCode){
+    public BoardComment(Long id, String content, Long userCode, Long postId){
         this.id = id;
         this.content = content;
         this.userCode = userCode;
+        this.postId = postId;
+    }
+
+    public static BoardComment  of(BoardCommentDto boardCommentDto, Long postId) {
+        return BoardComment.builder()
+                .content(boardCommentDto.getContent())
+                .userCode(boardCommentDto.getUserCode())
+                .postId(postId)
+                .build();
     }
 }
-
-

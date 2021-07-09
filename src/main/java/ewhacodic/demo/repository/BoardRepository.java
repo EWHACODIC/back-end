@@ -10,7 +10,6 @@ import java.util.List;
 
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    List<Board> findByTitleContaining(String keyword);
 
 //    @Query("select u From Board order by u.recommend")
 //    List<Board> OrderByRecommend();

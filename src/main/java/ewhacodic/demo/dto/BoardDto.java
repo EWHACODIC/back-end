@@ -18,7 +18,7 @@ public class BoardDto {
     private String tag;
     private int view;
     private int recommend;
-    private String user_id;
+    private Long userCode;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
 
@@ -30,20 +30,22 @@ public class BoardDto {
                 .tag(tag)
                 .view(view)
                 .recommend(recommend)
-                .user_id(user_id)
+                .userCode(userCode)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
                 .build();
         return build;
     }
 
     @Builder
-    public BoardDto(Long id, String title, String content, String tag, int view, int recommend, String user_id, LocalDateTime createDate, LocalDateTime modifiedDate){
+    public BoardDto(Long id, String title, String content, String tag, int view, int recommend, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag = tag;
         this.view = view;
         this.recommend = recommend;
-        this.user_id = user_id;
+        this.userCode = userCode;
         this.createDate = createDate;
         this.modifiedDate = modifiedDate;
     }
