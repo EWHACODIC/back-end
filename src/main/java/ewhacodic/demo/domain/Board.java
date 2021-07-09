@@ -1,18 +1,22 @@
 package ewhacodic.demo.domain;
 
+import ewhacodic.demo.dto.BoardDto;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
 @Entity
-@Table(name="Post")
+@NoArgsConstructor
+@Table(name="Board")
 public class Board {
     @Id
     @GeneratedValue
@@ -33,8 +37,13 @@ public class Board {
 
     @Column(name="recommend")
     private int recommend;
-  
-    private String user_id;
+
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinColumn(name="post_id")
+    private List<BoardComment> comments;
+
+    @Column(name="user_code")
+    private Long userCode;
 
     @CreatedDate
     @Column(name="created_at", updatable = false)
@@ -45,14 +54,16 @@ public class Board {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Board(Long id, String title, String content, String tag, int view, int recommend, String user_id){
+    public Board(Long id, String title, String content, String tag, int view, int recommend, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag = tag;
         this.recommend = recommend;
         this.view = view;
-        this.user_id = user_id;
+        this.userCode = userCode;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
     }
 
 
@@ -60,7 +71,11 @@ public class Board {
         this.view++;
     }
 
-    public void updateRecommend(){
-        this.recommend++;
+    public static Board updateRecommend(Board boardDto) {
+        int recommend = boardDto.getRecommend() + 1;
+        Board board = boardDto;
+        board.setRecommend(recommend);
+
+        return board;
     }
 }
