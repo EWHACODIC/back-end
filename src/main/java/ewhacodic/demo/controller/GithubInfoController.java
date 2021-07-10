@@ -1,0 +1,122 @@
+package ewhacodic.demo.controller;
+
+import ewhacodic.demo.domain.commitInfo.dto.CommitMap;
+import ewhacodic.demo.payload.DefaultResponse;
+import ewhacodic.demo.payload.ResponseCode;
+import ewhacodic.demo.payload.response.GithubCommitInfoResponse;
+import ewhacodic.demo.payload.response.GithubDetailInfoResponse;
+import ewhacodic.demo.service.GithubInfoService;
+import ewhacodic.demo.service.UserRankService;
+import ewhacodic.demo.util.TimeUtils;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+import static com.jyami.commitersewha.payload.ResponseMessage.*;
+
+@RequestMapping("api/github")
+@RestController
+@RequiredArgsConstructor
+@Slf4j
+public class GithubInfoController {
+
+    private final GithubInfoService githubInfoService;
+    private final UserRankService userRankService;
+
+    @GetMapping("me")
+    public ResponseEntity<?> getGithubCurrentUSerInfo(@CurrentUser GoogleUserPrincipal googleUserPrincipal) {
+        log.info("---getUserGithubInfo : parameter = {}", googleUserPrincipal.getId());
+        GithubDetailInfoResponse detailInfo = githubInfoService.getGithubInfoFromUserId(googleUserPrincipal.getId());
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, GET_GITHUB_USER_DETAIL_INFO, detailInfo));
+    }
+
+    @GetMapping("{subId}")
+    public ResponseEntity<?> getGithubUserInfo(@CurrentUser GoogleUserPrincipal googleUserPrincipal,
+                                               @PathVariable String subId) {
+        log.info("---getUserGithubInfo : parameter = {} => {}", googleUserPrincipal.getId(), subId);
+        GithubDetailInfoResponse detailInfo = githubInfoService.getGithubInfoFromSubId(subId);
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, GET_GITHUB_USER_DETAIL_INFO, detailInfo));
+    }
+
+    @PostMapping("newCommiters")
+    public ResponseEntity<?> saveNewGithubRepoInfo(@CurrentUser GoogleUserPrincipal googleUserPrincipal) {
+        log.info("---saveNewGithubInfo : parameter = {}", googleUserPrincipal.getId());
+        githubInfoService.saveNewCommitersInfo(googleUserPrincipal.getId());
+        userRankService.saveRank(googleUserPrincipal.getId());
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, SAVE_GITHUB_REPOSITORY_INFO_SUCCESS));
+    }
+
+    @PostMapping("newCommiters/{userId}")
+    public ResponseEntity<?> saveNewUserGithubRepo(@PathVariable Long userId) {
+        githubInfoService.saveNewCommitersInfo(userId);
+        userRankService.saveRank(userId);
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, SAVE_GITHUB_REPOSITORY_INFO_SUCCESS));
+    }
+
+    @PostMapping("update/{startDate}") // YYYY-MM-dd
+    public ResponseEntity<?> updateGithubRepositoryInfo(@CurrentUser GoogleUserPrincipal googleUserPrincipal, @PathVariable String startDate) {
+        log.info("---updateGithubInfo : userId = {} date = {}", googleUserPrincipal.getId(), startDate);
+        HashMap<String, List<GithubCommitInfoResponse>> updateDataInfo =
+                githubInfoService.updateDateInfo(TimeUtils.getStartDate(startDate), googleUserPrincipal.getId());
+        userRankService.saveRank(googleUserPrincipal.getId());
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, UPDATE_GITHUB_INFO_SUCCESS, updateDataInfo));
+    }
+
+    @GetMapping("myCommitMap")
+    public ResponseEntity<?> getMyCommitMap(@CurrentUser GoogleUserPrincipal googleUserPrincipal) {
+        log.info("---commitMap : search {} ", googleUserPrincipal.getId());
+        List<CommitMap> commitMapCount = githubInfoService.findMyCommitMapCount(googleUserPrincipal.getId());
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, FIND_COMMIT_SUCCESS, commitMapCount));
+    }
+
+    @GetMapping("commitMap/{subId}")
+    public ResponseEntity<?> getGitCommitMap(@CurrentUser GoogleUserPrincipal googleUserPrincipal, @PathVariable String subId) {
+        log.info("---commitMap : search {} => {}", googleUserPrincipal.getId(), subId);
+        List<CommitMap> commitMapCount = githubInfoService.findCommitMapCount(subId);
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, FIND_COMMIT_SUCCESS, commitMapCount));
+    }
+
+    @GetMapping("stat/me/time")
+    public ResponseEntity<?> getMyGitCommitTimeStat(@CurrentUser GoogleUserPrincipal googleUserPrincipal) {
+        log.info("---commitStatHourTime : {}", googleUserPrincipal.getId());
+        List<HourStat> commitTimeCount = githubInfoService.findCommitMyStatHourCount(googleUserPrincipal.getId());
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, FIND_STAT_HOUR_COUNT_SUCCESS, commitTimeCount));
+    }
+
+    @GetMapping("stat/me/weekday") // 0부터 monday
+    public ResponseEntity<?> getMyGitCommitWeekStat(@CurrentUser GoogleUserPrincipal googleUserPrincipal) {
+        log.info("---commitStatWeekdayTime : {}", googleUserPrincipal.getId());
+        List<WeekDayStat> commitStatWeekDayCount = githubInfoService.findCommitMyStatWeekdayCount(googleUserPrincipal.getId());
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, FIND_STAT_WEEKDAY_COUNT_SUCCESS, commitStatWeekDayCount));
+    }
+
+    @GetMapping("stat/time/{subId}")
+    public ResponseEntity<?> getGitCommitTimeStat(@CurrentUser GoogleUserPrincipal googleUserPrincipal, @PathVariable String subId) {
+        log.info("---commitStatHourTime : search {} => {}", googleUserPrincipal.getId(), subId);
+        List<HourStat> commitTimeCount = githubInfoService.findCommitStatHourCount(subId);
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, FIND_STAT_HOUR_COUNT_SUCCESS, commitTimeCount));
+    }
+
+    @GetMapping("stat/weekday/{subId}") // 0부터 monday
+    public ResponseEntity<?> getGitCommitWeekdayStat(@CurrentUser GoogleUserPrincipal googleUserPrincipal, @PathVariable String subId) {
+        log.info("---commitStatWeekdayTime : search {} => {}", googleUserPrincipal.getId(), subId);
+        List<WeekDayStat> commitStatWeekDayCount = githubInfoService.findCommitStatWeekdayCount(subId);
+        return ResponseEntity.ok()
+                .body(DefaultResponse.of(ResponseCode.OK, FIND_STAT_WEEKDAY_COUNT_SUCCESS, commitStatWeekDayCount));
+    }
+
+}
