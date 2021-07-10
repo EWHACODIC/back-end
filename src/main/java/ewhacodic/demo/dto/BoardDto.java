@@ -1,6 +1,9 @@
 package ewhacodic.demo.dto;
 
 import ewhacodic.demo.domain.Board;
+import ewhacodic.demo.domain.Community;
+import ewhacodic.demo.domain.Qna;
+import ewhacodic.demo.domain.Tech;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -16,8 +19,8 @@ public class BoardDto {
     private String title;
     private String content;
     private String tag;
-    private int view;
-    private int recommend;
+    private Long view;
+    private Long recommend;
     private Long userCode;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
@@ -37,8 +40,53 @@ public class BoardDto {
         return build;
     }
 
+    public Qna toQna(){
+        Qna build = Qna.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .tag(tag)
+                .view(view)
+                .recommend(recommend)
+                .userCode(userCode)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build();
+        return build;
+    }
+
+    public Community toCommunity(){
+        Community build = Community.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .tag(tag)
+                .view(view)
+                .recommend(recommend)
+                .userCode(userCode)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build();
+        return build;
+    }
+
+    public Tech toTech(){
+        Tech build = Tech.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .tag(tag)
+                .view(view)
+                .recommend(recommend)
+                .userCode(userCode)
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build();
+        return build;
+    }
+
     @Builder
-    public BoardDto(Long id, String title, String content, String tag, int view, int recommend, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
+    public BoardDto(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
         this.id = id;
         this.title = title;
         this.content = content;

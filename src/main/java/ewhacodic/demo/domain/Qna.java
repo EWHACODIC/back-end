@@ -2,6 +2,7 @@ package ewhacodic.demo.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,8 +14,9 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name="qna")
-public class Qna {
+public class Qna{
     @Id
     @GeneratedValue
     @Column(name="id") // 게시글 번호
@@ -51,14 +53,28 @@ public class Qna {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Qna(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode){
+    public Qna(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag = tag;
-        this.view = view;
         this.recommend = recommend;
+        this.view = view;
         this.userCode = userCode;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public void updateView(){
+        this.view++;
+    }
+
+    public static Qna updateRecommend(Qna boardDto) {
+        Long recommend = boardDto.getRecommend() + 1;
+        Qna qna = boardDto;
+        qna.setRecommend(recommend);
+
+        return qna;
     }
 }
 
