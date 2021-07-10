@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.5.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" //querydsl 관련
 }
 
 group = 'ewhacodic'
@@ -33,31 +32,8 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'com.querydsl:querydsl-jpa' //querydsl 관련
 }
 
 test {
 	useJUnitPlatform()
-}
-
-
-
-// queryDSL이 생성하는 QClass 경로 설정
-def querydslDir = "$buildDir/generated/querydsl"
-
-querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
-}
-
-sourceSets {
-	main.java.srcDir querydslDir
-}
-
-configurations {
-	querydsl.extendsFrom compileClasspath
-}
-
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
 }
