@@ -1,10 +1,10 @@
-package com.jyami.commitersewha.service;
+package ewhacodic.demo.domain.service;
 
 import ewhacodic.demo.domain.githubInfo.GithubInfo;
 import ewhacodic.demo.domain.githubInfo.GithubInfoRepository;
 import ewhacodic.demo.domain.userRank.UserRank;
 import ewhacodic.demo.domain.userRank.UserRankRepository;
-import ewhacodic.demo.exception.ResourceNotFoundException;
+//import ewhacodic.demo.exception.ResourceNotFoundException;
 import ewhacodic.demo.payload.response.OneUserRankResponse;
 import ewhacodic.demo.payload.response.UserRankInfoResponse;
 import ewhacodic.demo.util.TimeUtils;
@@ -28,14 +28,14 @@ public class UserRankService {
     @Transactional
     public void saveRank(Long userId) {
         GithubInfo githubInfo = githubInfoRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("GithubInfo", "userId", userId));
+        //        .orElseThrow(() -> new ResourceNotFoundException("GithubInfo", "userId", userId));
         saveRankAsQuarter(githubInfo);
         saveRankAsWeek(githubInfo);
     }
 
     public OneUserRankResponse getMyRankScore(Long userId) {
         GithubInfo githubInfo = githubInfoRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("GithubInfo", "userId", userId));
+        //        .orElseThrow(() -> new ResourceNotFoundException("GithubInfo", "userId", userId));
         UserRank quarterRankScore = findQuarterRankScore(githubInfo);
         UserRank weekRankScore = findWeekRankScore(githubInfo);
         return new OneUserRankResponse(UserRankInfoResponse.of(weekRankScore, githubInfo), UserRankInfoResponse.of(quarterRankScore, githubInfo));
@@ -43,7 +43,7 @@ public class UserRankService {
 
     public OneUserRankResponse getSingleUserRankScore(String subId) {
         GithubInfo githubInfo = githubInfoRepository.findByUserSubId(subId)
-                .orElseThrow(() -> new ResourceNotFoundException("GithubInfo", "subId", subId));
+        //        .orElseThrow(() -> new ResourceNotFoundException("GithubInfo", "subId", subId));
         UserRank quarterRankScore = findQuarterRankScore(githubInfo);
         UserRank weekRankScore = findWeekRankScore(githubInfo);
         return new OneUserRankResponse(UserRankInfoResponse.of(weekRankScore, githubInfo), UserRankInfoResponse.of(quarterRankScore, githubInfo));
