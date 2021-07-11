@@ -1,13 +1,32 @@
+buildscript {
+	ext {
+		springBootVersion = '2.2.6.RELEASE'
+		querydslPluginVersion = '1.0.10'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://plugins.gradle.org/m2/" } // plugin 저장소
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.6.RELEASE")
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE"
+		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+	}
+}
 plugins {
 	id 'org.springframework.boot' version '2.5.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" //querydsl 관련
+
 }
 
 group = 'ewhacodic'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
 
 configurations {
 	compileOnly {
@@ -24,6 +43,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
@@ -33,7 +53,7 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'com.querydsl:querydsl-jpa' //querydsl 관련
+
 }
 
 test {
@@ -41,23 +61,3 @@ test {
 }
 
 
-
-// queryDSL이 생성하는 QClass 경로 설정
-def querydslDir = "$buildDir/generated/querydsl"
-
-querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
-}
-
-sourceSets {
-	main.java.srcDir querydslDir
-}
-
-configurations {
-	querydsl.extendsFrom compileClasspath
-}
-
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
-}

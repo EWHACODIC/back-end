@@ -30,5 +30,3 @@ greenribbon-service/src/main/generated/*
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
-.vscode/
