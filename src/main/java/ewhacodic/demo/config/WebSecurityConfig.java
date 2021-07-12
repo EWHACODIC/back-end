@@ -34,7 +34,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 //                .anyRequest()
 //                .permitAll()
                 .authorizeRequests() // 접근에 대한 인증 설정
-                .antMatchers("/login", "/signup", "/user", "/api/**").permitAll() // 누구나 접근 허용
+                .antMatchers("/login", "/signup", "/user").permitAll() // 누구나 접근 허용
                 .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능
                 .antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
                 .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
