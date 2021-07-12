@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface TechCommentRepository extends JpaRepository<TechComment, Long> {
     List<TechComment> findBoardCommentsByPostId(Long postId);
     TechComment findByIdAndPostId(Long commentId, Long postId);

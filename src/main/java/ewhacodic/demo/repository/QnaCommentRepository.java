@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface QnaCommentRepository extends JpaRepository<QnaComment, Long> {
     List<QnaComment> findBoardCommentsByPostId(Long postId);
     QnaComment findByIdAndPostId(Long commentId, Long postId);

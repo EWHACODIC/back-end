@@ -28,23 +28,23 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    //추천순 게시글 정렬
-    @GetMapping(value="/order/recommend")
-    public List<BoardDto> orderByRecommend(){
-        return boardService.getBoardList("recommend");
-    }
-
-    //조회순 게시글 정렬
-    @GetMapping(value="/order/view")
-    public List<BoardDto> orderByView(){
-        return boardService.getBoardList("view");
-    }
-
-    //최신순 게시글 정렬
-    @GetMapping(value="/order/latest")
-    public List<BoardDto> orderByLatest(){
-        return boardService.getBoardList("latest");
-    }
+//    //추천순 게시글 정렬
+//    @GetMapping(value="/order/recommend")
+//    public List<BoardDto> orderByRecommend(){
+//        return boardService.getBoardList("recommend");
+//    }
+//
+//    //조회순 게시글 정렬
+//    @GetMapping(value="/order/view")
+//    public List<BoardDto> orderByView(){
+//        return boardService.getBoardList("view");
+//    }
+//
+//    //최신순 게시글 정렬
+//    @GetMapping(value="/order/latest")
+//    public List<BoardDto> orderByLatest(){
+//        return boardService.getBoardList("latest");
+//    }
 
     //댓글순 게시글 정렬
     @GetMapping(value="/order/reply")
@@ -113,6 +113,7 @@ public class BoardController {
     @PostMapping("/{postId}/comment")
     public ResponseEntity<String> saveComment(@PathVariable Long postId, @RequestBody BoardCommentDto boardCommentDto) {
         boardService.saveComment(boardCommentDto, postId);
+        boardService.updateCommentCount(postId);
         return ResponseEntity.ok("ok");
     }
 
@@ -127,30 +128,7 @@ public class BoardController {
     @DeleteMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
         boardService.deleteComment(commentId, postId);
-        return ResponseEntity.ok("ok");
-    }
-
-    @GetMapping("/list/key")
-    public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
-        return boardService.searchPosts(keyword);
-    //10. 댓글 작성
-    @PostMapping("/{postId}/comment")
-    public ResponseEntity<String> saveComment(@PathVariable Long postId, @RequestBody BoardCommentDto boardCommentDto) {
-        boardService.saveComment(boardCommentDto, postId);
-        return ResponseEntity.ok("ok");
-    }
-
-    //11. 댓글 수정
-    @PutMapping("/{postId}/comment/{commentId}")
-    public ResponseEntity<String> updateComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody BoardCommentDto boardCommentDto) {
-        boardService.updateComment(postId, commentId, boardCommentDto);
-        return ResponseEntity.ok("ok");
-    }
-
-    //12. 댓글 삭제
-    @DeleteMapping("/{postId}/comment/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
-        boardService.deleteComment(commentId, postId);
+        boardService.updateCommentCount(postId);
         return ResponseEntity.ok("ok");
     }
 
@@ -158,7 +136,6 @@ public class BoardController {
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
         return boardService.searchPosts(keyword);
     }
-
     /*@GetMapping("/list/key")
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword, @PageableDefault(size=10) Pageable pageable) {
         return boardService.searchPosts(keyword, pageable);

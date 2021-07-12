@@ -37,11 +37,14 @@ public class Qna{
     @Column(name="recommend") // 추천수
     private Long recommend;
 
+    @Column(name="comment_count")
+    private Long commentCount;
+
     @Column(name="user_code") // 작성자 아이디
     private Long userCode;
 
     @OneToMany(fetch=FetchType.EAGER)
-    @JoinColumn(name="comment_id")
+    @JoinColumn(name="post_id")
     private List<TechComment> comments;
 
     @CreatedDate
@@ -53,12 +56,13 @@ public class Qna{
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Qna(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public Qna(Long id, String title, String content, String tag, Long view, Long recommend, Long commentCount, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag = tag;
         this.recommend = recommend;
+        this.commentCount = commentCount;
         this.view = view;
         this.userCode = userCode;
         this.createdAt = createdAt;
@@ -75,6 +79,11 @@ public class Qna{
         qna.setRecommend(recommend);
 
         return qna;
+    }
+
+    public Qna renewCommentCount(){
+        this.setCommentCount(this.getComments().stream().count());
+        return this;
     }
 }
 

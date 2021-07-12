@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface QnaRepository extends JpaRepository<Qna, Long> {
     List<Qna> findByTitleContaining(String keyword);
 }

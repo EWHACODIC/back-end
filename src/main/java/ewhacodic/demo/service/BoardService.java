@@ -160,4 +160,10 @@ public class BoardService {
     }
 
 
+    public Board updateCommentCount(Long postId) {
+        Optional<Board> board = boardRepository.findById(postId);
+        board.ifPresent(Board::renewCommentCount);
+        return board.get();
+    }
+
 }

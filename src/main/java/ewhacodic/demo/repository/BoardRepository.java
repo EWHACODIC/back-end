@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findByTitleContaining(String keyword);
 

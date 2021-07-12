@@ -1,5 +1,6 @@
 package ewhacodic.demo.service;
 
+import ewhacodic.demo.domain.Qna;
 import ewhacodic.demo.domain.Tech;
 import ewhacodic.demo.domain.TechComment;
 import ewhacodic.demo.domain.Tech;
@@ -11,6 +12,7 @@ import ewhacodic.demo.repository.TechRepository;
 import ewhacodic.demo.repository.TechCommentRepository;
 import ewhacodic.demo.repository.TechRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -86,8 +88,8 @@ public class TechService {
         return techRepository.findById(id).get();
     }
 
-    public List<BoardListDto> getBoardListDto() {
-        return techRepository.findAll().stream().map(BoardListDto::ofTech).collect(Collectors.toList());
+    public List<BoardListDto> getBoardListDto(Pageable pageable) {
+        return techRepository.findAll(pageable).stream().map(BoardListDto::ofTech).collect(Collectors.toList());
     }
 
     public void updateBoardRecommend(Long id) {
@@ -158,5 +160,11 @@ public class TechService {
 
     public void deleteComment(Long commentId, Long postId) {
         techCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
+    }
+
+    public Tech updateCommentCount(Long postId) {
+        Optional<Tech> tech = techRepository.findById(postId);
+        tech.ifPresent(Tech::renewCommentCount);
+        return tech.get();
     }
 }

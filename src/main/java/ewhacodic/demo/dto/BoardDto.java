@@ -21,6 +21,7 @@ public class BoardDto {
     private String tag;
     private Long view;
     private Long recommend;
+    private Long commentCount;
     private Long userCode;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
@@ -33,9 +34,8 @@ public class BoardDto {
                 .tag(tag)
                 .view(view)
                 .recommend(recommend)
+                .commentCount(commentCount)
                 .userCode(userCode)
-                .createdAt(LocalDateTime.now())
-                .modifiedAt(LocalDateTime.now())
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -51,6 +51,7 @@ public class BoardDto {
                 .tag(tag)
                 .view(view)
                 .recommend(recommend)
+                .commentCount(commentCount)
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -66,6 +67,7 @@ public class BoardDto {
                 .tag(tag)
                 .view(view)
                 .recommend(recommend)
+                .commentCount(commentCount)
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -81,6 +83,7 @@ public class BoardDto {
                 .tag(tag)
                 .view(view)
                 .recommend(recommend)
+                .commentCount(commentCount)
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -89,13 +92,14 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
+    public BoardDto(Long id, String title, String content, String tag, Long view, Long recommend, Long commentCount, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag = tag;
         this.view = view;
         this.recommend = recommend;
+        this.commentCount = commentCount;
         this.userCode = userCode;
         this.createDate = createDate;
         this.modifiedDate = modifiedDate;

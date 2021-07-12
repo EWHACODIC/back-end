@@ -1,9 +1,6 @@
 package ewhacodic.demo.service;
 
-import ewhacodic.demo.domain.Board;
-import ewhacodic.demo.domain.BoardComment;
-import ewhacodic.demo.domain.Qna;
-import ewhacodic.demo.domain.QnaComment;
+import ewhacodic.demo.domain.*;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
@@ -12,6 +9,7 @@ import ewhacodic.demo.repository.BoardRepository;
 import ewhacodic.demo.repository.QnaCommentRepository;
 import ewhacodic.demo.repository.QnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -87,8 +85,8 @@ public class QnaService {
         return qnaRepository.findById(id).get();
     }
 
-    public List<BoardListDto> getBoardListDto() {
-        return qnaRepository.findAll().stream().map(BoardListDto::ofQna).collect(Collectors.toList());
+    public List<BoardListDto> getBoardListDto(Pageable pageable) {
+        return qnaRepository.findAll(pageable).stream().map(BoardListDto::ofQna).collect(Collectors.toList());
     }
 
     public void updateBoardRecommend(Long id) {
@@ -159,5 +157,11 @@ public class QnaService {
 
     public void deleteComment(Long commentId, Long postId) {
         qnaCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
+    }
+
+    public Qna updateCommentCount(Long postId) {
+        Optional<Qna> qna = qnaRepository.findById(postId);
+        qna.ifPresent(Qna::renewCommentCount);
+        return qna.get();
     }
 }

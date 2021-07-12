@@ -18,19 +18,19 @@ public class BoardListDto {
     private String tag;
     private Long view;
     private Long recommend;
-    private Long commentNum;
+    private Long commentCount;
     private Long userCode;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
 
     @Builder
-    public BoardListDto(Long id, String title,String tag, Long view, Long recommend, Long commentNum, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate) {
+    public BoardListDto(Long id, String title,String tag, Long view, Long recommend, Long commentCount, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
         this.tag = tag;
         this.view = view;
         this.recommend = recommend;
-        this.commentNum = commentNum;
+        this.commentCount = commentCount;
         this.userCode = userCode;
         this.createDate = createDate;
         this.modifiedDate = modifiedDate;
@@ -43,7 +43,7 @@ public class BoardListDto {
                 .tag(board.getTag())
                 .view(board.getView())
                 .recommend(board.getRecommend())
-                .commentNum(board.getComments().stream().count())
+                .commentCount(board.getCommentCount())
                 .userCode(board.getUserCode())
                 .createDate(board.getCreatedAt())
                 .modifiedDate(board.getModifiedAt())
@@ -57,7 +57,7 @@ public class BoardListDto {
                 .tag(board.getTag())
                 .view(board.getView())
                 .recommend(board.getRecommend())
-                .commentNum(board.getComments().stream().count())
+                .commentCount(board.getCommentCount())
                 .userCode(board.getUserCode())
                 .createDate(board.getCreatedAt())
                 .modifiedDate(board.getModifiedAt())
@@ -71,7 +71,7 @@ public class BoardListDto {
                 .tag(board.getTag())
                 .view(board.getView())
                 .recommend(board.getRecommend())
-                .commentNum(board.getComments().stream().count())
+                .commentCount(board.getCommentCount())
                 .userCode(board.getUserCode())
                 .createDate(board.getCreatedAt())
                 .modifiedDate(board.getModifiedAt())
@@ -85,7 +85,7 @@ public class BoardListDto {
                 .tag(board.getTag())
                 .view(board.getView())
                 .recommend(board.getRecommend())
-                .commentNum(board.getComments().stream().count())
+                .commentCount(board.getCommentCount())
                 .userCode(board.getUserCode())
                 .createDate(board.getCreatedAt())
                 .modifiedDate(board.getModifiedAt())
