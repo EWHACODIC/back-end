@@ -20,15 +20,14 @@ public class UserService implements UserDetailsService {
         infoDto.setPassword(encoder.encode(infoDto.getPassword()));
 
         return userRepository.save(UserInfo.builder()
-                .userName(infoDto.getUserName())
+                .userId(infoDto.getUserId())
                 .auth(infoDto.getAuth())
-                .id(infoDto.getId())
                 .password(infoDto.getPassword()).build()).getCode();
     }
     // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현
     @Override // 기본적인 반환 타입은 UserDetails, UserDetails를 상속받은 User로 반환 타입 지정 (자동으로 다운 캐스팅됨)
-    public UserInfo loadUserByUsername(String userName) throws UsernameNotFoundException {
-        return userRepository.findByUserName(userName)
-                .orElseThrow(() -> new UsernameNotFoundException((userName)));
+    public UserInfo loadUserByUsername(String userId) throws UsernameNotFoundException {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException((userId)));
     }
 }
