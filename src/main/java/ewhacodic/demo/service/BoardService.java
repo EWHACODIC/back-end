@@ -8,6 +8,7 @@ import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.repository.BoardCommentRepository;
 import ewhacodic.demo.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -84,8 +85,8 @@ public class BoardService {
         return boardRepository.findById(id).get();
     }
 
-    public List<BoardListDto> getBoardListDto() {
-        return boardRepository.findAll().stream().map(BoardListDto::of).collect(Collectors.toList());
+    public List<BoardListDto> getBoardListDto(Pageable pageable) {
+        return boardRepository.findAll(pageable).stream().map(BoardListDto::of).collect(Collectors.toList());
     }
 
     public void updateBoardRecommend(Long id) {
@@ -151,12 +152,9 @@ public class BoardService {
         BoardComment originalBoardComment = boardCommentRepository.findByIdAndPostId(commentId, postId);
         originalBoardComment.setContent(boardCommentDto.getContent());
         boardCommentRepository.save(originalBoardComment);
-
     }
 
     public void deleteComment(Long commentId, Long postId) {
         boardCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
     }
-
-
 }

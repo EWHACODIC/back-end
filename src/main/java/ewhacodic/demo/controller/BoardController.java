@@ -7,6 +7,7 @@ import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,6 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-//    //전체 게시글 목록 가져오기
-//    @GetMapping(value="/get")
-//    public Iterable<BoardDto> list(){
-//        return boardService.getBoardList(null);
-//    }
-//
     //추천순 게시글 정렬
     @GetMapping(value="/order/recommend")
     public List<BoardDto> orderByRecommend(){
@@ -75,8 +70,8 @@ public class BoardController {
 
     // 5. 게시글 목록 조회
     @GetMapping("/list")
-    public List<BoardListDto> getBoardList() {
-        return boardService.getBoardListDto();
+    public List<BoardListDto> getBoardList(Pageable pageable) {
+        return boardService.getBoardListDto(pageable);
     }
 
 
@@ -135,7 +130,4 @@ public class BoardController {
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
         return boardService.searchPosts(keyword);
     }
-
-
-
 }
