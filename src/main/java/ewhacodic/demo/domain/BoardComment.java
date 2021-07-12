@@ -48,7 +48,7 @@ public class BoardComment {
         this.postId = postId;
     }
 
-    public static BoardComment  of(BoardCommentDto boardCommentDto, Long postId) {
+    public static BoardComment of(BoardCommentDto boardCommentDto, Long postId) {
         return BoardComment.builder()
                 .content(boardCommentDto.getContent())
                 .userCode(boardCommentDto.getUserCode())

@@ -2,109 +2,113 @@ package ewhacodic.demo.controller;
 
 import ewhacodic.demo.domain.Board;
 import ewhacodic.demo.domain.BoardComment;
+import ewhacodic.demo.domain.Qna;
+import ewhacodic.demo.domain.QnaComment;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.service.BoardService;
+import ewhacodic.demo.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/post")
-public class BoardController {
+@RequestMapping("api/qna")
+public class QnaController {
 
     @Autowired
-    private BoardService boardService;
+    private QnaService qnaService;
 
-    public BoardController(BoardService boardService){
-        this.boardService = boardService;
+    public QnaController(BoardService boardService){
+        this.qnaService = qnaService;
     }
 
     //추천순 게시글 정렬
     @GetMapping(value="/order/recommend")
     public List<BoardDto> orderByRecommend(){
-        return boardService.getBoardList("recommend");
+        return qnaService.getBoardList("recommend");
     }
 
     //조회순 게시글 정렬
     @GetMapping(value="/order/view")
     public List<BoardDto> orderByView(){
-        return boardService.getBoardList("view");
+        return qnaService.getBoardList("view");
     }
 
     //최신순 게시글 정렬
     @GetMapping(value="/order/latest")
     public List<BoardDto> orderByLatest(){
-        return boardService.getBoardList("latest");
+        return qnaService.getBoardList("latest");
     }
 
     //댓글순 게시글 정렬
     @GetMapping(value="/order/reply")
     public List<BoardDto> orderByReply(){
-        return boardService.getBoardList("reply");
+        return qnaService.getBoardList("reply");
     }
 
     //4. 게시글 하나 가져오기
     @GetMapping(value="/{postId}")
     public BoardDto detail(@PathVariable("postId") Long postId){
-        BoardDto boardDto = boardService.getPostOnly(postId);
+        BoardDto boardDto = qnaService.getPostOnly(postId);
         return boardDto;
     }
 
     //4-1. 특정 게시글의 댓글 조회
     @GetMapping("/{postId}/comment")
-    public List<BoardComment> getBoardComment(@PathVariable("postId") Long postId) {
-        return boardService.getCommentByPostId(postId);
+    public List<QnaComment> getBoardComment(@PathVariable("postId") Long postId) {
+        return qnaService.getCommentByPostId(postId);
     }
 
     //4-2. 특정 게시글 한번에 조회 -> 명세에 없음 + 엔드포인트 새로 구성
     @GetMapping("post2/{postId}")
-    public Board getBoardPostAndComment(@PathVariable("postId") Long postId) {
-        return boardService.getPostAndComment(postId);
+    public Qna getBoardPostAndComment(@PathVariable("postId") Long postId) {
+        return qnaService.getPostAndComment(postId);
     }
 
     // 5. 게시글 목록 조회
     @GetMapping("/list")
-    public List<BoardListDto> getBoardList(Pageable pageable) {
-        return boardService.getBoardListDto(pageable);
+    public List<BoardListDto> getBoardList() {
+        return qnaService.getBoardListDto();
     }
+
+    /*//+
+    @GetMapping("/list/page")
+    public Page<BoardDto> getBoardListByPage(@PageableDefault(size=10) Pageable pageable, PagedResourcesAssembler assmebler){
+        List<BoardListDto> boardListDto = boardService.getBoardListDto(pageable);
+        return
+    }*/
 
 
     //6. 게시글 작성
     @PostMapping("/new")
     public ResponseEntity<String> write(@RequestBody BoardDto boardDto){
         System.out.println("controller");
-        boardService.savePost(boardDto);
+        qnaService.savePost(boardDto);
         return ResponseEntity.ok("ok");
     }
 
     //7. 게시글 수정
     @PatchMapping(value="/edit")
-    public ResponseEntity<String> update(@RequestBody Board board){
-        boardService.updatePost(board);
+    public ResponseEntity<String> update(@RequestBody Qna qna){
+        qnaService.updatePost(qna);
         return ResponseEntity.ok("ok");
     }
 
     //8. 게시글 삭제
     @DeleteMapping(value="/{postId}")
     public ResponseEntity<String> delete(@PathVariable("postId") Long id){
-        boardService.deletePost(id);
+        qnaService.deletePost(id);
         return ResponseEntity.ok("ok");
     }
-
 
     //9. 게시글 추천수 증가
     @PatchMapping(value="/{postId}/recommend")
     public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id){
-        boardService.updateBoardRecommend(id);
+        qnaService.updateBoardRecommend(id);
 
         return ResponseEntity.ok("ok");
     }
@@ -112,58 +116,26 @@ public class BoardController {
     //10. 댓글 작성
     @PostMapping("/{postId}/comment")
     public ResponseEntity<String> saveComment(@PathVariable Long postId, @RequestBody BoardCommentDto boardCommentDto) {
-        boardService.saveComment(boardCommentDto, postId);
+        qnaService.saveComment(boardCommentDto, postId);
         return ResponseEntity.ok("ok");
     }
 
     //11. 댓글 수정
     @PutMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<String> updateComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody BoardCommentDto boardCommentDto) {
-        boardService.updateComment(postId, commentId, boardCommentDto);
+        qnaService.updateComment(postId, commentId, boardCommentDto);
         return ResponseEntity.ok("ok");
     }
 
     //12. 댓글 삭제
     @DeleteMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
-        boardService.deleteComment(commentId, postId);
+        qnaService.deleteComment(commentId, postId);
         return ResponseEntity.ok("ok");
     }
 
     @GetMapping("/list/key")
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
-        return boardService.searchPosts(keyword);
-    //10. 댓글 작성
-    @PostMapping("/{postId}/comment")
-    public ResponseEntity<String> saveComment(@PathVariable Long postId, @RequestBody BoardCommentDto boardCommentDto) {
-        boardService.saveComment(boardCommentDto, postId);
-        return ResponseEntity.ok("ok");
+        return qnaService.searchPosts(keyword);
     }
-
-    //11. 댓글 수정
-    @PutMapping("/{postId}/comment/{commentId}")
-    public ResponseEntity<String> updateComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody BoardCommentDto boardCommentDto) {
-        boardService.updateComment(postId, commentId, boardCommentDto);
-        return ResponseEntity.ok("ok");
-    }
-
-    //12. 댓글 삭제
-    @DeleteMapping("/{postId}/comment/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
-        boardService.deleteComment(commentId, postId);
-        return ResponseEntity.ok("ok");
-    }
-
-    @GetMapping("/list/key")
-    public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
-        return boardService.searchPosts(keyword);
-    }
-
-    /*@GetMapping("/list/key")
-    public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword, @PageableDefault(size=10) Pageable pageable) {
-        return boardService.searchPosts(keyword, pageable);
-    }*/
-
-
-
 }

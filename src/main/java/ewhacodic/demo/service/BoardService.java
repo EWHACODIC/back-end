@@ -152,9 +152,12 @@ public class BoardService {
         BoardComment originalBoardComment = boardCommentRepository.findByIdAndPostId(commentId, postId);
         originalBoardComment.setContent(boardCommentDto.getContent());
         boardCommentRepository.save(originalBoardComment);
+
     }
 
     public void deleteComment(Long commentId, Long postId) {
         boardCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
     }
+
+
 }

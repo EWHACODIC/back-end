@@ -2,6 +2,7 @@ package ewhacodic.demo.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,6 +14,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name="tech")
 public class Tech {
     @Id
@@ -51,13 +53,27 @@ public class Tech {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Tech(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode){
+    public Tech(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag = tag;
-        this.view = view;
         this.recommend = recommend;
+        this.view = view;
         this.userCode = userCode;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    public void updateView(){
+        this.view++;
+    }
+
+    public static Tech updateRecommend(Tech boardDto) {
+        Long recommend = boardDto.getRecommend() + 1;
+        Tech tech = boardDto;
+        tech.setRecommend(recommend);
+
+        return tech;
     }
 }

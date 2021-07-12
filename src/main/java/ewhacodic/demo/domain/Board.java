@@ -33,10 +33,10 @@ public class Board {
     private String tag;
 
     @Column(name="view")
-    private int view;
+    private Long view;
 
     @Column(name="recommend")
-    private int recommend;
+    private Long recommend;
 
     @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="post_id")
@@ -54,7 +54,7 @@ public class Board {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Board(Long id, String title, String content, String tag, int view, int recommend, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public Board(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
@@ -72,7 +72,7 @@ public class Board {
     }
 
     public static Board updateRecommend(Board boardDto) {
-        int recommend = boardDto.getRecommend() + 1;
+        Long recommend = boardDto.getRecommend() + 1;
         Board board = boardDto;
         board.setRecommend(recommend);
 
