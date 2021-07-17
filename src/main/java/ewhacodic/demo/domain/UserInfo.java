@@ -24,8 +24,8 @@ public class UserInfo implements UserDetails {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long code;
 
-    @Column(name = "userId") // @ewhain.net
-    private String userId;
+    @Column(name = "id", unique = true) // @ewhain.net
+    private String userName;
 
     @Column(name = "password")
     private String password;
@@ -34,8 +34,8 @@ public class UserInfo implements UserDetails {
     private String auth;
 
     @Builder
-    public UserInfo(String userId, String password, String auth) {
-        this.userId = userId;
+    public UserInfo(String userName, String password, String auth) {
+        this.userName = userName;
         this.password = password;
         this.auth = auth;
     }
@@ -56,7 +56,7 @@ public class UserInfo implements UserDetails {
     // 사용자의 이름 반환 (unique한 값)
     @Override
     public String getUsername() {
-        return userId;
+        return userName;
     }
 
     // 사용자의 password를 반환
