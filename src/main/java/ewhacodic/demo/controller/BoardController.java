@@ -146,12 +146,12 @@ public class BoardController {
         return boardService.searchPosts(keyword);
     }
 
-    /*@GetMapping("/list/key")
-    public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword, @PageableDefault(size=10) Pageable pageable) {
-        return boardService.searchPosts(keyword, pageable);
-    }*/
+    @GetMapping("/list/tag")
+    public List<BoardListDto> getBoardListByTag(@RequestParam String tag) {
+        return boardService.searchPostsByTag(tag);
+    }
 
-    @GetMapping("/tag/{userCode}")
+    /*@GetMapping("/tag/{userCode}")
     public Set<Long> getUserTag(@PathVariable Long userCode) {
         return userService.getUserTagIds(userCode);
     }
@@ -159,5 +159,5 @@ public class BoardController {
     @GetMapping("/tag/dto/{userCode}")
     public Set<TagDto> getTagDto(@PathVariable Long userCode) {
         return userService.getUserTagDtos(userCode);
-    }
+    }*/
 }

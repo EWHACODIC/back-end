@@ -18,7 +18,8 @@ public class BoardDto {
     private Long id;
     private String title;
     private String content;
-    private String tag;
+    private String tag1;
+    private String tag2;
     private Long view;
     private Long recommend;
     private Long userCode;
@@ -30,7 +31,8 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .tag(tag)
+                .tag1(tag1)
+                .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
                 .userCode(userCode)
@@ -45,7 +47,8 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .tag(tag)
+                .tag1(tag1)
+                .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
                 .userCode(userCode)
@@ -60,7 +63,8 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .tag(tag)
+                .tag1(tag1)
+                .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
                 .userCode(userCode)
@@ -75,7 +79,8 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .tag(tag)
+                .tag1(tag1)
+                .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
                 .userCode(userCode)
@@ -86,11 +91,12 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String title, String content, String tag, Long view, Long recommend, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
+    public BoardDto(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
         this.id = id;
         this.title = title;
         this.content = content;
-        this.tag = tag;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
         this.view = view;
         this.recommend = recommend;
         this.userCode = userCode;

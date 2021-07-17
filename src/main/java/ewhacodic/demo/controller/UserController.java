@@ -35,9 +35,9 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @PostMapping("/api/user/tag/{userCode}")
+    /*@PostMapping("/api/user/tag/{userCode}")
     public ResponseEntity<String> updateUserTag(@PathVariable Long userCode, @RequestBody UserTagDto userTagDto) {
         userService.updateUserTag(userCode, userTagDto);
         return ResponseEntity.ok("Ok");
-    }
+    }*/
 }

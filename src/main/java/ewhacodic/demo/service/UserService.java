@@ -15,8 +15,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.eclipse.jdt.internal.compiler.problem.ProblemSeverities.Optional;
-
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
@@ -34,7 +32,7 @@ public class UserService implements UserDetailsService {
                 .password(infoDto.getPassword()).build()).getCode();
     }
 
-    public void updateUserTag(Long userCode, UserTagDto userTagDto) {
+   /* public void updateUserTag(Long userCode, UserTagDto userTagDto) {
        UserInfo userInfo = userRepository.findOneByCode(userCode);
        userInfo.setTagIds(userTagDto.getTagIds());
        userRepository.save(userInfo);
@@ -49,7 +47,7 @@ public class UserService implements UserDetailsService {
         UserInfo userInfo = userRepository.findOneByCode(userCode);
         Set<Long> tagIds = userInfo.getTagIds();
         return tagIds.stream().map(tagService::of).collect(Collectors.toSet());
-    }
+    }*/
 
     // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현
     @Override // 기본적인 반환 타입은 UserDetails, UserDetails를 상속받은 User로 반환 타입 지정 (자동으로 다운 캐스팅됨)

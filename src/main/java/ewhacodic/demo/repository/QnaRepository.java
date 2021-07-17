@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface QnaRepository extends JpaRepository<Qna, Long> {
     List<Qna> findByTitleContaining(String keyword);
+    List<Qna> findByTag1OrTag2(String tag1, String tag2);
 }

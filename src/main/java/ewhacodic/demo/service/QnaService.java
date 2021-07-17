@@ -50,7 +50,8 @@ public class QnaService {
             selectBoard.setTitle(qna.getTitle());
             selectBoard.setComments(qna.getComments());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(qna.getTag());
+            selectBoard.setTag1(qna.getTag1());
+            selectBoard.setTag2(qna.getTag2());
             selectBoard.setUserCode(qna.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             qnaRepository.save(selectBoard);
@@ -66,7 +67,8 @@ public class QnaService {
                 .id(qna.getId())
                 .title(qna.getTitle())
                 .content(qna.getContent())
-                .tag(qna.getTag())
+                .tag1(qna.getTag1())
+                .tag2(qna.getTag2())
                 .view(qna.getView())
                 .userCode(qna.getUserCode())
                 .createDate(qna.getCreatedAt())
@@ -105,6 +107,12 @@ public class QnaService {
         return boardList.stream().map(BoardListDto::ofQna).collect(Collectors.toList());
     }
 
+    public List<BoardListDto> searchPostsByTag(String tag){
+        List<Qna> boardList = qnaRepository.findByTag1OrTag2(tag, tag);
+
+        return boardList.stream().map(BoardListDto::ofQna).collect(Collectors.toList());
+    }
+
     @org.springframework.transaction.annotation.Transactional
     public List<BoardDto> getBoardList(String order){
         List<Qna> boardList;
@@ -126,7 +134,8 @@ public class QnaService {
                     .id(qna.getId())
                     .title(qna.getTitle())
                     .content(qna.getContent())
-                    .tag(qna.getTag())
+                    .tag1(qna.getTag1())
+                    .tag2(qna.getTag2())
                     .view(qna.getView())
                     .recommend(qna.getRecommend())
                     .userCode(qna.getUserCode())

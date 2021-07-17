@@ -50,7 +50,8 @@ public class CommunityService {
             selectBoard.setTitle(community.getTitle());
             selectBoard.setComments(community.getComments());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(community.getTag());
+            selectBoard.setTag1(community.getTag1());
+            selectBoard.setTag2(community.getTag2());
             selectBoard.setUserCode(community.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             communityRepository.save(selectBoard);
@@ -66,7 +67,8 @@ public class CommunityService {
                 .id(community.getId())
                 .title(community.getTitle())
                 .content(community.getContent())
-                .tag(community.getTag())
+                .tag1(community.getTag1())
+                .tag2(community.getTag2())
                 .view(community.getView())
                 .userCode(community.getUserCode())
                 .createDate(community.getCreatedAt())
@@ -105,6 +107,12 @@ public class CommunityService {
         return boardList.stream().map(BoardListDto::ofCommunity).collect(Collectors.toList());
     }
 
+    public List<BoardListDto> searchPostsByTag(String tag){
+        List<Community> boardList = communityRepository.findByTag1OrTag2(tag, tag);
+
+        return boardList.stream().map(BoardListDto::ofCommunity).collect(Collectors.toList());
+    }
+
     @org.springframework.transaction.annotation.Transactional
     public List<BoardDto> getBoardList(String order){
         List<Community> boardList;
@@ -126,7 +134,8 @@ public class CommunityService {
                     .id(community.getId())
                     .title(community.getTitle())
                     .content(community.getContent())
-                    .tag(community.getTag())
+                    .tag1(community.getTag1())
+                    .tag2(community.getTag2())
                     .view(community.getView())
                     .recommend(community.getRecommend())
                     .userCode(community.getUserCode())
