@@ -1,5 +1,6 @@
 package ewhacodic.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,8 +11,8 @@ import java.util.Set;
 @Setter
 @ToString
 public class UserTagDto {
-    private String userId;
     private Set<Long> tagIds;
+    private Set<TagDto> tagDtos;
 
     public UserTagDto() {
     }
