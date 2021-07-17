@@ -27,13 +27,14 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception { // http 관련 인증 설정
         http
+                //로그인 기능 외에 다른 기능 할 때 주석 반대로 해야함
                 .csrf()
                 .disable()
                 .authorizeRequests()
                 .anyRequest()
                 .permitAll()
 //                .authorizeRequests() // 접근에 대한 인증 설정
-//                .antMatchers("/login", "/signup", "/user", "/api/**").permitAll() // 누구나 접근 허용
+//                .antMatchers("/login", "/signup", "/user").permitAll() // 누구나 접근 허용
 //                .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능
 //                .antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
 //                .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
