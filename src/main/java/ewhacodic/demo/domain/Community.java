@@ -28,8 +28,11 @@ public class Community {
     @Column(name="content") // 게시글 내용
     private String content;
 
-    @Column(name="tag") // 태그
-    private String tag;
+    @Column(name="tag1")
+    private String tag1;
+
+    @Column(name="tag2")
+    private String tag2;
 
     @Column(name="view") // 조회수
     private Long view;
@@ -56,11 +59,12 @@ public class Community {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Community(Long id, String title, String content, String tag, Long view, Long recommend, Long commentCount, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public Community(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend, Long commentCount,Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
-        this.tag = tag;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
         this.recommend = recommend;
         this.commentCount = commentCount;
         this.view = view;

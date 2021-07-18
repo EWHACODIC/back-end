@@ -6,6 +6,7 @@ import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.dto.TagDto;
+import ewhacodic.demo.dto.TagDto;
 import ewhacodic.demo.service.BoardService;
 import ewhacodic.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,10 +142,11 @@ public class BoardController {
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
         return boardService.searchPosts(keyword);
     }
-    /*@GetMapping("/list/key")
-    public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword, @PageableDefault(size=10) Pageable pageable) {
-        return boardService.searchPosts(keyword, pageable);
-    }*/
+
+    @GetMapping("/list/tag")
+    public List<BoardListDto> getBoardListByTag(@RequestParam String tag) {
+        return boardService.searchPostsByTag(tag);
+    }
 
     @GetMapping("/tag/{userCode}")
     public Set<Long> getUserTag(@PathVariable Long userCode) {
@@ -155,4 +157,5 @@ public class BoardController {
     public Set<TagDto> getTagDto(@PathVariable Long userCode) {
         return userService.getUserTagDtos(userCode);
     }
+
 }

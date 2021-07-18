@@ -48,7 +48,8 @@ public class BoardService {
             selectBoard.setTitle(board.getTitle());
             selectBoard.setComments(board.getComments());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(board.getTag());
+            selectBoard.setTag1(board.getTag1());
+            selectBoard.setTag2(board.getTag2());
             selectBoard.setUserCode(board.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             boardRepository.save(selectBoard);
@@ -64,7 +65,8 @@ public class BoardService {
                 .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .tag(board.getTag())
+                .tag1(board.getTag1())
+                .tag2(board.getTag2())
                 .view(board.getView())
                 .userCode(board.getUserCode())
                 .createDate(board.getCreatedAt())
@@ -103,6 +105,12 @@ public class BoardService {
         return boardList.stream().map(BoardListDto::of).collect(Collectors.toList());
     }
 
+    public List<BoardListDto> searchPostsByTag(String tag){
+        List<Board> boardList = boardRepository.findByTag1OrTag2(tag, tag);
+
+        return boardList.stream().map(BoardListDto::of).collect(Collectors.toList());
+    }
+
     @Transactional
     public List<BoardDto> getBoardList(String order){
         List<Board> boardList;
@@ -124,7 +132,8 @@ public class BoardService {
                     .id(board.getId())
                     .title(board.getTitle())
                     .content(board.getContent())
-                    .tag(board.getTag())
+                    .tag1(board.getTag1())
+                    .tag2(board.getTag2())
                     .view(board.getView())
                     .recommend(board.getRecommend())
                     .userCode(board.getUserCode())

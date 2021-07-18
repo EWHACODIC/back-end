@@ -18,7 +18,8 @@ public class BoardDto {
     private Long id;
     private String title;
     private String content;
-    private String tag;
+    private String tag1;
+    private String tag2;
     private Long view;
     private Long recommend;
     private Long commentCount;
@@ -31,11 +32,11 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .tag(tag)
+                .tag1(tag1)
+                .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
                 .commentCount(commentCount)
-                .userCode(userCode)
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -48,7 +49,8 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .tag(tag)
+                .tag1(tag1)
+                .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
                 .commentCount(commentCount)
@@ -64,7 +66,8 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .tag(tag)
+                .tag1(tag1)
+                .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
                 .commentCount(commentCount)
@@ -80,7 +83,8 @@ public class BoardDto {
                 .id(id)
                 .title(title)
                 .content(content)
-                .tag(tag)
+                .tag1(tag1)
+                .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
                 .commentCount(commentCount)
@@ -92,11 +96,12 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String title, String content, String tag, Long view, Long recommend, Long commentCount, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
+    public BoardDto(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend,  Long commentCount, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
         this.id = id;
         this.title = title;
         this.content = content;
-        this.tag = tag;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
         this.view = view;
         this.recommend = recommend;
         this.commentCount = commentCount;

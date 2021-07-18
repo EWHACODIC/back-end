@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 public class BoardListDto {
     private Long id;
     private String title;
-    private String tag;
+    private String tag1;
+    private String tag2;
     private Long view;
     private Long recommend;
     private Long commentCount;
@@ -24,10 +25,11 @@ public class BoardListDto {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public BoardListDto(Long id, String title,String tag, Long view, Long recommend, Long commentCount, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate) {
+    public BoardListDto(Long id, String title,String tag1, String tag2, Long view, Long recommend, Long commentCount, Long commentNum, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
-        this.tag = tag;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
         this.view = view;
         this.recommend = recommend;
         this.commentCount = commentCount;
@@ -40,7 +42,8 @@ public class BoardListDto {
         return BoardListDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
-                .tag(board.getTag())
+                .tag1(board.getTag1())
+                .tag2(board.getTag2())
                 .view(board.getView())
                 .recommend(board.getRecommend())
                 .commentCount(board.getCommentCount())
@@ -54,7 +57,8 @@ public class BoardListDto {
         return BoardListDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
-                .tag(board.getTag())
+                .tag1(board.getTag1())
+                .tag2(board.getTag2())
                 .view(board.getView())
                 .recommend(board.getRecommend())
                 .commentCount(board.getCommentCount())
@@ -68,7 +72,8 @@ public class BoardListDto {
         return BoardListDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
-                .tag(board.getTag())
+                .tag1(board.getTag1())
+                .tag2(board.getTag2())
                 .view(board.getView())
                 .recommend(board.getRecommend())
                 .commentCount(board.getCommentCount())
@@ -82,7 +87,8 @@ public class BoardListDto {
         return BoardListDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
-                .tag(board.getTag())
+                .tag1(board.getTag1())
+                .tag2(board.getTag2())
                 .view(board.getView())
                 .recommend(board.getRecommend())
                 .commentCount(board.getCommentCount())

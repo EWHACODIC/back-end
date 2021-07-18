@@ -140,4 +140,9 @@ public class CommunityController {
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
         return communityService.searchPosts(keyword);
     }
+
+    @GetMapping("/list/tag")
+    public List<BoardListDto> getBoardListByTag(@RequestParam String tag) {
+        return communityService.searchPostsByTag(tag);
+    }
 }
