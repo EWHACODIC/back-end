@@ -1,5 +1,6 @@
 ewhacodic/demo/DemoApplication.java
  ewhacodic.demo.DemoApplication
+<<<<<<< Updated upstream
 ewhacodic/demo/config/MvcConfig.java
  ewhacodic.demo.config.MvcConfig
 ewhacodic/demo/config/SecurityMessageConfig.java
@@ -8,12 +9,132 @@ ewhacodic/demo/dto/UserInfoDto.java
  ewhacodic.demo.dto.UserInfoDto
 ewhacodic/demo/repository/UserRepository.java
  ewhacodic.demo.repository.UserRepository
-ewhacodic/demo/config/WebSecurityConfig.java
- ewhacodic.demo.config.WebSecurityConfig
-ewhacodic/demo/controller/UserController.java
- ewhacodic.demo.controller.UserController
+=======
+ ewhacodic.demo.DemoApplication$CacheDemoApplication
+ewhacodic/demo/config/CacheAspect.java
+ ewhacodic.demo.config.CacheAspect
+ewhacodic/demo/service/RankingService.java
+ ewhacodic.demo.service.RankingService
+ewhacodic/demo/domain/BoardComment.java
+ ewhacodic.demo.domain.BoardComment
+ ewhacodic.demo.domain.BoardComment$BoardCommentBuilder
 ewhacodic/demo/service/UserService.java
  ewhacodic.demo.service.UserService
+ewhacodic/demo/domain/QBoard.java
+ ewhacodic.demo.domain.QBoard
+ewhacodic/demo/repository/BoardCommentRepository.java
+ ewhacodic.demo.repository.BoardCommentRepository
+>>>>>>> Stashed changes
+ewhacodic/demo/config/WebSecurityConfig.java
+ ewhacodic.demo.config.WebSecurityConfig
+ewhacodic/demo/dto/BoardDto.java
+ ewhacodic.demo.dto.BoardDto
+ ewhacodic.demo.dto.BoardDto$BoardDtoBuilder
+ewhacodic/demo/domain/QnaComment.java
+ ewhacodic.demo.domain.QnaComment
+ ewhacodic.demo.domain.QnaComment$QnaCommentBuilder
+ewhacodic/demo/domain/QBoardComment.java
+ ewhacodic.demo.domain.QBoardComment
+ewhacodic/demo/repository/TechCommentRepository.java
+ ewhacodic.demo.repository.TechCommentRepository
+ewhacodic/demo/repository/QnaCommentRepository.java
+ ewhacodic.demo.repository.QnaCommentRepository
+ewhacodic/demo/controller/UserController.java
+ ewhacodic.demo.controller.UserController
+<<<<<<< Updated upstream
+ewhacodic/demo/service/UserService.java
+ ewhacodic.demo.service.UserService
+=======
+ewhacodic/demo/repository/UserRepository.java
+ ewhacodic.demo.repository.UserRepository
+>>>>>>> Stashed changes
 ewhacodic/demo/domain/UserInfo.java
  ewhacodic.demo.domain.UserInfo
  ewhacodic.demo.domain.UserInfo$UserInfoBuilder
+ewhacodic/demo/repository/CommunityRepository.java
+ ewhacodic.demo.repository.CommunityRepository
+ewhacodic/demo/rankMember/Member.java
+ ewhacodic.demo.rankMember.Member
+ewhacodic/demo/service/CommunityService.java
+ ewhacodic.demo.service.CommunityService
+ewhacodic/demo/config/EmbeddedRedisConfig.java
+ ewhacodic.demo.config.EmbeddedRedisConfig
+ewhacodic/demo/domain/Tech.java
+ ewhacodic.demo.domain.Tech
+ ewhacodic.demo.domain.Tech$TechBuilder
+ewhacodic/demo/domain/QUserInfo.java
+ ewhacodic.demo.domain.QUserInfo
+ewhacodic/demo/controller/QnaController.java
+ ewhacodic.demo.controller.QnaController
+ewhacodic/demo/controller/CommunityController.java
+ ewhacodic.demo.controller.CommunityController
+ewhacodic/demo/domain/QQnaComment.java
+ ewhacodic.demo.domain.QQnaComment
+ewhacodic/demo/domain/Board.java
+ ewhacodic.demo.domain.Board
+ ewhacodic.demo.domain.Board$BoardBuilder
+ewhacodic/demo/domain/QQna.java
+ ewhacodic.demo.domain.QQna
+ewhacodic/demo/rankMember/QMember.java
+ ewhacodic.demo.rankMember.QMember
+ewhacodic/demo/rankMember/MemberRepository.java
+ ewhacodic.demo.rankMember.MemberRepository
+ewhacodic/demo/ranking/RankingType.java
+ ewhacodic.demo.ranking.RankingType
+ewhacodic/demo/domain/QCommunity.java
+ ewhacodic.demo.domain.QCommunity
+ewhacodic/demo/domain/Community.java
+ ewhacodic.demo.domain.Community
+ ewhacodic.demo.domain.Community$CommunityBuilder
+ewhacodic/demo/service/QnaService.java
+ ewhacodic.demo.service.QnaService
+ewhacodic/demo/domain/TechComment.java
+ ewhacodic.demo.domain.TechComment
+ ewhacodic.demo.domain.TechComment$TechCommentBuilder
+ewhacodic/demo/service/BoardService.java
+ ewhacodic.demo.service.BoardService
+ewhacodic/demo/dto/BoardListDto.java
+ ewhacodic.demo.dto.BoardListDto
+ ewhacodic.demo.dto.BoardListDto$BoardListDtoBuilder
+ewhacodic/demo/config/MvcConfig.java
+ ewhacodic.demo.config.MvcConfig
+ewhacodic/demo/repository/QnaRepository.java
+ ewhacodic.demo.repository.QnaRepository
+ewhacodic/demo/repository/CommunityCommentRepository.java
+ ewhacodic.demo.repository.CommunityCommentRepository
+ewhacodic/demo/domain/CommunityComment.java
+ ewhacodic.demo.domain.CommunityComment
+ ewhacodic.demo.domain.CommunityComment$CommunityCommentBuilder
+ewhacodic/demo/domain/Qna.java
+ ewhacodic.demo.domain.Qna
+ ewhacodic.demo.domain.Qna$QnaBuilder
+ewhacodic/demo/service/AopRankingService.java
+ ewhacodic.demo.service.AopRankingService
+ewhacodic/demo/repository/BoardRepository.java
+ ewhacodic.demo.repository.BoardRepository
+ewhacodic/demo/domain/QTech.java
+ ewhacodic.demo.domain.QTech
+ewhacodic/demo/service/BeginnerRankingService.java
+ ewhacodic.demo.service.BeginnerRankingService
+ewhacodic/demo/service/RankingType.java
+ ewhacodic.demo.service.RankingType
+ewhacodic/demo/controller/BoardController.java
+ ewhacodic.demo.controller.BoardController
+ewhacodic/demo/config/Cacheable.java
+ ewhacodic.demo.config.Cacheable
+ewhacodic/demo/repository/TechRepository.java
+ ewhacodic.demo.repository.TechRepository
+ewhacodic/demo/service/TechService.java
+ ewhacodic.demo.service.TechService
+ewhacodic/demo/dto/BoardCommentDto.java
+ ewhacodic.demo.dto.BoardCommentDto
+ewhacodic/demo/domain/QCommunityComment.java
+ ewhacodic.demo.domain.QCommunityComment
+ewhacodic/demo/config/SecurityMessageConfig.java
+ ewhacodic.demo.config.SecurityMessageConfig
+ewhacodic/demo/dto/UserInfoDto.java
+ ewhacodic.demo.dto.UserInfoDto
+ewhacodic/demo/domain/QTechComment.java
+ ewhacodic.demo.domain.QTechComment
+ewhacodic/demo/controller/TechController.java
+ ewhacodic.demo.controller.TechController
