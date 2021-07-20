@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+import ewhacodic.demo.service.MailSendService;
 
 @RequiredArgsConstructor
 @Controller
@@ -21,6 +24,20 @@ public class UserController {
     @PostMapping("/user")
     public String signup(UserInfoDto infoDto) { // 회원 추가
         userService.save(infoDto);
+
+        //메일 관련 기능 추가
+        //임의의 authKey 생성 & 이메일 발송
+        String authKey = mss.sendAuthMail(UserInfoDto.getEmail());
+        UserInfoDto.setAuthKey(authKey);
+        Map<String, String> map = new HashMap<String, String>();
+
+        map.put("email", UserInfoDto.getEmail());
+        map.put("authKey", UserInfoDto.getAuthKey());
+        System.out.println(map);
+        //DB에 authKey 업데이트
+        //memberService.updateAuthKey(map);
+
+
         return "redirect:/login";
     }
 

@@ -22,7 +22,6 @@ public class UserService implements UserDetailsService {
         return userRepository.save(UserInfo.builder()
                 .userName(infoDto.getUserName())
                 .auth(infoDto.getAuth())
-                .id(infoDto.getId())
                 .password(infoDto.getPassword()).build()).getCode();
     }
     // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현

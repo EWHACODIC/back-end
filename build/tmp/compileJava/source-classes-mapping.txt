@@ -1,15 +1,5 @@
 ewhacodic/demo/DemoApplication.java
  ewhacodic.demo.DemoApplication
-<<<<<<< Updated upstream
-ewhacodic/demo/config/MvcConfig.java
- ewhacodic.demo.config.MvcConfig
-ewhacodic/demo/config/SecurityMessageConfig.java
- ewhacodic.demo.config.SecurityMessageConfig
-ewhacodic/demo/dto/UserInfoDto.java
- ewhacodic.demo.dto.UserInfoDto
-ewhacodic/demo/repository/UserRepository.java
- ewhacodic.demo.repository.UserRepository
-=======
  ewhacodic.demo.DemoApplication$CacheDemoApplication
 ewhacodic/demo/config/CacheAspect.java
  ewhacodic.demo.config.CacheAspect
@@ -24,7 +14,6 @@ ewhacodic/demo/domain/QBoard.java
  ewhacodic.demo.domain.QBoard
 ewhacodic/demo/repository/BoardCommentRepository.java
  ewhacodic.demo.repository.BoardCommentRepository
->>>>>>> Stashed changes
 ewhacodic/demo/config/WebSecurityConfig.java
  ewhacodic.demo.config.WebSecurityConfig
 ewhacodic/demo/dto/BoardDto.java
@@ -41,13 +30,8 @@ ewhacodic/demo/repository/QnaCommentRepository.java
  ewhacodic.demo.repository.QnaCommentRepository
 ewhacodic/demo/controller/UserController.java
  ewhacodic.demo.controller.UserController
-<<<<<<< Updated upstream
-ewhacodic/demo/service/UserService.java
- ewhacodic.demo.service.UserService
-=======
 ewhacodic/demo/repository/UserRepository.java
  ewhacodic.demo.repository.UserRepository
->>>>>>> Stashed changes
 ewhacodic/demo/domain/UserInfo.java
  ewhacodic.demo.domain.UserInfo
  ewhacodic.demo.domain.UserInfo$UserInfoBuilder

@@ -22,9 +22,17 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
     }
 
+
+    //추후에 로그인한 유저만 들어가게 하기위해서는 "/api/**" 이거 위치 hasRole 한테 옮기기
     @Override
     protected void configure(HttpSecurity http) throws Exception { // http 관련 인증 설정
         http
+                //로그인 기능 외에 다른 기능 할 때 주석 반대로 해야함
+//                .csrf()
+//                .disable()
+//                .authorizeRequests()
+//                .anyRequest()
+//                .permitAll()
                 .authorizeRequests() // 접근에 대한 인증 설정
                 .antMatchers("/login", "/signup", "/user").permitAll() // 누구나 접근 허용
                 .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능

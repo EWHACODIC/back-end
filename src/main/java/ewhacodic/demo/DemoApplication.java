@@ -2,9 +2,6 @@ package ewhacodic.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-<<<<<<< Updated upstream
-
-=======
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 // ranking
 import ewhacodic.demo.rankMember.Member;
@@ -12,7 +9,6 @@ import ewhacodic.demo.rankMember.MemberRepository;
 import org.springframework.boot.CommandLineRunner; //이건 뭐지
 import static java.util.Arrays.asList;
 @EnableJpaAuditing
->>>>>>> Stashed changes
 @SpringBootApplication
 public class DemoApplication {
 	public static void main(String[] args) {
