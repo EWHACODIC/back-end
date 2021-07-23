@@ -1,4 +1,4 @@
-package ewhacodic.demo.domain;
+/*package ewhacodic.demo.domain;
 
 import ewhacodic.demo.dto.BoardDto;
 import lombok.Builder;
@@ -89,3 +89,4 @@ public class Board {
     }
 
 }
+*/

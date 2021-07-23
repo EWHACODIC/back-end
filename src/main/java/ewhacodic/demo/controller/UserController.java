@@ -18,26 +18,13 @@ import ewhacodic.demo.service.MailSendService;
 @RequiredArgsConstructor
 @Controller
 public class UserController {
+    private final MailSendService mailSendService;
 
     private final UserService userService;
 
     @PostMapping("/user")
     public String signup(UserInfoDto infoDto) { // 회원 추가
         userService.save(infoDto);
-
-        //메일 관련 기능 추가
-        //임의의 authKey 생성 & 이메일 발송
-        String authKey = mss.sendAuthMail(UserInfoDto.getEmail());
-        UserInfoDto.setAuthKey(authKey);
-        Map<String, String> map = new HashMap<String, String>();
-
-        map.put("email", UserInfoDto.getEmail());
-        map.put("authKey", UserInfoDto.getAuthKey());
-        System.out.println(map);
-        //DB에 authKey 업데이트
-        //memberService.updateAuthKey(map);
-
-
         return "redirect:/login";
     }
 
@@ -45,5 +32,13 @@ public class UserController {
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/login";
+    }
+    @GetMapping("/mail")
+    public String dispMail(){
+        return "mail";
+    }
+    @PostMapping("/mail")
+    public void execMail(UserInfoDto infoDto){
+        mailSendService.sendAuthMail(infoDto.getEmail());
     }
 }

@@ -1,5 +1,5 @@
 package ewhacodic.demo.service;
-import ewhacodic.demo.service.MailUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
@@ -7,12 +7,13 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
-
+import ewhacodic.demo.dto.UserInfoDto;
 @Service("mss")
 public class MailSendService {
     @Autowired
     private JavaMailSenderImpl mailSender;
     private int size;
+
 
     //인증키 생성
     private String getKey(int size) {
@@ -35,7 +36,7 @@ public class MailSendService {
     }
 
     //인증메일 보내기
-    public String sendAuthMail(String email) {
+    public void sendAuthMail(String email) {
         //6자리 난수 인증번호 생성
         String authKey = getKey(6);
 
@@ -60,6 +61,5 @@ public class MailSendService {
             e.printStackTrace();
         }
 
-        return authKey;
     }
 }

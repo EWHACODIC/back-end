@@ -1,4 +1,4 @@
-package ewhacodic.demo.domain;
+/*package ewhacodic.demo.domain;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -87,3 +87,4 @@ public class Qna{
     }
 }
 
+*/

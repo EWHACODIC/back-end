@@ -1,4 +1,4 @@
-package ewhacodic.demo.rankMember;
+/*package ewhacodic.demo.rankMember;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,3 +50,4 @@ public class Member implements Serializable {
         this.createDate = createDate;
     }
 }
+*/

@@ -1,4 +1,4 @@
-package ewhacodic.demo.domain;
+/*package ewhacodic.demo.domain;
 
 import ewhacodic.demo.dto.BoardCommentDto;
 import lombok.Builder;
@@ -63,5 +63,5 @@ public class QnaComment {
     }
 }
 
-
+*/
 

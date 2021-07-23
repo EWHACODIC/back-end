@@ -8,17 +8,19 @@ public class UserInfoDto {
     private String userName;
     private String password;
     private String auth;
-    String email=userName+"@ewhain.net"; //그냥
+    private String email;
+    public UserInfoDto(String userName, String email, String password, String auth) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.auth = auth;
+    }
 
-    public static String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public static String getAuthKey() {
+   // public String getAuthKey() { }
 
-    }
-
-    public static void setAuthKey(String authKey) {
-
-    }
+    //public static void setAuthKey(String authKey) { }
 }
