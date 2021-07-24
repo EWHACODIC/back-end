@@ -148,14 +148,6 @@ public class BoardController {
         return boardService.searchPostsByTag(tag);
     }
 
-    @GetMapping("/tag/{userCode}")
-    public Set<Long> getUserTag(@PathVariable Long userCode) {
-        return userService.getUserTagIds(userCode);
-    }
 
-    @GetMapping("/tag/dto/{userCode}")
-    public Set<TagDto> getTagDto(@PathVariable Long userCode) {
-        return userService.getUserTagDtos(userCode);
-    }
 
 }

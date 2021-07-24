@@ -28,7 +28,7 @@ public class QUserInfo extends EntityPathBase<UserInfo> {
 
     public final SetPath<Long, NumberPath<Long>> tagIds = this.<Long, NumberPath<Long>>createSet("tagIds", Long.class, NumberPath.class, PathInits.DIRECT2);
 
-    public final StringPath userId = createString("userId");
+    public final StringPath userName = createString("userName");
 
     public QUserInfo(String variable) {
         super(UserInfo.class, forVariable(variable));

@@ -1,24 +1,14 @@
 ewhacodic/demo/DemoApplication.java
  ewhacodic.demo.DemoApplication
-ewhacodic/demo/domain/QCommunity.java
- ewhacodic.demo.domain.QCommunity
+ewhacodic/demo/dto/UserTagDto.java
+ ewhacodic.demo.dto.UserTagDto
 ewhacodic/demo/domain/BoardComment.java
  ewhacodic.demo.domain.BoardComment
  ewhacodic.demo.domain.BoardComment$BoardCommentBuilder
 ewhacodic/demo/service/UserService.java
  ewhacodic.demo.service.UserService
-ewhacodic/demo/domain/Community.java
- ewhacodic.demo.domain.Community
- ewhacodic.demo.domain.Community$CommunityBuilder
 ewhacodic/demo/domain/QBoard.java
  ewhacodic.demo.domain.QBoard
-ewhacodic/demo/service/QnaService.java
- ewhacodic.demo.service.QnaService
-ewhacodic/demo/domain/TechComment.java
- ewhacodic.demo.domain.TechComment
- ewhacodic.demo.domain.TechComment$TechCommentBuilder
-ewhacodic/demo/service/BoardService.java
- ewhacodic.demo.service.BoardService
 ewhacodic/demo/repository/BoardCommentRepository.java
  ewhacodic.demo.repository.BoardCommentRepository
 ewhacodic/demo/config/WebSecurityConfig.java
@@ -26,66 +16,33 @@ ewhacodic/demo/config/WebSecurityConfig.java
 ewhacodic/demo/dto/BoardDto.java
  ewhacodic.demo.dto.BoardDto
  ewhacodic.demo.dto.BoardDto$BoardDtoBuilder
-ewhacodic/demo/dto/BoardListDto.java
- ewhacodic.demo.dto.BoardListDto
- ewhacodic.demo.dto.BoardListDto$BoardListDtoBuilder
-ewhacodic/demo/config/MvcConfig.java
- ewhacodic.demo.config.MvcConfig
+ewhacodic/demo/service/TagService.java
+ ewhacodic.demo.service.TagService
 ewhacodic/demo/domain/QnaComment.java
  ewhacodic.demo.domain.QnaComment
  ewhacodic.demo.domain.QnaComment$QnaCommentBuilder
-ewhacodic/demo/repository/QnaRepository.java
- ewhacodic.demo.repository.QnaRepository
 ewhacodic/demo/domain/QBoardComment.java
  ewhacodic.demo.domain.QBoardComment
 ewhacodic/demo/repository/TechCommentRepository.java
  ewhacodic.demo.repository.TechCommentRepository
-ewhacodic/demo/repository/CommunityCommentRepository.java
- ewhacodic.demo.repository.CommunityCommentRepository
-ewhacodic/demo/domain/CommunityComment.java
- ewhacodic.demo.domain.CommunityComment
- ewhacodic.demo.domain.CommunityComment$CommunityCommentBuilder
 ewhacodic/demo/repository/QnaCommentRepository.java
  ewhacodic.demo.repository.QnaCommentRepository
-ewhacodic/demo/domain/Qna.java
- ewhacodic.demo.domain.Qna
- ewhacodic.demo.domain.Qna$QnaBuilder
 ewhacodic/demo/controller/UserController.java
  ewhacodic.demo.controller.UserController
-ewhacodic/demo/repository/BoardRepository.java
- ewhacodic.demo.repository.BoardRepository
-ewhacodic/demo/domain/QTech.java
- ewhacodic.demo.domain.QTech
-ewhacodic/demo/controller/BoardController.java
- ewhacodic.demo.controller.BoardController
 ewhacodic/demo/repository/UserRepository.java
  ewhacodic.demo.repository.UserRepository
-ewhacodic/demo/repository/TechRepository.java
- ewhacodic.demo.repository.TechRepository
 ewhacodic/demo/domain/UserInfo.java
  ewhacodic.demo.domain.UserInfo
  ewhacodic.demo.domain.UserInfo$UserInfoBuilder
 ewhacodic/demo/repository/CommunityRepository.java
  ewhacodic.demo.repository.CommunityRepository
-ewhacodic/demo/service/TechService.java
- ewhacodic.demo.service.TechService
-ewhacodic/demo/dto/BoardCommentDto.java
- ewhacodic.demo.dto.BoardCommentDto
-ewhacodic/demo/domain/QCommunityComment.java
- ewhacodic.demo.domain.QCommunityComment
 ewhacodic/demo/service/CommunityService.java
  ewhacodic.demo.service.CommunityService
-ewhacodic/demo/config/SecurityMessageConfig.java
- ewhacodic.demo.config.SecurityMessageConfig
-ewhacodic/demo/dto/UserInfoDto.java
- ewhacodic.demo.dto.UserInfoDto
 ewhacodic/demo/domain/Tech.java
  ewhacodic.demo.domain.Tech
  ewhacodic.demo.domain.Tech$TechBuilder
 ewhacodic/demo/domain/QUserInfo.java
  ewhacodic.demo.domain.QUserInfo
-ewhacodic/demo/domain/QTechComment.java
- ewhacodic.demo.domain.QTechComment
 ewhacodic/demo/controller/QnaController.java
  ewhacodic.demo.controller.QnaController
 ewhacodic/demo/controller/CommunityController.java
@@ -97,11 +54,65 @@ ewhacodic/demo/domain/Board.java
  ewhacodic.demo.domain.Board$BoardBuilder
 ewhacodic/demo/domain/QQna.java
  ewhacodic.demo.domain.QQna
-ewhacodic/demo/controller/TechController.java
- ewhacodic.demo.controller.TechController
-ewhacodic/demo/domain/QTag.java
- ewhacodic.demo.domain.QTag
+ewhacodic/demo/dto/TagDto.java
+ ewhacodic.demo.dto.TagDto
+ ewhacodic.demo.dto.TagDto$TagDtoBuilder
 ewhacodic/demo/domain/Tag.java
  ewhacodic.demo.domain.Tag
-ewhacodic/demo/enums/Tag.java
- ewhacodic.demo.enums.Tag
+ewhacodic/demo/domain/QTag.java
+ ewhacodic.demo.domain.QTag
+ewhacodic/demo/domain/QCommunity.java
+ ewhacodic.demo.domain.QCommunity
+ewhacodic/demo/domain/Community.java
+ ewhacodic.demo.domain.Community
+ ewhacodic.demo.domain.Community$CommunityBuilder
+ewhacodic/demo/service/QnaService.java
+ ewhacodic.demo.service.QnaService
+ewhacodic/demo/domain/TechComment.java
+ ewhacodic.demo.domain.TechComment
+ ewhacodic.demo.domain.TechComment$TechCommentBuilder
+ewhacodic/demo/service/BoardService.java
+ ewhacodic.demo.service.BoardService
+ewhacodic/demo/repository/TagRepository.java
+ ewhacodic.demo.repository.TagRepository
+ewhacodic/demo/dto/BoardListDto.java
+ ewhacodic.demo.dto.BoardListDto
+ ewhacodic.demo.dto.BoardListDto$BoardListDtoBuilder
+ewhacodic/demo/config/MvcConfig.java
+ ewhacodic.demo.config.MvcConfig
+ewhacodic/demo/repository/QnaRepository.java
+ ewhacodic.demo.repository.QnaRepository
+ewhacodic/demo/repository/CommunityCommentRepository.java
+ ewhacodic.demo.repository.CommunityCommentRepository
+ewhacodic/demo/domain/CommunityComment.java
+ ewhacodic.demo.domain.CommunityComment
+ ewhacodic.demo.domain.CommunityComment$CommunityCommentBuilder
+ewhacodic/demo/domain/Qna.java
+ ewhacodic.demo.domain.Qna
+ ewhacodic.demo.domain.Qna$QnaBuilder
+ewhacodic/demo/repository/BoardRepository.java
+ ewhacodic.demo.repository.BoardRepository
+ewhacodic/demo/domain/QTech.java
+ ewhacodic.demo.domain.QTech
+ewhacodic/demo/controller/TechController.java
+ ewhacodic.demo.controller.TechController
+ewhacodic/demo/repository/TechRepository.java
+ ewhacodic.demo.repository.TechRepository
+ewhacodic/demo/service/TechService.java
+ ewhacodic.demo.service.TechService
+ewhacodic/demo/dto/BoardCommentDto.java
+ ewhacodic.demo.dto.BoardCommentDto
+ewhacodic/demo/domain/QCommunityComment.java
+ ewhacodic.demo.domain.QCommunityComment
+ewhacodic/demo/config/SecurityMessageConfig.java
+ ewhacodic.demo.config.SecurityMessageConfig
+ewhacodic/demo/dto/UserInfoDto.java
+ ewhacodic.demo.dto.UserInfoDto
+ewhacodic/demo/domain/QTechComment.java
+ ewhacodic.demo.domain.QTechComment
+ewhacodic/demo/dto/BoardTagDto.java
+ ewhacodic.demo.dto.BoardTagDto
+ewhacodic/demo/controller/BoardController.java
+ ewhacodic.demo.controller.BoardController
+ewhacodic/demo/controller/TagController.java
+ ewhacodic.demo.controller.TagController

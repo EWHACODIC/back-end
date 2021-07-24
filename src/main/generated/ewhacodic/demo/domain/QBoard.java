@@ -34,7 +34,9 @@ public class QBoard extends EntityPathBase<Board> {
 
     public final NumberPath<Long> recommend = createNumber("recommend", Long.class);
 
-    public final StringPath tag = createString("tag");
+    public final StringPath tag1 = createString("tag1");
+
+    public final StringPath tag2 = createString("tag2");
 
     public final StringPath title = createString("title");
 
