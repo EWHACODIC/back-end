@@ -22,8 +22,6 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
     }
 
-
-    //추후에 로그인한 유저만 들어가게 하기위해서는 "/api/**" 이거 위치 hasRole 한테 옮기기
     @Override
     protected void configure(HttpSecurity http) throws Exception { // http 관련 인증 설정
         http
@@ -48,7 +46,6 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true) // 세션 날리기
         ;
     }
-
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception { // 필요한 정보들을 가져오는 곳
         auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());

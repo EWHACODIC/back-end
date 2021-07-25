@@ -1,2 +1,4 @@
+ewhacodic/demo/Service/GithubServiceTest.java
+ ewhacodic.demo.Service.GithubServiceTest
 ewhacodic/demo/DemoApplicationTests.java
  ewhacodic.demo.DemoApplicationTests
