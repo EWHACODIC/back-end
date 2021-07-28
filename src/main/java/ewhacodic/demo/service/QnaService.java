@@ -169,4 +169,8 @@ public class QnaService {
     public void deleteComment(Long commentId, Long postId) {
         qnaCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
     }
+
+    public long totalPosts(List<BoardListDto> boardListDtos){
+        return boardListDtos.stream().count();
+    }
 }

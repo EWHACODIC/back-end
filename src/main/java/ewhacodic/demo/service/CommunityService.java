@@ -169,4 +169,8 @@ public class CommunityService {
     public void deleteComment(Long commentId, Long postId) {
         communityCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
     }
+
+    public long totalPosts(List<BoardListDto> boardListDtos){
+        return boardListDtos.stream().count();
+    }
 }

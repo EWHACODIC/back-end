@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/tech")
 public class TechController {
     @Autowired
@@ -134,5 +135,10 @@ public class TechController {
     @GetMapping("/list/key")
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
         return techService.searchPosts(keyword);
+    }
+
+    @GetMapping("/list/total")
+    public long totalPosts(@RequestBody List<BoardListDto> boardListDtos){
+        return techService.totalPosts(boardListDtos);
     }
 }

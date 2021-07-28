@@ -169,4 +169,8 @@ public class TechService {
     public void deleteComment(Long commentId, Long postId) {
         techCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
     }
+
+    public long totalPosts(List<BoardListDto> boardListDtos){
+        return boardListDtos.stream().count();
+    }
 }

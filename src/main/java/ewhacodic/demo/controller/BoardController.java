@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/post")
 public class BoardController {
 
@@ -149,6 +150,11 @@ public class BoardController {
     @GetMapping("/list/tag")
     public List<BoardListDto> getBoardListByTag(@RequestParam String tag) {
         return boardService.searchPostsByTag(tag);
+    }
+
+    @GetMapping("/list/total")
+    public long totalPosts(@RequestBody List<BoardListDto> boardListDtos){
+        return boardService.totalPosts(boardListDtos);
     }
 
     /*@GetMapping("/tag/{userCode}")
