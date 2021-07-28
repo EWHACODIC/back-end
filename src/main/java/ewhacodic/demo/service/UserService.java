@@ -3,6 +3,7 @@ package ewhacodic.demo.service;
 import ewhacodic.demo.domain.UserInfo;
 import ewhacodic.demo.dto.TagDto;
 import ewhacodic.demo.dto.UserInfoDto;
+import ewhacodic.demo.dto.UserLikePostDto;
 import ewhacodic.demo.dto.UserTagDto;
 import ewhacodic.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,11 @@ public class UserService implements UserDetailsService {
         UserInfo userInfo = userRepository.findOneByCode(userCode);
         Set<Long> tagIds = userInfo.getTagIds();
         return tagIds.stream().map(tagService::of).collect(Collectors.toSet());
+    }
+
+    public UserLikePostDto getUserLiktPostList(Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
+        return UserLikePostDto.of(userInfo);
     }
 
     // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현

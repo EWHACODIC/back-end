@@ -1,8 +1,10 @@
 package ewhacodic.demo.controller;
 
 import ewhacodic.demo.dto.TagDto;
+import ewhacodic.demo.dto.UserLikePostDto;
 import ewhacodic.demo.service.TagService;
 import ewhacodic.demo.service.UserService;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.UserCredentialsDataSourceAdapter;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,17 +18,12 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/tag")
 public class TagController {
-    @Autowired
-    private TagService tagService;
-    private UserService userService;
+    private final TagService tagService;
+    private final UserService userService;
 
     public TagController(TagService tagService, UserService userService) {
         this.tagService = tagService;
         this.userService = userService;
-    }
-
-    public TagController(TagService tagService){
-        this.tagService = tagService;
     }
 
     //전체 태그 불러오기
@@ -43,5 +40,11 @@ public class TagController {
     @GetMapping("/dto/{userCode}")
     public Set<TagDto> getTagDto(@PathVariable Long userCode) {
         return userService.getUserTagDtos(userCode);
+    }
+
+    //UserController template error 문제로 임시로 여기에 위치시켰습니다.
+    @GetMapping("/user/post/{userCode}")
+    public UserLikePostDto getUserLikeList(@PathVariable Long userCode) {
+        return userService.getUserLiktPostList(userCode);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,12 +44,64 @@ public class UserInfo implements UserDetails {
     @Column(name = "tag_ids", nullable = false)
     private Set<Long> tagIds;
 
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "board_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "board_ids", nullable = false)
+    private Set<Long> boardIds;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "community_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "community_ids", nullable = false)
+    private Set<Long> communityIds;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "qna_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "qna_ids", nullable = false)
+    private Set<Long> qnaIds;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "tech_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "tech_ids", nullable = false)
+    private Set<Long> techIds;
+
     @Builder
-    public UserInfo(String userName, String password, String auth) {
+    public UserInfo(
+            String userName,
+            String password,
+            String auth,
+            Set<Long> tagIds,
+            Set<Long> communityIds,
+            Set<Long> qnaIds,
+            Set<Long> techIds
+    ) {
         this.userName = userName;
         this.password = password;
         this.auth = auth;
         this.tagIds = tagIds;
+        this.communityIds = communityIds;
+        this.qnaIds = qnaIds;
+        this.techIds = techIds;
     }
 
     // 사용자의 권한을 콜렉션 형태로 반환

@@ -22,11 +22,19 @@ public class QUserInfo extends EntityPathBase<UserInfo> {
 
     public final StringPath auth = createString("auth");
 
+    public final SetPath<Long, NumberPath<Long>> boardIds = this.<Long, NumberPath<Long>>createSet("boardIds", Long.class, NumberPath.class, PathInits.DIRECT2);
+
     public final NumberPath<Long> code = createNumber("code", Long.class);
+
+    public final SetPath<Long, NumberPath<Long>> communityIds = this.<Long, NumberPath<Long>>createSet("communityIds", Long.class, NumberPath.class, PathInits.DIRECT2);
 
     public final StringPath password = createString("password");
 
+    public final SetPath<Long, NumberPath<Long>> qnaIds = this.<Long, NumberPath<Long>>createSet("qnaIds", Long.class, NumberPath.class, PathInits.DIRECT2);
+
     public final SetPath<Long, NumberPath<Long>> tagIds = this.<Long, NumberPath<Long>>createSet("tagIds", Long.class, NumberPath.class, PathInits.DIRECT2);
+
+    public final SetPath<Long, NumberPath<Long>> techIds = this.<Long, NumberPath<Long>>createSet("techIds", Long.class, NumberPath.class, PathInits.DIRECT2);
 
     public final StringPath userName = createString("userName");
 
