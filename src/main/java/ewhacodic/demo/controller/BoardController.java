@@ -5,7 +5,10 @@ import ewhacodic.demo.domain.BoardComment;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
+import ewhacodic.demo.dto.TagDto;
+import ewhacodic.demo.dto.TagDto;
 import ewhacodic.demo.service.BoardService;
+import ewhacodic.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/post")
@@ -23,9 +27,11 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+    private UserService userService;
 
-    public BoardController(BoardService boardService){
+    public BoardController(BoardService boardService, UserService userService){
         this.boardService = boardService;
+        this.userService = userService;
     }
 
 //    //추천순 게시글 정렬
@@ -102,9 +108,9 @@ public class BoardController {
 
 
     //9. 게시글 추천수 증가
-    @PatchMapping(value="/{postId}/recommend")
-    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id){
-        boardService.updateBoardRecommend(id);
+    @PatchMapping(value="/{postId}/recommend/{userCode}")
+    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id, @PathVariable("userCode") Long userCode){
+        boardService.updateBoardRecommend(id, userCode);
 
         return ResponseEntity.ok("ok");
     }
@@ -136,10 +142,11 @@ public class BoardController {
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
         return boardService.searchPosts(keyword);
     }
-    /*@GetMapping("/list/key")
-    public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword, @PageableDefault(size=10) Pageable pageable) {
-        return boardService.searchPosts(keyword, pageable);
-    }*/
+
+    @GetMapping("/list/tag")
+    public List<BoardListDto> getBoardListByTag(@RequestParam String tag) {
+        return boardService.searchPostsByTag(tag);
+    }
 
 
 

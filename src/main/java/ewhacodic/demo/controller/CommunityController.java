@@ -106,9 +106,9 @@ public class CommunityController {
     }
 
     //9. 게시글 추천수 증가
-    @PatchMapping(value = "/{postId}/recommend")
-    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id) {
-        communityService.updateBoardRecommend(id);
+    @PatchMapping(value = "/{postId}/recommend/{userCode}")
+    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id, @PathVariable("userCode") Long userCode) {
+        communityService.updateBoardRecommend(id, userCode);
 
         return ResponseEntity.ok("ok");
     }
@@ -139,5 +139,10 @@ public class CommunityController {
     @GetMapping("/list/key")
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
         return communityService.searchPosts(keyword);
+    }
+
+    @GetMapping("/list/tag")
+    public List<BoardListDto> getBoardListByTag(@RequestParam String tag) {
+        return communityService.searchPostsByTag(tag);
     }
 }

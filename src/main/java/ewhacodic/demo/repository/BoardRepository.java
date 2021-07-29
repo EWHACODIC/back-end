@@ -14,6 +14,7 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findByTitleContaining(String keyword);
 
+    List<Board> findByTag1OrTag2(String tag1, String tag2);
 //    @Query("select u From Board order by u.recommend")
 //    List<Board> OrderByRecommend();
 //

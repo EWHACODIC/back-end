@@ -2,15 +2,15 @@ package ewhacodic.demo.service;
 
 import ewhacodic.demo.domain.Board;
 import ewhacodic.demo.domain.BoardComment;
+import ewhacodic.demo.domain.UserInfo;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.repository.BoardCommentRepository;
 import ewhacodic.demo.repository.BoardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import ewhacodic.demo.repository.UserRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,19 +18,23 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class BoardService {
-    @Autowired
-    private BoardRepository boardRepository;
-    private BoardCommentRepository boardCommentRepository;
+
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+    private final BoardCommentRepository boardCommentRepository;
 
     public BoardService(
+            UserRepository userRepository,
             BoardRepository boardRepository,
             BoardCommentRepository boardCommentRepository
     ) {
+        this.userRepository = userRepository;
         this.boardRepository = boardRepository;
         this.boardCommentRepository = boardCommentRepository;
     }
@@ -48,7 +52,8 @@ public class BoardService {
             selectBoard.setTitle(board.getTitle());
             selectBoard.setComments(board.getComments());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(board.getTag());
+            selectBoard.setTag1(board.getTag1());
+            selectBoard.setTag2(board.getTag2());
             selectBoard.setUserCode(board.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             boardRepository.save(selectBoard);
@@ -64,7 +69,8 @@ public class BoardService {
                 .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .tag(board.getTag())
+                .tag1(board.getTag1())
+                .tag2(board.getTag2())
                 .view(board.getView())
                 .userCode(board.getUserCode())
                 .createDate(board.getCreatedAt())
@@ -89,16 +95,26 @@ public class BoardService {
         return boardRepository.findAll(pageable).stream().map(BoardListDto::of).collect(Collectors.toList());
     }
 
-    public void updateBoardRecommend(Long id) {
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
+
         Optional<Board> boardDto = boardRepository.findById(id);
         boardDto.ifPresent(it -> {
             Board board = Board.updateRecommend(it);
+            userInfo.getBoardIds().add(board.getId());
             boardRepository.save(board);
+            userRepository.save(userInfo);
         });
     }
 
     public List<BoardListDto> searchPosts(String keyword) {
         List<Board> boardList = boardRepository.findByTitleContaining(keyword);
+
+        return boardList.stream().map(BoardListDto::of).collect(Collectors.toList());
+    }
+
+    public List<BoardListDto> searchPostsByTag(String tag){
+        List<Board> boardList = boardRepository.findByTag1OrTag2(tag, tag);
 
         return boardList.stream().map(BoardListDto::of).collect(Collectors.toList());
     }
@@ -124,7 +140,8 @@ public class BoardService {
                     .id(board.getId())
                     .title(board.getTitle())
                     .content(board.getContent())
-                    .tag(board.getTag())
+                    .tag1(board.getTag1())
+                    .tag2(board.getTag2())
                     .view(board.getView())
                     .recommend(board.getRecommend())
                     .userCode(board.getUserCode())

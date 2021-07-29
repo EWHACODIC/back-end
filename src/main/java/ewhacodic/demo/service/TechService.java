@@ -1,16 +1,14 @@
 package ewhacodic.demo.service;
 
-import ewhacodic.demo.domain.Qna;
-import ewhacodic.demo.domain.Tech;
-import ewhacodic.demo.domain.TechComment;
+import ewhacodic.demo.domain.*;
 import ewhacodic.demo.domain.Tech;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
+import ewhacodic.demo.repository.*;
 import ewhacodic.demo.repository.TechCommentRepository;
 import ewhacodic.demo.repository.TechRepository;
-import ewhacodic.demo.repository.TechCommentRepository;
-import ewhacodic.demo.repository.TechRepository;
+import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,15 +25,18 @@ import java.util.stream.Collectors;
 @Transactional
 public class TechService {
     @Autowired
-    private TechRepository techRepository;
-    private TechCommentRepository techCommentRepository;
+    private final TechRepository techRepository;
+    private final TechCommentRepository techCommentRepository;
+    private final UserRepository userRepository;
 
     public TechService(
             TechRepository techRepository,
-            TechCommentRepository techCommentRepository
+            TechCommentRepository techCommentRepository,
+            UserRepository userRepository
     ) {
         this.techRepository = techRepository;
         this.techCommentRepository = techCommentRepository;
+        this.userRepository = userRepository;
     }
 
     public void savePost(BoardDto boardDto) {
@@ -51,7 +52,8 @@ public class TechService {
             selectBoard.setTitle(tech.getTitle());
             selectBoard.setComments(tech.getComments());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(tech.getTag());
+            selectBoard.setTag1(tech.getTag1());
+            selectBoard.setTag2(tech.getTag2());
             selectBoard.setUserCode(tech.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             techRepository.save(selectBoard);
@@ -67,7 +69,8 @@ public class TechService {
                 .id(tech.getId())
                 .title(tech.getTitle())
                 .content(tech.getContent())
-                .tag(tech.getTag())
+                .tag1(tech.getTag1())
+                .tag2(tech.getTag2())
                 .view(tech.getView())
                 .userCode(tech.getUserCode())
                 .createDate(tech.getCreatedAt())
@@ -92,16 +95,25 @@ public class TechService {
         return techRepository.findAll(pageable).stream().map(BoardListDto::ofTech).collect(Collectors.toList());
     }
 
-    public void updateBoardRecommend(Long id) {
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
         Optional<Tech> boardDto = techRepository.findById(id);
         boardDto.ifPresent(it -> {
             Tech tech = Tech.updateRecommend(it);
+            userInfo.getTechIds().add(tech.getId());
             techRepository.save(tech);
+            userRepository.save(userInfo);
         });
     }
 
     public List<BoardListDto> searchPosts(String keyword) {
         List<Tech> boardList = techRepository.findByTitleContaining(keyword);
+
+        return boardList.stream().map(BoardListDto::ofTech).collect(Collectors.toList());
+    }
+
+    public List<BoardListDto> searchPostsByTag(String tag){
+        List<Tech> boardList = techRepository.findByTag1OrTag2(tag, tag);
 
         return boardList.stream().map(BoardListDto::ofTech).collect(Collectors.toList());
     }
@@ -127,7 +139,8 @@ public class TechService {
                     .id(tech.getId())
                     .title(tech.getTitle())
                     .content(tech.getContent())
-                    .tag(tech.getTag())
+                    .tag1(tech.getTag1())
+                    .tag2(tech.getTag2())
                     .view(tech.getView())
                     .recommend(tech.getRecommend())
                     .userCode(tech.getUserCode())

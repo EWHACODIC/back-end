@@ -4,10 +4,7 @@ import ewhacodic.demo.domain.*;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
-import ewhacodic.demo.repository.BoardCommentRepository;
-import ewhacodic.demo.repository.BoardRepository;
-import ewhacodic.demo.repository.QnaCommentRepository;
-import ewhacodic.demo.repository.QnaRepository;
+import ewhacodic.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,15 +21,18 @@ import java.util.stream.Collectors;
 @Transactional
 public class QnaService {
     @Autowired
-    private QnaRepository qnaRepository;
-    private QnaCommentRepository qnaCommentRepository;
+    private final QnaRepository qnaRepository;
+    private final QnaCommentRepository qnaCommentRepository;
+    private final UserRepository userRepository;
 
     public QnaService(
             QnaRepository qnaRepository,
-            QnaCommentRepository qnaCommentRepository
+            QnaCommentRepository qnaCommentRepository,
+            UserRepository userRepository
     ) {
         this.qnaRepository = qnaRepository;
         this.qnaCommentRepository = qnaCommentRepository;
+        this.userRepository = userRepository;
     }
 
     public void savePost(BoardDto boardDto) {
@@ -48,7 +48,8 @@ public class QnaService {
             selectBoard.setTitle(qna.getTitle());
             selectBoard.setComments(qna.getComments());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(qna.getTag());
+            selectBoard.setTag1(qna.getTag1());
+            selectBoard.setTag2(qna.getTag2());
             selectBoard.setUserCode(qna.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             qnaRepository.save(selectBoard);
@@ -64,7 +65,8 @@ public class QnaService {
                 .id(qna.getId())
                 .title(qna.getTitle())
                 .content(qna.getContent())
-                .tag(qna.getTag())
+                .tag1(qna.getTag1())
+                .tag2(qna.getTag2())
                 .view(qna.getView())
                 .userCode(qna.getUserCode())
                 .createDate(qna.getCreatedAt())
@@ -89,16 +91,39 @@ public class QnaService {
         return qnaRepository.findAll(pageable).stream().map(BoardListDto::ofQna).collect(Collectors.toList());
     }
 
-    public void updateBoardRecommend(Long id) {
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
         Optional<Qna> boardDto = qnaRepository.findById(id);
         boardDto.ifPresent(it -> {
             Qna qna = Qna.updateRecommend(it);
+            userInfo.getQnaIds().add(qna.getId());
             qnaRepository.save(qna);
+            userRepository.save(userInfo);
         });
     }
 
+    /*
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
+
+        Optional<Board> boardDto = boardRepository.findById(id);
+        boardDto.ifPresent(it -> {
+            Board board = Board.updateRecommend(it);
+            userInfo.getBoardIds().add(board.getId());
+            boardRepository.save(board);
+            userRepository.save(userInfo);
+        });
+    }
+     */
+
     public List<BoardListDto> searchPosts(String keyword) {
         List<Qna> boardList = qnaRepository.findByTitleContaining(keyword);
+
+        return boardList.stream().map(BoardListDto::ofQna).collect(Collectors.toList());
+    }
+
+    public List<BoardListDto> searchPostsByTag(String tag){
+        List<Qna> boardList = qnaRepository.findByTag1OrTag2(tag, tag);
 
         return boardList.stream().map(BoardListDto::ofQna).collect(Collectors.toList());
     }
@@ -124,7 +149,8 @@ public class QnaService {
                     .id(qna.getId())
                     .title(qna.getTitle())
                     .content(qna.getContent())
-                    .tag(qna.getTag())
+                    .tag1(qna.getTag1())
+                    .tag2(qna.getTag2())
                     .view(qna.getView())
                     .recommend(qna.getRecommend())
                     .userCode(qna.getUserCode())

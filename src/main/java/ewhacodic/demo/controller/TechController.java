@@ -104,9 +104,9 @@ public class TechController {
     }
 
     //9. 게시글 추천수 증가
-    @PatchMapping(value = "/{postId}/recommend")
-    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id) {
-        techService.updateBoardRecommend(id);
+    @PatchMapping(value = "/{postId}/recommend/{userCode}")
+    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id, @PathVariable("userCode") Long userCode) {
+        techService.updateBoardRecommend(id, userCode);
 
         return ResponseEntity.ok("ok");
     }

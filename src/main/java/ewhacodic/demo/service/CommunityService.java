@@ -1,16 +1,10 @@
 package ewhacodic.demo.service;
 
-import ewhacodic.demo.domain.Board;
-import ewhacodic.demo.domain.BoardComment;
-import ewhacodic.demo.domain.Community;
-import ewhacodic.demo.domain.CommunityComment;
+import ewhacodic.demo.domain.*;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
-import ewhacodic.demo.repository.BoardCommentRepository;
-import ewhacodic.demo.repository.BoardRepository;
-import ewhacodic.demo.repository.CommunityCommentRepository;
-import ewhacodic.demo.repository.CommunityRepository;
+import ewhacodic.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,13 +23,16 @@ public class CommunityService {
     @Autowired
     private CommunityRepository communityRepository;
     private CommunityCommentRepository communityCommentRepository;
+    private UserRepository userRepository;
 
     public CommunityService(
             CommunityRepository communityRepository,
-            CommunityCommentRepository communityCommentRepository
+            CommunityCommentRepository communityCommentRepository,
+            UserRepository userRepository
     ) {
         this.communityRepository = communityRepository;
         this.communityCommentRepository = communityCommentRepository;
+        this.userRepository = userRepository;
     }
 
     public void savePost(BoardDto boardDto) {
@@ -51,7 +48,8 @@ public class CommunityService {
             selectBoard.setTitle(community.getTitle());
             selectBoard.setComments(community.getComments());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(community.getTag());
+            selectBoard.setTag1(community.getTag1());
+            selectBoard.setTag2(community.getTag2());
             selectBoard.setUserCode(community.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             communityRepository.save(selectBoard);
@@ -67,7 +65,8 @@ public class CommunityService {
                 .id(community.getId())
                 .title(community.getTitle())
                 .content(community.getContent())
-                .tag(community.getTag())
+                .tag1(community.getTag1())
+                .tag2(community.getTag2())
                 .view(community.getView())
                 .userCode(community.getUserCode())
                 .createDate(community.getCreatedAt())
@@ -92,16 +91,25 @@ public class CommunityService {
         return communityRepository.findAll(pageable).stream().map(BoardListDto::ofCommunity).collect(Collectors.toList());
     }
 
-    public void updateBoardRecommend(Long id) {
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
         Optional<Community> boardDto = communityRepository.findById(id);
         boardDto.ifPresent(it -> {
             Community community = Community.updateRecommend(it);
+            userInfo.getCommunityIds().add(community.getId());
             communityRepository.save(community);
+            userRepository.save(userInfo);
         });
     }
 
     public List<BoardListDto> searchPosts(String keyword) {
         List<Community> boardList = communityRepository.findByTitleContaining(keyword);
+
+        return boardList.stream().map(BoardListDto::ofCommunity).collect(Collectors.toList());
+    }
+
+    public List<BoardListDto> searchPostsByTag(String tag){
+        List<Community> boardList = communityRepository.findByTag1OrTag2(tag, tag);
 
         return boardList.stream().map(BoardListDto::ofCommunity).collect(Collectors.toList());
     }
@@ -127,7 +135,8 @@ public class CommunityService {
                     .id(community.getId())
                     .title(community.getTitle())
                     .content(community.getContent())
-                    .tag(community.getTag())
+                    .tag1(community.getTag1())
+                    .tag2(community.getTag2())
                     .view(community.getView())
                     .recommend(community.getRecommend())
                     .userCode(community.getUserCode())
