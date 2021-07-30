@@ -3,6 +3,7 @@ package ewhacodic.demo.service;
 import ewhacodic.demo.domain.UserInfo;
 import ewhacodic.demo.dto.TagDto;
 import ewhacodic.demo.dto.UserInfoDto;
+import ewhacodic.demo.dto.UserLikePostDto;
 import ewhacodic.demo.dto.UserTagDto;
 import ewhacodic.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class UserService implements UserDetailsService {
                 .password(infoDto.getPassword()).build()).getCode();
     }
 
-   /* public void updateUserTag(Long userCode, UserTagDto userTagDto) {
+    public void updateUserTag(Long userCode, UserTagDto userTagDto) {
        UserInfo userInfo = userRepository.findOneByCode(userCode);
        userInfo.setTagIds(userTagDto.getTagIds());
        userRepository.save(userInfo);
@@ -47,7 +48,12 @@ public class UserService implements UserDetailsService {
         UserInfo userInfo = userRepository.findOneByCode(userCode);
         Set<Long> tagIds = userInfo.getTagIds();
         return tagIds.stream().map(tagService::of).collect(Collectors.toSet());
-    }*/
+    }
+
+    public UserLikePostDto getUserLiktPostList(Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
+        return UserLikePostDto.of(userInfo);
+    }
 
     // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현
     @Override // 기본적인 반환 타입은 UserDetails, UserDetails를 상속받은 User로 반환 타입 지정 (자동으로 다운 캐스팅됨)

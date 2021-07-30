@@ -1,6 +1,7 @@
 package ewhacodic.demo.controller;
 
 import ewhacodic.demo.dto.UserInfoDto;
+import ewhacodic.demo.dto.UserLikePostDto;
 import ewhacodic.demo.dto.UserTagDto;
 import ewhacodic.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,9 @@ public class UserController {
         return "redirect:/login";
     }
 
-    /*@PostMapping("/api/user/tag/{userCode}")
+    @PostMapping("/api/user/tag/{userCode}")
     public ResponseEntity<String> updateUserTag(@PathVariable Long userCode, @RequestBody UserTagDto userTagDto) {
         userService.updateUserTag(userCode, userTagDto);
         return ResponseEntity.ok("Ok");
-    }*/
+    }
 }

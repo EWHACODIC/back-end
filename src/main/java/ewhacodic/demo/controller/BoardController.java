@@ -6,6 +6,7 @@ import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.dto.TagDto;
+import ewhacodic.demo.dto.TagDto;
 import ewhacodic.demo.service.BoardService;
 import ewhacodic.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,23 +35,23 @@ public class BoardController {
         this.userService = userService;
     }
 
-    //추천순 게시글 정렬
-    @GetMapping(value="/order/recommend")
-    public List<BoardDto> orderByRecommend(){
-        return boardService.getBoardList("recommend");
-    }
-
-    //조회순 게시글 정렬
-    @GetMapping(value="/order/view")
-    public List<BoardDto> orderByView(){
-        return boardService.getBoardList("view");
-    }
-
-    //최신순 게시글 정렬
-    @GetMapping(value="/order/latest")
-    public List<BoardDto> orderByLatest(){
-        return boardService.getBoardList("latest");
-    }
+//    //추천순 게시글 정렬
+//    @GetMapping(value="/order/recommend")
+//    public List<BoardDto> orderByRecommend(){
+//        return boardService.getBoardList("recommend");
+//    }
+//
+//    //조회순 게시글 정렬
+//    @GetMapping(value="/order/view")
+//    public List<BoardDto> orderByView(){
+//        return boardService.getBoardList("view");
+//    }
+//
+//    //최신순 게시글 정렬
+//    @GetMapping(value="/order/latest")
+//    public List<BoardDto> orderByLatest(){
+//        return boardService.getBoardList("latest");
+//    }
 
     //댓글순 게시글 정렬
     @GetMapping(value="/order/reply")
@@ -79,16 +80,9 @@ public class BoardController {
 
     // 5. 게시글 목록 조회
     @GetMapping("/list")
-    public List<BoardListDto> getBoardList() {
-        return boardService.getBoardListDto();
+    public List<BoardListDto> getBoardList(Pageable pageable) {
+        return boardService.getBoardListDto(pageable);
     }
-
-    /*//+
-    @GetMapping("/list/page")
-    public Page<BoardDto> getBoardListByPage(@PageableDefault(size=10) Pageable pageable, PagedResourcesAssembler assmebler){
-        List<BoardListDto> boardListDto = boardService.getBoardListDto(pageable);
-        return
-    }*/
 
 
     //6. 게시글 작성
@@ -114,9 +108,9 @@ public class BoardController {
     }
 
     //9. 게시글 추천수 증가
-    @PatchMapping(value="/{postId}/recommend")
-    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id){
-        boardService.updateBoardRecommend(id);
+    @PatchMapping(value="/{postId}/recommend/{userCode}")
+    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id, @PathVariable("userCode") Long userCode){
+        boardService.updateBoardRecommend(id, userCode);
 
         return ResponseEntity.ok("ok");
     }
@@ -125,6 +119,7 @@ public class BoardController {
     @PostMapping("/{postId}/comment")
     public ResponseEntity<String> saveComment(@PathVariable Long postId, @RequestBody BoardCommentDto boardCommentDto) {
         boardService.saveComment(boardCommentDto, postId);
+        boardService.updateCommentCount(postId);
         return ResponseEntity.ok("ok");
     }
 
@@ -139,6 +134,7 @@ public class BoardController {
     @DeleteMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
         boardService.deleteComment(commentId, postId);
+        boardService.updateCommentCount(postId);
         return ResponseEntity.ok("ok");
     }
 
@@ -162,8 +158,5 @@ public class BoardController {
         return userService.getUserTagIds(userCode);
     }
 
-    @GetMapping("/tag/dto/{userCode}")
-    public Set<TagDto> getTagDto(@PathVariable Long userCode) {
-        return userService.getUserTagDtos(userCode);
-    }*/
+
 }

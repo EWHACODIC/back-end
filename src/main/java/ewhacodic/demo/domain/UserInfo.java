@@ -1,9 +1,7 @@
 package ewhacodic.demo.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import ewhacodic.demo.dto.UserTagDto;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,12 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity  //클래스와 테이블 매핑
 @Table(name="USER") //USER 테이블과 매핑
 @Getter
+@Setter
 public class UserInfo implements UserDetails {
 
     @Id
@@ -24,11 +24,8 @@ public class UserInfo implements UserDetails {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long code;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "id", unique = true) // @ewhain.net
     private String userName;
-
-    @Column(name = "id") // @ewhain.net
-    private String id;
 
     @Column(name = "password")
     private String password;
@@ -36,12 +33,75 @@ public class UserInfo implements UserDetails {
     @Column(name = "auth")
     private String auth;
 
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "tag_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "tag_ids", nullable = false)
+    private Set<Long> tagIds;
+
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "board_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "board_ids", nullable = false)
+    private Set<Long> boardIds;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "community_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "community_ids", nullable = false)
+    private Set<Long> communityIds;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "qna_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "qna_ids", nullable = false)
+    private Set<Long> qnaIds;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "tech_ids",
+            joinColumns = {
+                    @JoinColumn(name = "user_code")
+            }
+    )
+    @Column(name = "tech_ids", nullable = false)
+    private Set<Long> techIds;
+
     @Builder
-    public UserInfo(String userName, String id, String password, String auth) {
+    public UserInfo(
+            String userName,
+            String password,
+            String auth,
+            Set<Long> tagIds,
+            Set<Long> communityIds,
+            Set<Long> qnaIds,
+            Set<Long> techIds
+    ) {
         this.userName = userName;
-        this.id = id;
         this.password = password;
         this.auth = auth;
+        this.tagIds = tagIds;
+        this.communityIds = communityIds;
+        this.qnaIds = qnaIds;
+        this.techIds = techIds;
     }
 
     // 사용자의 권한을 콜렉션 형태로 반환
@@ -60,7 +120,7 @@ public class UserInfo implements UserDetails {
     // 사용자의 이름 반환 (unique한 값)
     @Override
     public String getUsername() {
-        return id;
+        return userName;
     }
 
     // 사용자의 password를 반환

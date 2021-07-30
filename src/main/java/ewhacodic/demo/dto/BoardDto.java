@@ -22,6 +22,7 @@ public class BoardDto {
     private String tag2;
     private Long view;
     private Long recommend;
+    private Long commentCount;
     private Long userCode;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
@@ -35,6 +36,7 @@ public class BoardDto {
                 .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
+                .commentCount(commentCount)
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -51,6 +53,7 @@ public class BoardDto {
                 .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
+                .commentCount(commentCount)
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -67,6 +70,7 @@ public class BoardDto {
                 .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
+                .commentCount(commentCount)
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -83,6 +87,7 @@ public class BoardDto {
                 .tag2(tag2)
                 .view(view)
                 .recommend(recommend)
+                .commentCount(commentCount)
                 .userCode(userCode)
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
@@ -91,7 +96,7 @@ public class BoardDto {
     }
 
     @Builder
-    public BoardDto(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
+    public BoardDto(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend,  Long commentCount, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate){
         this.id = id;
         this.title = title;
         this.content = content;
@@ -99,6 +104,7 @@ public class BoardDto {
         this.tag2 = tag2;
         this.view = view;
         this.recommend = recommend;
+        this.commentCount = commentCount;
         this.userCode = userCode;
         this.createDate = createDate;
         this.modifiedDate = modifiedDate;

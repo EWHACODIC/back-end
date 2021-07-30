@@ -1,17 +1,16 @@
 package ewhacodic.demo.service;
 
-import ewhacodic.demo.domain.Board;
-import ewhacodic.demo.domain.Tech;
-import ewhacodic.demo.domain.TechComment;
+import ewhacodic.demo.domain.*;
 import ewhacodic.demo.domain.Tech;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
+import ewhacodic.demo.repository.*;
 import ewhacodic.demo.repository.TechCommentRepository;
 import ewhacodic.demo.repository.TechRepository;
-import ewhacodic.demo.repository.TechCommentRepository;
-import ewhacodic.demo.repository.TechRepository;
+import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +25,18 @@ import java.util.stream.Collectors;
 @Transactional
 public class TechService {
     @Autowired
-    private TechRepository techRepository;
-    private TechCommentRepository techCommentRepository;
+    private final TechRepository techRepository;
+    private final TechCommentRepository techCommentRepository;
+    private final UserRepository userRepository;
 
     public TechService(
             TechRepository techRepository,
-            TechCommentRepository techCommentRepository
+            TechCommentRepository techCommentRepository,
+            UserRepository userRepository
     ) {
         this.techRepository = techRepository;
         this.techCommentRepository = techCommentRepository;
+        this.userRepository = userRepository;
     }
 
     public void savePost(BoardDto boardDto) {
@@ -89,15 +91,18 @@ public class TechService {
         return techRepository.findById(id).get();
     }
 
-    public List<BoardListDto> getBoardListDto() {
-        return techRepository.findAll().stream().map(BoardListDto::ofTech).collect(Collectors.toList());
+    public List<BoardListDto> getBoardListDto(Pageable pageable) {
+        return techRepository.findAll(pageable).stream().map(BoardListDto::ofTech).collect(Collectors.toList());
     }
 
-    public void updateBoardRecommend(Long id) {
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
         Optional<Tech> boardDto = techRepository.findById(id);
         boardDto.ifPresent(it -> {
             Tech tech = Tech.updateRecommend(it);
+            userInfo.getTechIds().add(tech.getId());
             techRepository.save(tech);
+            userRepository.save(userInfo);
         });
     }
 
@@ -168,6 +173,12 @@ public class TechService {
 
     public void deleteComment(Long commentId, Long postId) {
         techCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
+    }
+
+    public Tech updateCommentCount(Long postId) {
+        Optional<Tech> tech = techRepository.findById(postId);
+        tech.ifPresent(Tech::renewCommentCount);
+        return tech.get();
     }
 
     public long totalPosts(List<BoardListDto> boardListDtos){

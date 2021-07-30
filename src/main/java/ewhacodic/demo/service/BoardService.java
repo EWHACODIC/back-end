@@ -2,15 +2,15 @@ package ewhacodic.demo.service;
 
 import ewhacodic.demo.domain.Board;
 import ewhacodic.demo.domain.BoardComment;
+import ewhacodic.demo.domain.UserInfo;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.repository.BoardCommentRepository;
 import ewhacodic.demo.repository.BoardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import ewhacodic.demo.repository.UserRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,14 +28,17 @@ import static java.util.stream.Collectors.toList;
 @Service
 @Transactional
 public class BoardService {
-    @Autowired
-    private BoardRepository boardRepository;
-    private BoardCommentRepository boardCommentRepository;
+
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+    private final BoardCommentRepository boardCommentRepository;
 
     public BoardService(
+            UserRepository userRepository,
             BoardRepository boardRepository,
             BoardCommentRepository boardCommentRepository
     ) {
+        this.userRepository = userRepository;
         this.boardRepository = boardRepository;
         this.boardCommentRepository = boardCommentRepository;
     }
@@ -91,15 +95,19 @@ public class BoardService {
         return boardRepository.findById(id).get();
     }
 
-    public List<BoardListDto> getBoardListDto() {
-        return boardRepository.findAll().stream().map(BoardListDto::of).collect(Collectors.toList());
+    public List<BoardListDto> getBoardListDto(Pageable pageable) {
+        return boardRepository.findAll(pageable).stream().map(BoardListDto::of).collect(Collectors.toList());
     }
 
-    public void updateBoardRecommend(Long id) {
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
+
         Optional<Board> boardDto = boardRepository.findById(id);
         boardDto.ifPresent(it -> {
             Board board = Board.updateRecommend(it);
+            userInfo.getBoardIds().add(board.getId());
             boardRepository.save(board);
+            userRepository.save(userInfo);
         });
     }
 
@@ -170,6 +178,13 @@ public class BoardService {
 
     public void deleteComment(Long commentId, Long postId) {
         boardCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
+    }
+
+
+    public Board updateCommentCount(Long postId) {
+        Optional<Board> board = boardRepository.findById(postId);
+        board.ifPresent(Board::renewCommentCount);
+        return board.get();
     }
 
     public long totalPosts(List<BoardListDto> boardListDtos){

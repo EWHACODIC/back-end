@@ -1,17 +1,12 @@
 package ewhacodic.demo.service;
 
-import ewhacodic.demo.domain.Board;
-import ewhacodic.demo.domain.BoardComment;
-import ewhacodic.demo.domain.Qna;
-import ewhacodic.demo.domain.QnaComment;
+import ewhacodic.demo.domain.*;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
-import ewhacodic.demo.repository.BoardCommentRepository;
-import ewhacodic.demo.repository.BoardRepository;
-import ewhacodic.demo.repository.QnaCommentRepository;
-import ewhacodic.demo.repository.QnaRepository;
+import ewhacodic.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +21,18 @@ import java.util.stream.Collectors;
 @Transactional
 public class QnaService {
     @Autowired
-    private QnaRepository qnaRepository;
-    private QnaCommentRepository qnaCommentRepository;
+    private final QnaRepository qnaRepository;
+    private final QnaCommentRepository qnaCommentRepository;
+    private final UserRepository userRepository;
 
     public QnaService(
             QnaRepository qnaRepository,
-            QnaCommentRepository qnaCommentRepository
+            QnaCommentRepository qnaCommentRepository,
+            UserRepository userRepository
     ) {
         this.qnaRepository = qnaRepository;
         this.qnaCommentRepository = qnaCommentRepository;
+        this.userRepository = userRepository;
     }
 
     public void savePost(BoardDto boardDto) {
@@ -89,17 +87,34 @@ public class QnaService {
         return qnaRepository.findById(id).get();
     }
 
-    public List<BoardListDto> getBoardListDto() {
-        return qnaRepository.findAll().stream().map(BoardListDto::ofQna).collect(Collectors.toList());
+    public List<BoardListDto> getBoardListDto(Pageable pageable) {
+        return qnaRepository.findAll(pageable).stream().map(BoardListDto::ofQna).collect(Collectors.toList());
     }
 
-    public void updateBoardRecommend(Long id) {
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
         Optional<Qna> boardDto = qnaRepository.findById(id);
         boardDto.ifPresent(it -> {
             Qna qna = Qna.updateRecommend(it);
+            userInfo.getQnaIds().add(qna.getId());
             qnaRepository.save(qna);
+            userRepository.save(userInfo);
         });
     }
+
+    /*
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
+
+        Optional<Board> boardDto = boardRepository.findById(id);
+        boardDto.ifPresent(it -> {
+            Board board = Board.updateRecommend(it);
+            userInfo.getBoardIds().add(board.getId());
+            boardRepository.save(board);
+            userRepository.save(userInfo);
+        });
+    }
+     */
 
     public List<BoardListDto> searchPosts(String keyword) {
         List<Qna> boardList = qnaRepository.findByTitleContaining(keyword);
@@ -168,6 +183,12 @@ public class QnaService {
 
     public void deleteComment(Long commentId, Long postId) {
         qnaCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
+    }
+
+    public Qna updateCommentCount(Long postId) {
+        Optional<Qna> qna = qnaRepository.findById(postId);
+        qna.ifPresent(Qna::renewCommentCount);
+        return qna.get();
     }
 
     public long totalPosts(List<BoardListDto> boardListDtos){

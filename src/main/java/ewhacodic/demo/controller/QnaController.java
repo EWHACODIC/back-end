@@ -10,6 +10,7 @@ import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.service.BoardService;
 import ewhacodic.demo.service.QnaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,23 +28,23 @@ public class QnaController {
         this.qnaService = qnaService;
     }
 
-    //추천순 게시글 정렬
-    @GetMapping(value="/order/recommend")
-    public List<BoardDto> orderByRecommend(){
-        return qnaService.getBoardList("recommend");
-    }
-
-    //조회순 게시글 정렬
-    @GetMapping(value="/order/view")
-    public List<BoardDto> orderByView(){
-        return qnaService.getBoardList("view");
-    }
-
-    //최신순 게시글 정렬
-    @GetMapping(value="/order/latest")
-    public List<BoardDto> orderByLatest(){
-        return qnaService.getBoardList("latest");
-    }
+//    //추천순 게시글 정렬
+//    @GetMapping(value="/order/recommend")
+//    public List<BoardDto> orderByRecommend(){
+//        return qnaService.getBoardList("recommend");
+//    }
+//
+//    //조회순 게시글 정렬
+//    @GetMapping(value="/order/view")
+//    public List<BoardDto> orderByView(){
+//        return qnaService.getBoardList("view");
+//    }
+//
+//    //최신순 게시글 정렬
+//    @GetMapping(value="/order/latest")
+//    public List<BoardDto> orderByLatest(){
+//        return qnaService.getBoardList("latest");
+//    }
 
     //댓글순 게시글 정렬
     @GetMapping(value="/order/reply")
@@ -72,8 +73,8 @@ public class QnaController {
 
     // 5. 게시글 목록 조회
     @GetMapping("/list")
-    public List<BoardListDto> getBoardList() {
-        return qnaService.getBoardListDto();
+    public List<BoardListDto> getBoardList(Pageable pageable) {
+        return qnaService.getBoardListDto(pageable);
     }
 
     /*//+
@@ -107,9 +108,9 @@ public class QnaController {
     }
 
     //9. 게시글 추천수 증가
-    @PatchMapping(value="/{postId}/recommend")
-    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id){
-        qnaService.updateBoardRecommend(id);
+    @PatchMapping(value="/{postId}/recommend/{userCode}")
+    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id, @PathVariable("userCode") Long userCode){
+        qnaService.updateBoardRecommend(id, userCode);
 
         return ResponseEntity.ok("ok");
     }
@@ -118,6 +119,7 @@ public class QnaController {
     @PostMapping("/{postId}/comment")
     public ResponseEntity<String> saveComment(@PathVariable Long postId, @RequestBody BoardCommentDto boardCommentDto) {
         qnaService.saveComment(boardCommentDto, postId);
+        qnaService.updateCommentCount(postId);
         return ResponseEntity.ok("ok");
     }
 
@@ -132,6 +134,7 @@ public class QnaController {
     @DeleteMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
         qnaService.deleteComment(commentId, postId);
+        qnaService.updateCommentCount(postId);
         return ResponseEntity.ok("ok");
     }
 

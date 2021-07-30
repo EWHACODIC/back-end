@@ -1,17 +1,12 @@
 package ewhacodic.demo.service;
 
-import ewhacodic.demo.domain.Board;
-import ewhacodic.demo.domain.BoardComment;
-import ewhacodic.demo.domain.Community;
-import ewhacodic.demo.domain.CommunityComment;
+import ewhacodic.demo.domain.*;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
 import ewhacodic.demo.dto.BoardListDto;
-import ewhacodic.demo.repository.BoardCommentRepository;
-import ewhacodic.demo.repository.BoardRepository;
-import ewhacodic.demo.repository.CommunityCommentRepository;
-import ewhacodic.demo.repository.CommunityRepository;
+import ewhacodic.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +23,16 @@ public class CommunityService {
     @Autowired
     private CommunityRepository communityRepository;
     private CommunityCommentRepository communityCommentRepository;
+    private UserRepository userRepository;
 
     public CommunityService(
             CommunityRepository communityRepository,
-            CommunityCommentRepository communityCommentRepository
+            CommunityCommentRepository communityCommentRepository,
+            UserRepository userRepository
     ) {
         this.communityRepository = communityRepository;
         this.communityCommentRepository = communityCommentRepository;
+        this.userRepository = userRepository;
     }
 
     public void savePost(BoardDto boardDto) {
@@ -89,15 +87,18 @@ public class CommunityService {
         return communityRepository.findById(id).get();
     }
 
-    public List<BoardListDto> getBoardListDto() {
-        return communityRepository.findAll().stream().map(BoardListDto::ofCommunity).collect(Collectors.toList());
+    public List<BoardListDto> getBoardListDto(Pageable pageable) {
+        return communityRepository.findAll(pageable).stream().map(BoardListDto::ofCommunity).collect(Collectors.toList());
     }
 
-    public void updateBoardRecommend(Long id) {
+    public void updateBoardRecommend(Long id, Long userCode) {
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
         Optional<Community> boardDto = communityRepository.findById(id);
         boardDto.ifPresent(it -> {
             Community community = Community.updateRecommend(it);
+            userInfo.getCommunityIds().add(community.getId());
             communityRepository.save(community);
+            userRepository.save(userInfo);
         });
     }
 
@@ -168,6 +169,12 @@ public class CommunityService {
 
     public void deleteComment(Long commentId, Long postId) {
         communityCommentRepository.deleteBoardCommentByIdAndPostId(commentId, postId);
+    }
+
+    public Community updateCommentCount(Long postId) {
+        Optional<Community> community = communityRepository.findById(postId);
+        community.ifPresent(Community::renewCommentCount);
+        return community.get();
     }
 
     public long totalPosts(List<BoardListDto> boardListDtos){

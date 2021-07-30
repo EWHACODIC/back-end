@@ -40,11 +40,14 @@ public class Community {
     @Column(name="recommend") // 추천수
     private Long recommend;
 
+    @Column(name="comment_count")
+    private Long commentCount;
+
     @Column(name="user_code") // 작성자 아이디
     private Long userCode;
 
     @OneToMany(fetch=FetchType.EAGER)
-    @JoinColumn(name="comment_id")
+    @JoinColumn(name="post_id")
     private List<CommunityComment> comments;
 
     @CreatedDate
@@ -56,13 +59,14 @@ public class Community {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Community(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public Community(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend, Long commentCount,Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag1 = tag1;
         this.tag2 = tag2;
         this.recommend = recommend;
+        this.commentCount = commentCount;
         this.view = view;
         this.userCode = userCode;
         this.createdAt = createdAt;
@@ -79,5 +83,10 @@ public class Community {
         community.setRecommend(recommend);
 
         return community;
+    }
+
+    public Community renewCommentCount(){
+        this.setCommentCount(this.getComments().stream().count());
+        return this;
     }
 }

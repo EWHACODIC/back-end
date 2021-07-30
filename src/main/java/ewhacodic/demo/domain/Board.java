@@ -11,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Setter
 @Getter
@@ -41,6 +42,9 @@ public class Board {
     @Column(name="recommend")
     private Long recommend;
 
+    @Column(name="comment_count")
+    private Long commentCount;
+
     @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="post_id")
     private List<BoardComment> comments;
@@ -57,19 +61,19 @@ public class Board {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Board(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public Board(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend,  Long commentCount,Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
         this.tag1 = tag1;
         this.tag2 = tag2;
         this.recommend = recommend;
+        this.commentCount = commentCount;
         this.view = view;
         this.userCode = userCode;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
-
 
     public void updateView(){
         this.view++;
@@ -82,4 +86,10 @@ public class Board {
 
         return board;
     }
+
+    public Board renewCommentCount(){
+        this.setCommentCount(this.getComments().stream().count());
+        return this;
+    }
+
 }

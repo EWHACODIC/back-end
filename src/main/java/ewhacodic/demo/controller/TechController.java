@@ -8,6 +8,7 @@ import ewhacodic.demo.dto.BoardListDto;
 import ewhacodic.demo.service.TechService;
 import ewhacodic.demo.service.TechService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,23 +25,23 @@ public class TechController {
         this.techService = techService;
     }
 
-    //추천순 게시글 정렬
-    @GetMapping(value = "/order/recommend")
-    public List<BoardDto> orderByRecommend() {
-        return techService.getBoardList("recommend");
-    }
-
-    //조회순 게시글 정렬
-    @GetMapping(value = "/order/view")
-    public List<BoardDto> orderByView() {
-        return techService.getBoardList("view");
-    }
-
-    //최신순 게시글 정렬
-    @GetMapping(value = "/order/latest")
-    public List<BoardDto> orderByLatest() {
-        return techService.getBoardList("latest");
-    }
+//    //추천순 게시글 정렬
+//    @GetMapping(value = "/order/recommend")
+//    public List<BoardDto> orderByRecommend() {
+//        return techService.getBoardList("recommend");
+//    }
+//
+//    //조회순 게시글 정렬
+//    @GetMapping(value = "/order/view")
+//    public List<BoardDto> orderByView() {
+//        return techService.getBoardList("view");
+//    }
+//
+//    //최신순 게시글 정렬
+//    @GetMapping(value = "/order/latest")
+//    public List<BoardDto> orderByLatest() {
+//        return techService.getBoardList("latest");
+//    }
 
     //댓글순 게시글 정렬
     @GetMapping(value = "/order/reply")
@@ -69,8 +70,8 @@ public class TechController {
 
     // 5. 게시글 목록 조회
     @GetMapping("/list")
-    public List<BoardListDto> getBoardList() {
-        return techService.getBoardListDto();
+    public List<BoardListDto> getBoardList(Pageable pageable) {
+        return techService.getBoardListDto(pageable);
     }
 
     /*//+
@@ -104,9 +105,9 @@ public class TechController {
     }
 
     //9. 게시글 추천수 증가
-    @PatchMapping(value = "/{postId}/recommend")
-    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id) {
-        techService.updateBoardRecommend(id);
+    @PatchMapping(value = "/{postId}/recommend/{userCode}")
+    public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id, @PathVariable("userCode") Long userCode) {
+        techService.updateBoardRecommend(id, userCode);
 
         return ResponseEntity.ok("ok");
     }
@@ -115,6 +116,7 @@ public class TechController {
     @PostMapping("/{postId}/comment")
     public ResponseEntity<String> saveComment(@PathVariable Long postId, @RequestBody BoardCommentDto boardCommentDto) {
         techService.saveComment(boardCommentDto, postId);
+        techService.updateCommentCount(postId);
         return ResponseEntity.ok("ok");
     }
 
@@ -129,6 +131,7 @@ public class TechController {
     @DeleteMapping("/{postId}/comment/{commentId}")
     public ResponseEntity<String> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
         techService.deleteComment(commentId, postId);
+        techService.updateCommentCount(postId);
         return ResponseEntity.ok("ok");
     }
 
