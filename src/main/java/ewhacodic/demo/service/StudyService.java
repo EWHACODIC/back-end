@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ import static java.util.stream.Collectors.toList;
 @Transactional
 public class StudyService {
     @Autowired
-    private StudyRepository studyRepository;
+    private final StudyRepository studyRepository;
 
     public StudyService(StudyRepository studyRepository){
         this.studyRepository = studyRepository;
@@ -30,29 +31,18 @@ public class StudyService {
     }
 
     public List<StudyListDto> getRecentStudyList(){
-        return studyRepository.findAll().stream().sorted().
-                map(StudyListDto::of).limit(8).collect(Collectors.toList());
+        return studyRepository.findAll()
+                .stream()
+                .sorted()
+                .map(StudyListDto::of)
+                .limit(8)
+                .collect(Collectors.toList());
     }
 
     public StudyDto getStudyOnly(Long id){
         Optional<Study> studyWrapper = studyRepository.findById(id);
-        Study study = studyWrapper.get();
 
-        StudyDto studyDto = StudyDto.builder()
-                .id(study.getId())
-                .maxPpl(study.getMaxPpl())
-                .curPpl(study.getCurPpl())
-                .time(study.getTime())
-                .password(study.getPassword())
-                .studyType(study.getStudyType())
-                .startAt(study.getStartAt())
-                .endAt(study.getEndAt())
-                .createdAt(study.getCreatedAt())
-                .userCode(study.getUserCode())
-                .description(study.getDescription())
-                .build();
-
-        return studyDto;
+        return studyWrapper.map(StudyDto::of).orElseThrow(NoSuchElementException::new);
     }
 
     public void saveStudy(StudyDto studyDto){

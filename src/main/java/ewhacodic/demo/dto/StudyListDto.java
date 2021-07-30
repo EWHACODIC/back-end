@@ -1,6 +1,7 @@
 package ewhacodic.demo.dto;
 
 import ewhacodic.demo.domain.Study;
+import ewhacodic.demo.enums.StudyType;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,7 +19,7 @@ public class StudyListDto {
     private Long curPpl;
     private Long time;
     private Long password;
-    private String studyType;
+    private StudyType studyType;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate startAt;
     @DateTimeFormat(pattern="yyyy-MM-dd")

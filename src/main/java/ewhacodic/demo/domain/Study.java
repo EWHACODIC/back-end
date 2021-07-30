@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ewhacodic.demo.dto.StudyListDto;
+import ewhacodic.demo.enums.StudyType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +40,8 @@ public class Study implements Comparable<Study> {
     private Long password;
 
     @Column(name="study_type")
-    private String studyType;
+    @Enumerated(EnumType.STRING)
+    private StudyType studyType;
 
     @Column(name="start_at")
     private LocalDate startAt;
@@ -58,7 +60,7 @@ public class Study implements Comparable<Study> {
     private String description;
 
     @Builder
-    public Study(Long id, Long maxPpl,  Long curPpl, Long time, Long password, String studyType,
+    public Study(Long id, Long maxPpl,  Long curPpl, Long time, Long password, StudyType studyType,
                  LocalDate startAt, LocalDate endAt, LocalDateTime createdAt,
                  Long userCode, String description){
         this.id = id;

@@ -1,6 +1,7 @@
 package ewhacodic.demo.dto;
 
 import ewhacodic.demo.domain.Study;
+import ewhacodic.demo.enums.StudyType;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +20,7 @@ public class StudyDto {
     private Long curPpl;
     private Long time;
     private Long password;
-    private String studyType;
+    private StudyType studyType;
     private LocalDate startAt;
     private LocalDate endAt;
     private LocalDateTime createdAt;
@@ -44,7 +45,7 @@ public class StudyDto {
     }
 
     @Builder
-    public StudyDto(Long id, Long maxPpl,  Long curPpl, Long time, Long password, String studyType,
+    public StudyDto(Long id, Long maxPpl,  Long curPpl, Long time, Long password, StudyType studyType,
                  LocalDate startAt, LocalDate endAt, LocalDateTime createdAt,
                  Long userCode, String description){
         this.id = id;
@@ -58,6 +59,22 @@ public class StudyDto {
         this.createdAt = createdAt;
         this.userCode = userCode;
         this.description = description;
+    }
+
+    public static StudyDto of(Study study) {
+        return StudyDto.builder()
+                .id(study.getId())
+                .maxPpl(study.getMaxPpl())
+                .curPpl(study.getCurPpl())
+                .time(study.getTime())
+                .password(study.getPassword())
+                .studyType(study.getStudyType())
+                .startAt(study.getStartAt())
+                .endAt(study.getEndAt())
+                .createdAt(study.getCreatedAt())
+                .userCode(study.getUserCode())
+                .description(study.getDescription())
+                .build();
     }
 
 }
