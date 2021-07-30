@@ -190,4 +190,8 @@ public class BoardService {
     public long totalPosts(List<BoardListDto> boardListDtos){
         return boardListDtos.stream().count();
     }
+
+    public Long totalPosts() {
+        return boardRepository.findAll().stream().count();
+    }
 }

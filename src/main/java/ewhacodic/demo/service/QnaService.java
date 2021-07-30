@@ -194,4 +194,8 @@ public class QnaService {
     public long totalPosts(List<BoardListDto> boardListDtos){
         return boardListDtos.stream().count();
     }
+
+    public Long totalPosts() {
+        return qnaRepository.findAll().stream().count();
+    }
 }

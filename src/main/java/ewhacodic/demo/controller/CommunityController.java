@@ -151,4 +151,9 @@ public class CommunityController {
     public long totalPosts(@RequestBody List<BoardListDto> boardListDtos){
         return communityService.totalPosts(boardListDtos);
     }
+
+    @GetMapping("/list/total/count")
+    public Long totalPostCount() {
+        return communityService.totalPosts();
+    }
 }

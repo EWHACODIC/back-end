@@ -181,7 +181,11 @@ public class TechService {
         return tech.get();
     }
 
-    public long totalPosts(List<BoardListDto> boardListDtos){
+    public Long totalPosts(List<BoardListDto> boardListDtos){
         return boardListDtos.stream().count();
+    }
+
+    public Long totalPosts() {
+        return techRepository.findAll().stream().count();
     }
 }

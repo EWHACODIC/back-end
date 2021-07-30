@@ -144,4 +144,9 @@ public class TechController {
     public long totalPosts(@RequestBody List<BoardListDto> boardListDtos){
         return techService.totalPosts(boardListDtos);
     }
+
+    @GetMapping("/list/total/count")
+    public Long totalPostCount() {
+        return techService.totalPosts();
+    }
 }

@@ -180,4 +180,8 @@ public class CommunityService {
     public long totalPosts(List<BoardListDto> boardListDtos){
         return boardListDtos.stream().count();
     }
+
+    public Long totalPosts() {
+        return communityRepository.findAll().stream().count();
+    }
 }

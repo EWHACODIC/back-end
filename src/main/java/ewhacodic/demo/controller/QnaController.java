@@ -147,4 +147,9 @@ public class QnaController {
     public long totalPosts(@RequestBody List<BoardListDto> boardListDtos){
         return qnaService.totalPosts(boardListDtos);
     }
+
+    @GetMapping("/list/total/count")
+    public Long totalPostCount() {
+        return qnaService.totalPosts();
+    }
 }
