@@ -153,10 +153,8 @@ public class BoardController {
         return boardService.totalPosts(boardListDtos);
     }
 
-    /*@GetMapping("/tag/{userCode}")
+    @GetMapping("/tag/{userCode}")
     public Set<Long> getUserTag(@PathVariable Long userCode) {
         return userService.getUserTagIds(userCode);
     }
-
-
 }
