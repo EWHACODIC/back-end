@@ -51,6 +51,6 @@ public class StudyController {
     //스터디 삭제하기
     @DeleteMapping("/{studyId}")
     public ResponseEntity<String> deleteStudy(@PathVariable("studyId") Long studyId) {
-
+        return ResponseEntity.ok("Ok");
     }
 }
