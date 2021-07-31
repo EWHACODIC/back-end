@@ -35,6 +35,7 @@ public class StudyListDto {
                 .curPpl(study.getCurPpl())
                 .time(study.getTime())
                 .password(study.getPassword())
+                .studyType((study.getStudyType()))
                 .startAt(study.getStartAt())
                 .endAt(study.getEndAt())
                 .createdAt(study.getCreatedAt())
