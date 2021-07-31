@@ -59,59 +59,73 @@
 
 ```scss
 ├── DemoApplication.java
+├── Security
+│   └── CurrentUser.java
 ├── config
+│   ├── EmailConfig.java
 │   ├── MvcConfig.java
 │   ├── SecurityMessageConfig.java
 │   └── WebSecurityConfig.java
 ├── controller
 │   ├── BoardController.java
 │   ├── CommunityController.java
+│   ├── EmailController.java
+│   ├── GithubInfoController.java
 │   ├── QnaController.java
+│   ├── StudyController.java
 │   ├── TagController.java
 │   ├── TechController.java
-│		├── GithubInfoController.java
 │   └── UserController.java
 ├── domain
 │   ├── Board.java
 │   ├── BoardComment.java
 │   ├── Community.java
 │   ├── CommunityComment.java
+│   ├── GithubInfo.java
 │   ├── Qna.java
 │   ├── QnaComment.java
+│   ├── Study.java
 │   ├── Tag.java
 │   ├── Tech.java
 │   ├── TechComment.java
-│		├── GithubInfo.java
 │   └── UserInfo.java
 ├── dto
 │   ├── BoardCommentDto.java
 │   ├── BoardDto.java
 │   ├── BoardListDto.java
 │   ├── BoardTagDto.java
+│   ├── CommitDto.java
+│   ├── GithubInfoDto.java
+│   ├── StudyDto.java
+│   ├── StudyListDto.java
 │   ├── TagDto.java
-│		├── GithubInfoDto.java
 │   ├── UserInfoDto.java
+│   ├── UserLikePostDto.java
 │   └── UserTagDto.java
 ├── enums
+│   └── StudyType.java
 ├── repository
 │   ├── BoardCommentRepository.java
 │   ├── BoardRepository.java
 │   ├── CommunityCommentRepository.java
 │   ├── CommunityRepository.java
+│   ├── GithubInfoRepository.java
 │   ├── QnaCommentRepository.java
 │   ├── QnaRepository.java
+│   ├── StudyRepository.java
 │   ├── TagRepository.java
 │   ├── TechCommentRepository.java
 │   ├── TechRepository.java
-│		├── GithubInfoRepository.java
 │   └── UserRepository.java
 └── service
     ├── BoardService.java
     ├── CommunityService.java
+    ├── EmailService.java
+    ├── GithubInfoService.java
     ├── QnaService.java
+    ├── StudyService.java
     ├── TagService.java
     ├── TechService.java
-		├── GithubInfoService.java
     └── UserService.java
 ```
 
