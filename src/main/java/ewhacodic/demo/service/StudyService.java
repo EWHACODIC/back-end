@@ -51,7 +51,5 @@ public class StudyService {
 
     public void deleteStudy(Long studyId) {
         Optional<Study> study = studyRepository.findById(studyId);
-        study
-
     }
 }
