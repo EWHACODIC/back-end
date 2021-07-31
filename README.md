@@ -124,6 +124,6 @@
 |이름|ID|역할|
 |------|---|---|
 |[김윤서](https://github.com/ottl-seo)|@ottl-seo|회원가입 및 로그인, 이화 벗들과의 커밋 랭킹전 기능|
-|이재희|@ejhee1|회원가입 및 로그인, 이화 벗들과의 커밋 랭킹전 기능|
-|이채은|@lcheun|게시판, 관심 Tag, 스터디 페이지 구현|
-|장보미|@JangBomi|게시판, 관심 Tag, 스터디 페이지 구현|
+|[이재희](https://github.com/ejhee1)|@ejhee1|회원가입 및 로그인, 이화 벗들과의 커밋 랭킹전 기능|
+|[이채은](https://github.com/lcheun)|@lcheun|게시판, 관심 Tag, 스터디 페이지 구현|
+|[장보미](https://github.com/JangBomi)|@JangBomi|게시판, 관심 Tag, 스터디 페이지 구현|
