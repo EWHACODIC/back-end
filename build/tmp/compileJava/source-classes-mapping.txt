@@ -29,8 +29,8 @@ ewhacodic/demo/repository/TechCommentRepository.java
  ewhacodic.demo.repository.TechCommentRepository
 ewhacodic/demo/repository/QnaCommentRepository.java
  ewhacodic.demo.repository.QnaCommentRepository
-ewhacodic/demo/config/WebSecurityConfig.java
- ewhacodic.demo.config.WebSecurityConfig
+ewhacodic/demo/controller/UserController.java
+ ewhacodic.demo.controller.UserController
 ewhacodic/demo/repository/UserRepository.java
  ewhacodic.demo.repository.UserRepository
 ewhacodic/demo/enums/StudyType.java
@@ -103,8 +103,8 @@ ewhacodic/demo/dto/StudyDto.java
 ewhacodic/demo/dto/BoardListDto.java
  ewhacodic.demo.dto.BoardListDto
  ewhacodic.demo.dto.BoardListDto$BoardListDtoBuilder
-ewhacodic/demo/controller/UserController.java
- ewhacodic.demo.controller.UserController
+ewhacodic/demo/config/MvcConfig.java
+ ewhacodic.demo.config.MvcConfig
 ewhacodic/demo/dto/StudyListDto.java
  ewhacodic.demo.dto.StudyListDto
  ewhacodic.demo.dto.StudyListDto$StudyListDtoBuilder
@@ -144,5 +144,5 @@ ewhacodic/demo/controller/TechController.java
  ewhacodic.demo.controller.TechController
 ewhacodic/demo/domain/QStudy.java
  ewhacodic.demo.domain.QStudy
-ewhacodic/demo/config/MvcConfig.java
- ewhacodic.demo.config.MvcConfig
+ewhacodic/demo/config/WebSecurityConfig.java
+ ewhacodic.demo.config.WebSecurityConfig
