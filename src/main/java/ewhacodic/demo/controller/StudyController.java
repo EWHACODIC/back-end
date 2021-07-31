@@ -29,7 +29,7 @@ public class StudyController {
 
     //스터디 모집하기
     @PostMapping("/new")
-    public ResponseEntity<String> recruitment(@RequestBody StudyDto studyDto){
+    public ResponseEntity<String> recruitment(@RequestBody StudyDto studyDto) {
         System.out.println("controller");
         studyService.saveStudy(studyDto);
         return ResponseEntity.ok("ok");
@@ -37,7 +37,7 @@ public class StudyController {
 
     //스터디 상세정보 조회
     @GetMapping("/{studyId}")
-    public StudyDto detail(@PathVariable("studyId") Long studyId){
+    public StudyDto detail(@PathVariable("studyId") Long studyId) {
         StudyDto studyDto = studyService.getStudyOnly(studyId);
         return studyDto;
     }
@@ -46,5 +46,11 @@ public class StudyController {
     @GetMapping("/list/recent")
     public List<StudyListDto> getRecentStudyList(){
         return studyService.getRecentStudyList();
+    }
+
+    //스터디 삭제하기
+    @DeleteMapping("/{studyId}")
+    public ResponseEntity<String> deleteStudy(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok("Ok");
     }
 }
