@@ -12,12 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity // Security 사용
 @RequiredArgsConstructor
 @Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
 
@@ -26,36 +27,48 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
     }
 
-
-    //추후에 로그인한 유저만 들어가게 하기위해서는 "/api/**" 이거 위치 hasRole 한테 옮기기
     @Override
     protected void configure(HttpSecurity http) throws Exception { // http 관련 인증 설정
         http
                 //로그인 기능 외에 다른 기능 할 때 주석 반대로 해야함
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll()
-//                .authorizeRequests() // 접근에 대한 인증 설정
-//                .antMatchers("/login", "/signup", "/user").permitAll() // 누구나 접근 허용
-//                .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능
-//                .antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
-//                .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
-//                .and()
-//                .formLogin() // 로그인에 관한 설정
-//                .loginPage("/login") // 로그인 페이지 링크
-//                .defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
-//                .and()
-//                .logout() // 로그아웃
-//                .logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
-//                .invalidateHttpSession(true) // 세션 날리기
+//                .csrf()
+//                .disable()
+//                .authorizeRequests()
+//                .anyRequest()
+//                .permitAll()
+                .cors().configurationSource(corsConfigurationSource()).and()
+                .authorizeRequests() // 접근에 대한 인증 설정
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() //CORS 해결
+                .antMatchers("/login", "/signup", "/user").permitAll() // 누구나 접근 허용
+                .antMatchers("/").hasRole("USER") // USER, ADMIN만 접근 가능
+                .antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
+                .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
+                .and()
+                .formLogin() // 로그인에 관한 설정
+                //.loginPage("/login") // 주석처리하면 기본 로그인 화면 나옴
+                .defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
+                .and()
+                .logout() // 로그아웃
+                .logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
+                .invalidateHttpSession(true) // 세션 날리기
         ;
     }
-
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception { // 필요한 정보들을 가져오는 곳
         auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
         // 해당 서비스(userService)에서는 UserDetailsService를 implements해서 loadUserByUsername() 구현해야함 (서비스 참고)
+    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() { //cors 정책 설정
+        CorsConfiguration configuration = new CorsConfiguration();
+        // - (3)
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
