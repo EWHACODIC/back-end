@@ -1,24 +1,22 @@
 package ewhacodic.demo.service;
 import ewhacodic.demo.domain.GithubInfo;
-import ewhacodic.demo.domain.UserInfo;
+import ewhacodic.demo.dto.CommitDto;
 import ewhacodic.demo.dto.GithubInfoDto;
 
-import ewhacodic.demo.dto.UserInfoDto;
 import ewhacodic.demo.repository.GithubInfoRepository;
-import ewhacodic.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
-import org.json.JSONObject;
 //import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -73,6 +71,22 @@ public class GithubInfoService {
             e.printStackTrace();
         }
         return commits; // 5. 커밋 수 리턴
+    }
+
+    public List<CommitDto> getRankDtoList(){
+        List<GithubInfo> commitList = githubInfoRepository.findAll();
+        List<CommitDto> sortedRankDtoList = new ArrayList<>();
+        AtomicReference<Long> rank = new AtomicReference<>(1L);
+        List<GithubInfo> sortedCommitList = commitList
+                .stream()
+                .sorted(Comparator.comparing(GithubInfo::getCommits).reversed())
+                .collect(Collectors.toList());
+
+        sortedCommitList.forEach(it -> {
+            sortedRankDtoList.add(CommitDto.of(it, rank.getAndSet(rank.get() + 1)));
+        });
+
+        return sortedRankDtoList;
     }
 
 

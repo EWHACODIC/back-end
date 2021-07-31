@@ -1,4 +1,5 @@
 package ewhacodic.demo.controller;
+import ewhacodic.demo.dto.CommitDto;
 import ewhacodic.demo.dto.GithubInfoDto;
 import ewhacodic.demo.service.GithubInfoService;
 import ewhacodic.demo.service.UserService;
@@ -8,9 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class GithubInfoController {
     private final GithubInfoService githubInfoService;
     private final UserService userService;
@@ -28,5 +30,10 @@ public class GithubInfoController {
         githubInfoService.save(githubInfoDto);
 
         return commits;
+    }
+
+    @GetMapping("/api/rank")
+    public List<CommitDto> getRankedCommitDto() {
+        return githubInfoService.getRankDtoList();
     }
 }
