@@ -190,4 +190,12 @@ public class QnaService {
         qna.ifPresent(Qna::renewCommentCount);
         return qna.get();
     }
+
+    public long totalPosts(List<BoardListDto> boardListDtos){
+        return boardListDtos.stream().count();
+    }
+
+    public Long totalPosts() {
+        return qnaRepository.findAll().stream().count();
+    }
 }

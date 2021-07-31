@@ -176,4 +176,12 @@ public class CommunityService {
         community.ifPresent(Community::renewCommentCount);
         return community.get();
     }
+
+    public long totalPosts(List<BoardListDto> boardListDtos){
+        return boardListDtos.stream().count();
+    }
+
+    public Long totalPosts() {
+        return communityRepository.findAll().stream().count();
+    }
 }

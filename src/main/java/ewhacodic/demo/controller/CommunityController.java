@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/community")
 public class CommunityController {
     @Autowired
@@ -144,5 +145,15 @@ public class CommunityController {
     @GetMapping("/list/tag")
     public List<BoardListDto> getBoardListByTag(@RequestParam String tag) {
         return communityService.searchPostsByTag(tag);
+    }
+
+    @GetMapping("/list/total")
+    public long totalPosts(@RequestBody List<BoardListDto> boardListDtos){
+        return communityService.totalPosts(boardListDtos);
+    }
+
+    @GetMapping("/list/total/count")
+    public Long totalPostCount() {
+        return communityService.totalPosts();
     }
 }

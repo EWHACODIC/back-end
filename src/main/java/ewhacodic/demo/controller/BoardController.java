@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/post")
 public class BoardController {
 
@@ -106,7 +107,6 @@ public class BoardController {
         return ResponseEntity.ok("ok");
     }
 
-
     //9. 게시글 추천수 증가
     @PatchMapping(value="/{postId}/recommend/{userCode}")
     public ResponseEntity<String> updateRecommend(@PathVariable("postId") Long id, @PathVariable("userCode") Long userCode){
@@ -148,6 +148,18 @@ public class BoardController {
         return boardService.searchPostsByTag(tag);
     }
 
+    @GetMapping("/list/total")
+    public long totalPosts(@RequestBody List<BoardListDto> boardListDtos){
+        return boardService.totalPosts(boardListDtos);
+    }
 
+    @GetMapping("/list/total/count")
+    public Long totalPostCount() {
+        return boardService.totalPosts();
+    }
 
+    @GetMapping("/tag/{userCode}")
+    public Set<Long> getUserTag(@PathVariable Long userCode) {
+        return userService.getUserTagIds(userCode);
+    }
 }

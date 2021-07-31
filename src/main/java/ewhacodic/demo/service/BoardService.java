@@ -20,6 +20,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
@@ -110,13 +114,13 @@ public class BoardService {
     public List<BoardListDto> searchPosts(String keyword) {
         List<Board> boardList = boardRepository.findByTitleContaining(keyword);
 
-        return boardList.stream().map(BoardListDto::of).collect(Collectors.toList());
+        return boardList.stream().map(BoardListDto::of).collect(toList());
     }
 
     public List<BoardListDto> searchPostsByTag(String tag){
         List<Board> boardList = boardRepository.findByTag1OrTag2(tag, tag);
 
-        return boardList.stream().map(BoardListDto::of).collect(Collectors.toList());
+        return boardList.stream().map(BoardListDto::of).collect(toList());
     }
 
     @Transactional
@@ -129,7 +133,7 @@ public class BoardService {
         } else if(order.equals("view")){
             boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "view"));
         } else if(order.equals("reply")){
-            boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "comments.createdAt")).stream().distinct().collect(Collectors.toList());
+            boardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "comments.createdAt")).stream().distinct().collect(toList());
         } else {
             boardList = boardRepository.findAll();
         }
@@ -183,4 +187,11 @@ public class BoardService {
         return board.get();
     }
 
+    public long totalPosts(List<BoardListDto> boardListDtos){
+        return boardListDtos.stream().count();
+    }
+
+    public Long totalPosts() {
+        return boardRepository.findAll().stream().count();
+    }
 }

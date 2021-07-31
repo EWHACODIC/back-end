@@ -180,4 +180,12 @@ public class TechService {
         tech.ifPresent(Tech::renewCommentCount);
         return tech.get();
     }
+
+    public Long totalPosts(List<BoardListDto> boardListDtos){
+        return boardListDtos.stream().count();
+    }
+
+    public Long totalPosts() {
+        return techRepository.findAll().stream().count();
+    }
 }

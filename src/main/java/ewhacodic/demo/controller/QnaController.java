@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("api/qna")
 public class QnaController {
 
@@ -140,5 +141,15 @@ public class QnaController {
     @GetMapping("/list/key")
     public List<BoardListDto> getBoardListByKeyWord(@RequestParam String keyword) {
         return qnaService.searchPosts(keyword);
+    }
+
+    @GetMapping("/list/total")
+    public long totalPosts(@RequestBody List<BoardListDto> boardListDtos){
+        return qnaService.totalPosts(boardListDtos);
+    }
+
+    @GetMapping("/list/total/count")
+    public Long totalPostCount() {
+        return qnaService.totalPosts();
     }
 }
