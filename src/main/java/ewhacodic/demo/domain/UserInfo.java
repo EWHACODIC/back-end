@@ -1,7 +1,9 @@
 package ewhacodic.demo.domain;
 
-import ewhacodic.demo.dto.UserTagDto;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,14 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity  //클래스와 테이블 매핑
 @Table(name="USER") //USER 테이블과 매핑
 @Getter
-@Setter
 public class UserInfo implements UserDetails {
 
     @Id
@@ -30,78 +30,22 @@ public class UserInfo implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "github_name")
+    private String githubName;
+
+    @Column(name = "repo_name")
+    private String repoName;
+
     @Column(name = "auth")
     private String auth;
 
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "tag_ids",
-            joinColumns = {
-                    @JoinColumn(name = "user_code")
-            }
-    )
-    @Column(name = "tag_ids", nullable = false)
-    private Set<Long> tagIds;
-
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "board_ids",
-            joinColumns = {
-                    @JoinColumn(name = "user_code")
-            }
-    )
-    @Column(name = "board_ids", nullable = false)
-    private Set<Long> boardIds;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "community_ids",
-            joinColumns = {
-                    @JoinColumn(name = "user_code")
-            }
-    )
-    @Column(name = "community_ids", nullable = false)
-    private Set<Long> communityIds;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "qna_ids",
-            joinColumns = {
-                    @JoinColumn(name = "user_code")
-            }
-    )
-    @Column(name = "qna_ids", nullable = false)
-    private Set<Long> qnaIds;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "tech_ids",
-            joinColumns = {
-                    @JoinColumn(name = "user_code")
-            }
-    )
-    @Column(name = "tech_ids", nullable = false)
-    private Set<Long> techIds;
-
     @Builder
-    public UserInfo(
-            String userName,
-            String password,
-            String auth,
-            Set<Long> tagIds,
-            Set<Long> communityIds,
-            Set<Long> qnaIds,
-            Set<Long> techIds
-    ) {
+    public UserInfo(String userName, String password, String githubName, String repoName, String auth) {
         this.userName = userName;
         this.password = password;
+        this.githubName = githubName;
+        this.repoName = repoName;
         this.auth = auth;
-        this.tagIds = tagIds;
-        this.communityIds = communityIds;
-        this.qnaIds = qnaIds;
-        this.techIds = techIds;
     }
 
     // 사용자의 권한을 콜렉션 형태로 반환
