@@ -31,11 +31,11 @@ ewhacodic/demo/controller/UserController.java
  ewhacodic.demo.controller.UserController
 ewhacodic/demo/repository/UserRepository.java
  ewhacodic.demo.repository.UserRepository
+ewhacodic/demo/repository/CommunityRepository.java
+ ewhacodic.demo.repository.CommunityRepository
 ewhacodic/demo/domain/UserInfo.java
  ewhacodic.demo.domain.UserInfo
  ewhacodic.demo.domain.UserInfo$UserInfoBuilder
-ewhacodic/demo/repository/CommunityRepository.java
- ewhacodic.demo.repository.CommunityRepository
 ewhacodic/demo/service/CommunityService.java
  ewhacodic.demo.service.CommunityService
 ewhacodic/demo/domain/Tech.java
@@ -59,8 +59,11 @@ ewhacodic/demo/dto/TagDto.java
  ewhacodic.demo.dto.TagDto$TagDtoBuilder
 ewhacodic/demo/domain/Tag.java
  ewhacodic.demo.domain.Tag
-ewhacodic/demo/domain/QTag.java
- ewhacodic.demo.domain.QTag
+ewhacodic/demo/dto/UserLikePostDto.java
+ ewhacodic.demo.dto.UserLikePostDto
+ ewhacodic.demo.dto.UserLikePostDto$UserLikePostDtoBuilder
+ewhacodic/demo/controller/TagController.java
+ ewhacodic.demo.controller.TagController
 ewhacodic/demo/domain/QCommunity.java
  ewhacodic.demo.domain.QCommunity
 ewhacodic/demo/domain/Community.java
@@ -71,6 +74,8 @@ ewhacodic/demo/service/QnaService.java
 ewhacodic/demo/domain/TechComment.java
  ewhacodic.demo.domain.TechComment
  ewhacodic.demo.domain.TechComment$TechCommentBuilder
+ewhacodic/demo/Security/CurrentUser.java
+ ewhacodic.demo.Security.CurrentUser
 ewhacodic/demo/service/BoardService.java
  ewhacodic.demo.service.BoardService
 ewhacodic/demo/repository/TagRepository.java
@@ -94,8 +99,8 @@ ewhacodic/demo/repository/BoardRepository.java
  ewhacodic.demo.repository.BoardRepository
 ewhacodic/demo/domain/QTech.java
  ewhacodic.demo.domain.QTech
-ewhacodic/demo/controller/TechController.java
- ewhacodic.demo.controller.TechController
+ewhacodic/demo/controller/BoardController.java
+ ewhacodic.demo.controller.BoardController
 ewhacodic/demo/repository/TechRepository.java
  ewhacodic.demo.repository.TechRepository
 ewhacodic/demo/service/TechService.java
@@ -112,7 +117,7 @@ ewhacodic/demo/domain/QTechComment.java
  ewhacodic.demo.domain.QTechComment
 ewhacodic/demo/dto/BoardTagDto.java
  ewhacodic.demo.dto.BoardTagDto
-ewhacodic/demo/controller/BoardController.java
- ewhacodic.demo.controller.BoardController
-ewhacodic/demo/controller/TagController.java
- ewhacodic.demo.controller.TagController
+ewhacodic/demo/controller/TechController.java
+ ewhacodic.demo.controller.TechController
+ewhacodic/demo/domain/QTag.java
+ ewhacodic.demo.domain.QTag
