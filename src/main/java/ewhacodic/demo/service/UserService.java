@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,13 +29,16 @@ public class UserService implements UserDetailsService {
         return userRepository.save(UserInfo.builder()
                 .userName(infoDto.getUserName())
                 .auth(infoDto.getAuth())
+                .githubName(infoDto.getGithubName())
+                .repoName(infoDto.getRepoName())
                 .password(infoDto.getPassword()).build()).getCode();
     }
 
+
     public void updateUserTag(Long userCode, UserTagDto userTagDto) {
-       UserInfo userInfo = userRepository.findOneByCode(userCode);
-       userInfo.setTagIds(userTagDto.getTagIds());
-       userRepository.save(userInfo);
+        UserInfo userInfo = userRepository.findOneByCode(userCode);
+        userInfo.setTagIds(userTagDto.getTagIds());
+        userRepository.save(userInfo);
     }
 
     public Set<Long> getUserTagIds(Long userCode) {

@@ -1,6 +1,5 @@
 package ewhacodic.demo.domain;
 
-import ewhacodic.demo.dto.UserTagDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,19 +8,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity  //클래스와 테이블 매핑
-@Table(name="USER") //USER 테이블과 매핑
+@Table(name = "USER") //USER 테이블과 매핑
 @Getter
 @Setter
 public class UserInfo implements UserDetails {
 
     @Id
     @Column(name = "code")
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long code;
 
     @Column(name = "id", unique = true) // @ewhain.net
@@ -30,9 +28,14 @@ public class UserInfo implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "github_name")
+    private String githubName;
+
+    @Column(name = "repo_name")
+    private String repoName;
+
     @Column(name = "auth")
     private String auth;
-
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
@@ -89,14 +92,17 @@ public class UserInfo implements UserDetails {
     public UserInfo(
             String userName,
             String password,
+            String githubName,
+            String repoName,
             String auth,
             Set<Long> tagIds,
             Set<Long> communityIds,
             Set<Long> qnaIds,
-            Set<Long> techIds
-    ) {
+            Set<Long> techIds) {
         this.userName = userName;
         this.password = password;
+        this.githubName = githubName;
+        this.repoName = repoName;
         this.auth = auth;
         this.tagIds = tagIds;
         this.communityIds = communityIds;

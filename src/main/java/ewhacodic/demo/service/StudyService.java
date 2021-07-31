@@ -58,4 +58,8 @@ public class StudyService {
     public Long totalCount(){
         return studyRepository.findAll().stream().count();
     }
+
+    public void deleteStudy(Long studyId) {
+        Optional<Study> study = studyRepository.findById(studyId);
+    }
 }
