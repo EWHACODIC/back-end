@@ -46,6 +46,16 @@ public class StudyService {
     }
 
     public void saveStudy(StudyDto studyDto){
-        studyRepository.save(studyDto.toEntity());
+        studyRepository.save(studyDto.toEntity().updateMember(studyDto.getUserCode(), studyDto.getPassword()));
+    }
+
+    public StudyDto joinStudy(Long studyId, Long userId, Long password){
+        Optional<Study> study = studyRepository.findById(studyId);
+        StudyDto studyDto = StudyDto.of(study.get().updateMember(userId, password));
+        return studyDto;
+    }
+
+    public Long totalCount(){
+        return studyRepository.findAll().stream().count();
     }
 }

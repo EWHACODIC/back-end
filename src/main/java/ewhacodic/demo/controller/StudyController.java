@@ -6,6 +6,7 @@ import ewhacodic.demo.dto.StudyListDto;
 import ewhacodic.demo.service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +47,21 @@ public class StudyController {
     @GetMapping("/list/recent")
     public List<StudyListDto> getRecentStudyList(){
         return studyService.getRecentStudyList();
+    }
+
+    //스터디 총 개수 조회
+    @GetMapping("/list/count")
+    public Long totalStudyCount(){
+        return studyService.totalCount();
+    }
+
+    //스터디 참여하기
+    @GetMapping("/{studyId}/join")
+    public ResponseEntity<String> joinStudy(@PathVariable("studyId") Long studyId,
+                                            @RequestParam("userId") Long userId,
+                                            @RequestParam(value = "password", required = false) Long password) throws Exception{
+        if (studyService.joinStudy(studyId, userId, password) == null)
+            throw new Exception();
+        return ResponseEntity.ok("ok");
     }
 }
