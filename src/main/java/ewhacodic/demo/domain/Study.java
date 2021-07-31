@@ -1,8 +1,6 @@
 package ewhacodic.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import ewhacodic.demo.dto.StudyDto;
 import ewhacodic.demo.dto.StudyListDto;
 import ewhacodic.demo.enums.StudyType;
 import lombok.Builder;
@@ -15,6 +13,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -39,6 +40,18 @@ public class Study implements Comparable<Study> {
     @Column(name="password")
     private Long password;
 
+    @Column(name="day1")
+    private String day1;
+
+    @Column(name="day2")
+    private String day2;
+
+    @Column(name="start_time")
+    private LocalTime startTime;
+
+    @Column(name="end_time")
+    private LocalTime endTime;
+
     @Column(name="study_type")
     @Enumerated(EnumType.STRING)
     private StudyType studyType;
@@ -56,23 +69,39 @@ public class Study implements Comparable<Study> {
     @Column(name="user_code")
     private Long userCode;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name="user_list",
+            joinColumns={
+                    @JoinColumn(name="study_id")
+            }
+    )
+    @Column(name="user_id", nullable = false)
+    private Set<Long> userList;
+
     @Column(name="description")
     private String description;
 
     @Builder
-    public Study(Long id, Long maxPpl,  Long curPpl, Long time, Long password, StudyType studyType,
-                 LocalDate startAt, LocalDate endAt, LocalDateTime createdAt,
-                 Long userCode, String description){
+    public Study(Long id, Long maxPpl,  Long curPpl, Long time, Long password, String day1, String day2,
+                 LocalTime startTime, LocalTime endTime, StudyType studyType, LocalDate startAt,
+                 LocalDate endAt, LocalDateTime createdAt, Long userCode, Set<Long> userList,
+                 String description){
         this.id = id;
         this.maxPpl = maxPpl;
         this.curPpl = curPpl;
         this.time = time;
+        this.day1 = day1;
+        this.day2 = day2;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.password = password;
         this.studyType = studyType;
         this.startAt = startAt;
         this.endAt = endAt;
         this.createdAt = createdAt;
         this.userCode = userCode;
+        this.userList = userList;
         this.description = description;
     }
 
@@ -84,5 +113,15 @@ public class Study implements Comparable<Study> {
             return -1;
         }
         return -1;
+    }
+
+    public Study updateMember(Long userId, Long password){
+        if(this.getCurPpl() == this.getMaxPpl() || !password.equals(this.getPassword())) return null;
+        Set<Long> userList = this.getUserList();
+        userList.add(userId);
+        this.setUserList(userList);
+        this.setCurPpl(this.getUserList().stream().count());
+
+        return this;
     }
 }
