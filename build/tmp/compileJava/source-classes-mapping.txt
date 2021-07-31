@@ -144,5 +144,21 @@ ewhacodic/demo/controller/TechController.java
  ewhacodic.demo.controller.TechController
 ewhacodic/demo/domain/QStudy.java
  ewhacodic.demo.domain.QStudy
+ewhacodic/demo/domain/GithubInfo.java
+ ewhacodic.demo.domain.GithubInfo
+ ewhacodic.demo.domain.GithubInfo$GithubInfoBuilder
 ewhacodic/demo/config/WebSecurityConfig.java
  ewhacodic.demo.config.WebSecurityConfig
+ewhacodic/demo/repository/GithubInfoRepository.java
+ ewhacodic.demo.repository.GithubInfoRepository
+ewhacodic/demo/dto/GithubInfoDto.java
+ ewhacodic.demo.dto.GithubInfoDto
+ewhacodic/demo/domain/QGithubInfo.java
+ ewhacodic.demo.domain.QGithubInfo
+ewhacodic/demo/dto/CommitDto.java
+ ewhacodic.demo.dto.CommitDto
+ ewhacodic.demo.dto.CommitDto$CommitDtoBuilder
+ewhacodic/demo/controller/GithubInfoController.java
+ ewhacodic.demo.controller.GithubInfoController
+ewhacodic/demo/service/GithubInfoService.java
+ ewhacodic.demo.service.GithubInfoService
