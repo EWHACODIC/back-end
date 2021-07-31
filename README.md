@@ -121,9 +121,9 @@
 
 # 📚 팀원별 역할분담
 
-|이름|ID|역할|
+||이름|ID|역할|
 |------|---|---|
-|<img src = "https://user-images.githubusercontent.com/71870316/127739602-65d2f3e0-451c-4bfa-b382-4a128336f9de.png" width="50%" height="50%">[김윤서](https://github.com/ottl-seo)|@ottl-seo|회원가입 및 로그인, 이화 벗들과의 커밋 랭킹전 기능|
+|<img src = "https://user-images.githubusercontent.com/71870316/127739602-65d2f3e0-451c-4bfa-b382-4a128336f9de.png" width="50%" height="50%">|[김윤서](https://github.com/ottl-seo)|@ottl-seo|회원가입 및 로그인, 이화 벗들과의 커밋 랭킹전 기능|
 |![재희](https://user-images.githubusercontent.com/71870316/127739808-3deb9684-e90a-4f19-92a4-49f91617af6d.JPG)[이재희](https://github.com/ejhee1)|@ejhee1|회원가입 및 로그인, 이화 벗들과의 커밋 랭킹전 기능|
 |[이채은](https://github.com/lcheun)|@lcheun|게시판, 관심 Tag, 스터디 페이지 구현|
 |![보미](https://user-images.githubusercontent.com/71870316/127739702-b19c4cc4-7273-409c-a345-c74d7872e14a.png)[장보미](https://github.com/JangBomi)|@JangBomi|게시판, 관심 Tag, 스터디 페이지 구현|
