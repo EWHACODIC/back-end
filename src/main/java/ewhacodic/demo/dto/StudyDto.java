@@ -63,7 +63,7 @@ public class StudyDto {
     public StudyDto(Long id, Long maxPpl,  Long curPpl, Long time, Long password, String day1, String day2,
                     LocalTime startTime, LocalTime endTime, StudyType studyType, LocalDate startAt,
                     LocalDate endAt, LocalDateTime createdAt, Long userCode, Set<Long> userList,
-                    String description, boolean deleted){
+                    String description){
         this.id = id;
         this.maxPpl = maxPpl;
         this.curPpl = curPpl;
