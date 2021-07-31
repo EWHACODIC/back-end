@@ -28,9 +28,13 @@ public class QUserInfo extends EntityPathBase<UserInfo> {
 
     public final SetPath<Long, NumberPath<Long>> communityIds = this.<Long, NumberPath<Long>>createSet("communityIds", Long.class, NumberPath.class, PathInits.DIRECT2);
 
+    public final StringPath githubName = createString("githubName");
+
     public final StringPath password = createString("password");
 
     public final SetPath<Long, NumberPath<Long>> qnaIds = this.<Long, NumberPath<Long>>createSet("qnaIds", Long.class, NumberPath.class, PathInits.DIRECT2);
+
+    public final StringPath repoName = createString("repoName");
 
     public final SetPath<Long, NumberPath<Long>> tagIds = this.<Long, NumberPath<Long>>createSet("tagIds", Long.class, NumberPath.class, PathInits.DIRECT2);
 

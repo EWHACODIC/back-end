@@ -13,8 +13,8 @@ ewhacodic/demo/domain/QBoard.java
  ewhacodic.demo.domain.QBoard
 ewhacodic/demo/repository/BoardCommentRepository.java
  ewhacodic.demo.repository.BoardCommentRepository
-ewhacodic/demo/config/WebSecurityConfig.java
- ewhacodic.demo.config.WebSecurityConfig
+ewhacodic/demo/domain/QTag.java
+ ewhacodic.demo.domain.QTag
 ewhacodic/demo/dto/BoardDto.java
  ewhacodic.demo.dto.BoardDto
  ewhacodic.demo.dto.BoardDto$BoardDtoBuilder
@@ -29,8 +29,8 @@ ewhacodic/demo/repository/TechCommentRepository.java
  ewhacodic.demo.repository.TechCommentRepository
 ewhacodic/demo/repository/QnaCommentRepository.java
  ewhacodic.demo.repository.QnaCommentRepository
-ewhacodic/demo/controller/UserController.java
- ewhacodic.demo.controller.UserController
+ewhacodic/demo/config/WebSecurityConfig.java
+ ewhacodic.demo.config.WebSecurityConfig
 ewhacodic/demo/repository/UserRepository.java
  ewhacodic.demo.repository.UserRepository
 ewhacodic/demo/enums/StudyType.java
@@ -66,6 +66,8 @@ ewhacodic/demo/dto/TagDto.java
 ewhacodic/demo/domain/Study.java
  ewhacodic.demo.domain.Study
  ewhacodic.demo.domain.Study$StudyBuilder
+ewhacodic/demo/controller/EmailController.java
+ ewhacodic.demo.controller.EmailController
 ewhacodic/demo/domain/Tag.java
  ewhacodic.demo.domain.Tag
 ewhacodic/demo/dto/UserLikePostDto.java
@@ -73,6 +75,8 @@ ewhacodic/demo/dto/UserLikePostDto.java
  ewhacodic.demo.dto.UserLikePostDto$UserLikePostDtoBuilder
 ewhacodic/demo/controller/TagController.java
  ewhacodic.demo.controller.TagController
+ewhacodic/demo/config/EmailConfig.java
+ ewhacodic.demo.config.EmailConfig
 ewhacodic/demo/domain/QCommunity.java
  ewhacodic.demo.domain.QCommunity
 ewhacodic/demo/domain/Community.java
@@ -85,6 +89,8 @@ ewhacodic/demo/domain/TechComment.java
  ewhacodic.demo.domain.TechComment$TechCommentBuilder
 ewhacodic/demo/Security/CurrentUser.java
  ewhacodic.demo.Security.CurrentUser
+ewhacodic/demo/service/EmailService.java
+ ewhacodic.demo.service.EmailService
 ewhacodic/demo/service/BoardService.java
  ewhacodic.demo.service.BoardService
 ewhacodic/demo/repository/TagRepository.java
@@ -97,8 +103,8 @@ ewhacodic/demo/dto/StudyDto.java
 ewhacodic/demo/dto/BoardListDto.java
  ewhacodic.demo.dto.BoardListDto
  ewhacodic.demo.dto.BoardListDto$BoardListDtoBuilder
-ewhacodic/demo/config/MvcConfig.java
- ewhacodic.demo.config.MvcConfig
+ewhacodic/demo/controller/UserController.java
+ ewhacodic.demo.controller.UserController
 ewhacodic/demo/dto/StudyListDto.java
  ewhacodic.demo.dto.StudyListDto
  ewhacodic.demo.dto.StudyListDto$StudyListDtoBuilder
@@ -138,5 +144,5 @@ ewhacodic/demo/controller/TechController.java
  ewhacodic.demo.controller.TechController
 ewhacodic/demo/domain/QStudy.java
  ewhacodic.demo.domain.QStudy
-ewhacodic/demo/domain/QTag.java
- ewhacodic.demo.domain.QTag
+ewhacodic/demo/config/MvcConfig.java
+ ewhacodic.demo.config.MvcConfig
