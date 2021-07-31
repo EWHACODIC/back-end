@@ -48,4 +48,10 @@ public class StudyService {
     public void saveStudy(StudyDto studyDto){
         studyRepository.save(studyDto.toEntity());
     }
+
+    public void deleteStudy(Long studyId) {
+        Optional<Study> study = studyRepository.findById(studyId);
+        study
+
+    }
 }
