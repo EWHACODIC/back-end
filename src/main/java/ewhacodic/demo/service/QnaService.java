@@ -1,5 +1,6 @@
 package ewhacodic.demo.service;
 
+import com.google.gson.Gson;
 import ewhacodic.demo.domain.*;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
@@ -24,6 +25,7 @@ public class QnaService {
     private final QnaRepository qnaRepository;
     private final QnaCommentRepository qnaCommentRepository;
     private final UserRepository userRepository;
+    private Gson gsonObj = new Gson();
 
     public QnaService(
             QnaRepository qnaRepository,
@@ -48,8 +50,7 @@ public class QnaService {
             selectBoard.setTitle(qna.getTitle());
             selectBoard.setComments(qna.getComments());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag1(qna.getTag1());
-            selectBoard.setTag2(qna.getTag2());
+            selectBoard.setTag(qna.getTag());
             selectBoard.setUserCode(qna.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             qnaRepository.save(selectBoard);
@@ -65,8 +66,7 @@ public class QnaService {
                 .id(qna.getId())
                 .title(qna.getTitle())
                 .content(qna.getContent())
-                .tag1(qna.getTag1())
-                .tag2(qna.getTag2())
+                .tag(gsonObj.fromJson(qna.getTag(), List.class))
                 .view(qna.getView())
                 .userCode(qna.getUserCode())
                 .createDate(qna.getCreatedAt())
@@ -123,7 +123,7 @@ public class QnaService {
     }
 
     public List<BoardListDto> searchPostsByTag(String tag){
-        List<Qna> boardList = qnaRepository.findByTag1OrTag2(tag, tag);
+        List<Qna> boardList = qnaRepository.findByTagContaining(tag);
 
         return boardList.stream().map(BoardListDto::ofQna).collect(Collectors.toList());
     }
@@ -149,8 +149,7 @@ public class QnaService {
                     .id(qna.getId())
                     .title(qna.getTitle())
                     .content(qna.getContent())
-                    .tag1(qna.getTag1())
-                    .tag2(qna.getTag2())
+                    .tag(gsonObj.fromJson(qna.getTag(), List.class))
                     .view(qna.getView())
                     .recommend(qna.getRecommend())
                     .userCode(qna.getUserCode())

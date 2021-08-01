@@ -1,5 +1,9 @@
 package ewhacodic.demo.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.Gson;
 import ewhacodic.demo.domain.Board;
 import ewhacodic.demo.domain.Community;
 import ewhacodic.demo.domain.Qna;
@@ -7,29 +11,31 @@ import ewhacodic.demo.domain.Tech;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 @NoArgsConstructor
 public class BoardListDto {
     private Long id;
     private String title;
-    private String tag1;
-    private String tag2;
+    private List<String> tag;
     private Long view;
     private Long recommend;
     private Long commentCount;
     private Long userCode;
     private LocalDateTime createDate;
     private LocalDateTime modifiedDate;
+    @JsonIgnore
+    static Gson gsonObj = new Gson();
 
     @Builder
-    public BoardListDto(Long id, String title,String tag1, String tag2, Long view, Long recommend, Long commentCount, Long commentNum, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate) {
+    public BoardListDto(Long id, String title, List<String> tag, Long view, Long recommend, Long commentCount, Long commentNum, Long userCode, LocalDateTime createDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.title = title;
-        this.tag1 = tag1;
-        this.tag2 = tag2;
+        this.tag = tag;
         this.view = view;
         this.recommend = recommend;
         this.commentCount = commentCount;
@@ -42,8 +48,7 @@ public class BoardListDto {
         return BoardListDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
-                .tag1(board.getTag1())
-                .tag2(board.getTag2())
+                .tag(gsonObj.fromJson(board.getTag(), List.class))
                 .view(board.getView())
                 .recommend(board.getRecommend())
                 .commentCount(board.getCommentCount())
@@ -57,8 +62,7 @@ public class BoardListDto {
         return BoardListDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
-                .tag1(board.getTag1())
-                .tag2(board.getTag2())
+                .tag(gsonObj.fromJson(board.getTag(), List.class))
                 .view(board.getView())
                 .recommend(board.getRecommend())
                 .commentCount(board.getCommentCount())
@@ -72,8 +76,7 @@ public class BoardListDto {
         return BoardListDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
-                .tag1(board.getTag1())
-                .tag2(board.getTag2())
+                .tag(gsonObj.fromJson(board.getTag(), List.class))
                 .view(board.getView())
                 .recommend(board.getRecommend())
                 .commentCount(board.getCommentCount())
@@ -87,8 +90,7 @@ public class BoardListDto {
         return BoardListDto.builder()
                 .id(board.getId())
                 .title(board.getTitle())
-                .tag1(board.getTag1())
-                .tag2(board.getTag2())
+                .tag(gsonObj.fromJson(board.getTag(), List.class))
                 .view(board.getView())
                 .recommend(board.getRecommend())
                 .commentCount(board.getCommentCount())

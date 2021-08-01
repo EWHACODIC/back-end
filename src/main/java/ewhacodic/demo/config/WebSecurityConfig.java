@@ -31,12 +31,12 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception { // http 관련 인증 설정
         http
                 //로그인 기능 외에 다른 기능 할 때 주석 반대로 해야함
-//                .csrf()
-//                .disable()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .permitAll()
-                .cors().configurationSource(corsConfigurationSource()).and()
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .anyRequest()
+                .permitAll()
+              /*  .cors().configurationSource(corsConfigurationSource()).and()
                 .csrf()
                 .disable()
                 .authorizeRequests() // 접근에 대한 인증 설정
@@ -52,7 +52,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout() // 로그아웃
                 .logoutSuccessUrl("/login") // 로그아웃 성공시 리다이렉트 주소
-                .invalidateHttpSession(true) // 세션 날리기
+                .invalidateHttpSession(true) // 세션 날리기*/
         ;
     }
     @Override

@@ -28,11 +28,8 @@ public class Tech {
     @Column(name="content") // 게시글 내용
     private String content;
 
-    @Column(name="tag1")
-    private String tag1;
-
-    @Column(name="tag2")
-    private String tag2;
+    @Column(name="tag")
+    private String tag;
 
     @Column(name="view") // 조회수
     private Long view;
@@ -59,12 +56,11 @@ public class Tech {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Tech(Long id, String title, String content, String tag1, String tag2, Long view, Long recommend, Long commentCount, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public Tech(Long id, String title, String content, String tag, Long view, Long recommend, Long commentCount, Long userCode, LocalDateTime createdAt, LocalDateTime modifiedAt){
         this.id = id;
         this.title = title;
         this.content = content;
-        this.tag1 = tag1;
-        this.tag2 = tag2;
+        this.tag = tag;
         this.recommend = recommend;
         this.commentCount = commentCount;
         this.view = view;
