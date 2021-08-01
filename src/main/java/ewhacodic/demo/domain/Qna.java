@@ -48,7 +48,7 @@ public class Qna{
 
     @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="post_id")
-    private List<TechComment> comments;
+    private List<QnaComment> comments;
 
     @CreatedDate
     @Column(name="created_at", updatable = false)
