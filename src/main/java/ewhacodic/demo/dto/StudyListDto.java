@@ -18,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class StudyListDto {
     private Long id;
+    private String title;
     private Long maxPpl;
     private Long curPpl;
     private Long time;
@@ -32,13 +33,14 @@ public class StudyListDto {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate endAt;
     private LocalDateTime createdAt;
-    private Long userCode;
-    private Set<Long> userList;
+    private String userCode;
+    private Set<String> userList;
     private String description;
 
     public static StudyListDto of(Study study){
         return StudyListDto.builder()
                 .id(study.getId())
+                .title(study.getTitle())
                 .maxPpl(study.getMaxPpl())
                 .curPpl(study.getCurPpl())
                 .time(study.getTime())
