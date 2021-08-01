@@ -38,10 +38,6 @@ public class TechComment {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-
-    @Column(name = "comment_id")
-    private Long commentId;
-
     @Column(name = "post_id")
     private Long postId;
 
