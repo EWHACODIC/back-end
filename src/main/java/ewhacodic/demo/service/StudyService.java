@@ -49,7 +49,7 @@ public class StudyService {
         studyRepository.save(studyDto.toEntity().updateMember(studyDto.getUserCode(), studyDto.getPassword()));
     }
 
-    public StudyDto joinStudy(Long studyId, Long userId, Long password){
+    public StudyDto joinStudy(Long studyId, String userId, Long password){
         Optional<Study> study = studyRepository.findById(studyId);
         StudyDto studyDto = StudyDto.of(study.get().updateMember(userId, password));
         return studyDto;

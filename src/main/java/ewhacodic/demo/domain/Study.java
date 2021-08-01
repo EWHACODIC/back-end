@@ -70,7 +70,7 @@ public class Study implements Comparable<Study> {
     private LocalDateTime createdAt;
 
     @Column(name="user_code")
-    private Long userCode;
+    private String userCode;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
@@ -80,7 +80,7 @@ public class Study implements Comparable<Study> {
             }
     )
     @Column(name="user_id", nullable = false)
-    private Set<Long> userList;
+    private Set<String> userList;
 
     @Column(name="description")
     private String description;
@@ -88,8 +88,8 @@ public class Study implements Comparable<Study> {
     @Builder
     public Study(Long id, String title, Long maxPpl,  Long curPpl, Long time, Long password,
                  String day1, String day2, LocalTime startTime, LocalTime endTime, StudyType studyType,
-                 LocalDate startAt, LocalDate endAt, LocalDateTime createdAt, Long userCode, Set<Long> userList,
-                 String description){
+                 LocalDate startAt, LocalDate endAt, LocalDateTime createdAt, String userCode,
+                 Set<String> userList, String description){
         this.id = id;
         this.title = title;
         this.maxPpl = maxPpl;
@@ -119,9 +119,9 @@ public class Study implements Comparable<Study> {
         return -1;
     }
 
-    public Study updateMember(Long userId, Long password){
+    public Study updateMember(String userId, Long password){
         if(this.getCurPpl() == this.getMaxPpl() || !password.equals(this.getPassword())) return null;
-        Set<Long> userList = this.getUserList();
+        Set<String> userList = this.getUserList();
         userList.add(userId);
         this.setUserList(userList);
         this.setCurPpl(this.getUserList().stream().count());

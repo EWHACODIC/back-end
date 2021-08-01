@@ -33,8 +33,8 @@ public class StudyListDto {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate endAt;
     private LocalDateTime createdAt;
-    private Long userCode;
-    private Set<Long> userList;
+    private String userCode;
+    private Set<String> userList;
     private String description;
 
     public static StudyListDto of(Study study){

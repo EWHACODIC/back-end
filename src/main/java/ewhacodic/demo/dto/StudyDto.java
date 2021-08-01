@@ -34,8 +34,8 @@ public class StudyDto {
     private LocalDate startAt;
     private LocalDate endAt;
     private LocalDateTime createdAt;
-    private Long userCode;
-    private Set<Long> userList = new HashSet<>();
+    private String userCode;
+    private Set<String> userList = new HashSet<>();
     private String description;
 
     public Study toEntity(){
@@ -64,8 +64,8 @@ public class StudyDto {
     @Builder
     public StudyDto(Long id, String title, Long maxPpl,  Long curPpl, Long time, Long password,
                     String day1, String day2, LocalTime startTime, LocalTime endTime, StudyType studyType,
-                    LocalDate startAt, LocalDate endAt, LocalDateTime createdAt, Long userCode, Set<Long> userList,
-                    String description){
+                    LocalDate startAt, LocalDate endAt, LocalDateTime createdAt, String userCode,
+                    Set<String> userList, String description){
         this.id = id;
         this.title = title;
         this.maxPpl = maxPpl;
