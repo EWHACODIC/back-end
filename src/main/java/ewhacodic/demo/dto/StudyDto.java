@@ -21,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class StudyDto {
     private Long id;
+    private String title;
     private Long maxPpl;
     private Long curPpl;
     private Long time;
@@ -40,6 +41,7 @@ public class StudyDto {
     public Study toEntity(){
         Study build = Study.builder()
                 .id(id)
+                .title(title)
                 .curPpl(curPpl)
                 .maxPpl(maxPpl)
                 .time(time)
@@ -60,11 +62,12 @@ public class StudyDto {
     }
 
     @Builder
-    public StudyDto(Long id, Long maxPpl,  Long curPpl, Long time, Long password, String day1, String day2,
-                    LocalTime startTime, LocalTime endTime, StudyType studyType, LocalDate startAt,
-                    LocalDate endAt, LocalDateTime createdAt, Long userCode, Set<Long> userList,
+    public StudyDto(Long id, String title, Long maxPpl,  Long curPpl, Long time, Long password,
+                    String day1, String day2, LocalTime startTime, LocalTime endTime, StudyType studyType,
+                    LocalDate startAt, LocalDate endAt, LocalDateTime createdAt, Long userCode, Set<Long> userList,
                     String description){
         this.id = id;
+        this.title = title;
         this.maxPpl = maxPpl;
         this.curPpl = curPpl;
         this.time = time;
@@ -85,6 +88,7 @@ public class StudyDto {
     public static StudyDto of(Study study) {
         return StudyDto.builder()
                 .id(study.getId())
+                .title(study.getTitle())
                 .maxPpl(study.getMaxPpl())
                 .curPpl(study.getCurPpl())
                 .time(study.getTime())

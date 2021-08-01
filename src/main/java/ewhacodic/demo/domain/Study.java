@@ -28,6 +28,9 @@ public class Study implements Comparable<Study> {
     @Column(name="id")
     private Long id;
 
+    @Column(name="title")
+    private String title;
+
     @Column(name="max_ppl")
     private Long maxPpl;
 
@@ -83,11 +86,12 @@ public class Study implements Comparable<Study> {
     private String description;
 
     @Builder
-    public Study(Long id, Long maxPpl,  Long curPpl, Long time, Long password, String day1, String day2,
-                 LocalTime startTime, LocalTime endTime, StudyType studyType, LocalDate startAt,
-                 LocalDate endAt, LocalDateTime createdAt, Long userCode, Set<Long> userList,
+    public Study(Long id, String title, Long maxPpl,  Long curPpl, Long time, Long password,
+                 String day1, String day2, LocalTime startTime, LocalTime endTime, StudyType studyType,
+                 LocalDate startAt, LocalDate endAt, LocalDateTime createdAt, Long userCode, Set<Long> userList,
                  String description){
         this.id = id;
+        this.title = title;
         this.maxPpl = maxPpl;
         this.curPpl = curPpl;
         this.time = time;

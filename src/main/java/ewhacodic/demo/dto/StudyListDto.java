@@ -18,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class StudyListDto {
     private Long id;
+    private String title;
     private Long maxPpl;
     private Long curPpl;
     private Long time;
@@ -39,6 +40,7 @@ public class StudyListDto {
     public static StudyListDto of(Study study){
         return StudyListDto.builder()
                 .id(study.getId())
+                .title(study.getTitle())
                 .maxPpl(study.getMaxPpl())
                 .curPpl(study.getCurPpl())
                 .time(study.getTime())
