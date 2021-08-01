@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/community")
 public class CommunityController {
     @Autowired
@@ -94,7 +93,7 @@ public class CommunityController {
 
     //7. 게시글 수정
     @PatchMapping(value = "/edit")
-    public ResponseEntity<String> update(@RequestBody Community community) {
+    public ResponseEntity<String> update(@RequestBody BoardDto community) {
         communityService.updatePost(community);
         return ResponseEntity.ok("ok");
     }

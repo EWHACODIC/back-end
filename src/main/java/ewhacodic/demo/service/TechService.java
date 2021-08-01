@@ -1,5 +1,6 @@
 package ewhacodic.demo.service;
 
+import com.google.gson.Gson;
 import ewhacodic.demo.domain.*;
 import ewhacodic.demo.domain.Tech;
 import ewhacodic.demo.dto.BoardCommentDto;
@@ -28,6 +29,7 @@ public class TechService {
     private final TechRepository techRepository;
     private final TechCommentRepository techCommentRepository;
     private final UserRepository userRepository;
+    private Gson gsonObj = new Gson();
 
     public TechService(
             TechRepository techRepository,
@@ -44,16 +46,15 @@ public class TechService {
     }
 
     @org.springframework.transaction.annotation.Transactional
-    public void updatePost(Tech tech) {
+    public void updatePost(BoardDto tech) {
         Optional<Tech> originalBoard = techRepository.findById(tech.getId());
 
         originalBoard.ifPresent(selectBoard -> {
             selectBoard.setId(tech.getId());
             selectBoard.setTitle(tech.getTitle());
-            selectBoard.setComments(tech.getComments());
+            selectBoard.setContent(tech.getContent());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag1(tech.getTag1());
-            selectBoard.setTag2(tech.getTag2());
+            selectBoard.setTag(gsonObj.toJson(tech.getTag()));
             selectBoard.setUserCode(tech.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             techRepository.save(selectBoard);
@@ -69,8 +70,7 @@ public class TechService {
                 .id(tech.getId())
                 .title(tech.getTitle())
                 .content(tech.getContent())
-                .tag1(tech.getTag1())
-                .tag2(tech.getTag2())
+                .tag(gsonObj.fromJson(tech.getTag(), List.class))
                 .view(tech.getView())
                 .userCode(tech.getUserCode())
                 .createDate(tech.getCreatedAt())
@@ -113,7 +113,7 @@ public class TechService {
     }
 
     public List<BoardListDto> searchPostsByTag(String tag){
-        List<Tech> boardList = techRepository.findByTag1OrTag2(tag, tag);
+        List<Tech> boardList = techRepository.findByTagContaining(tag);
 
         return boardList.stream().map(BoardListDto::ofTech).collect(Collectors.toList());
     }
@@ -139,8 +139,7 @@ public class TechService {
                     .id(tech.getId())
                     .title(tech.getTitle())
                     .content(tech.getContent())
-                    .tag1(tech.getTag1())
-                    .tag2(tech.getTag2())
+                    .tag(gsonObj.fromJson(tech.getTag(), List.class))
                     .view(tech.getView())
                     .recommend(tech.getRecommend())
                     .userCode(tech.getUserCode())

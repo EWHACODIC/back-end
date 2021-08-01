@@ -1,5 +1,6 @@
 package ewhacodic.demo.service;
 
+import com.google.gson.Gson;
 import ewhacodic.demo.domain.*;
 import ewhacodic.demo.dto.BoardCommentDto;
 import ewhacodic.demo.dto.BoardDto;
@@ -24,6 +25,7 @@ public class CommunityService {
     private CommunityRepository communityRepository;
     private CommunityCommentRepository communityCommentRepository;
     private UserRepository userRepository;
+    private Gson gsonObj = new Gson();
 
     public CommunityService(
             CommunityRepository communityRepository,
@@ -40,16 +42,15 @@ public class CommunityService {
     }
 
     @org.springframework.transaction.annotation.Transactional
-    public void updatePost(Community community) {
+    public void updatePost(BoardDto community) {
         Optional<Community> originalBoard = communityRepository.findById(community.getId());
 
         originalBoard.ifPresent(selectBoard -> {
             selectBoard.setId(community.getId());
             selectBoard.setTitle(community.getTitle());
-            selectBoard.setComments(community.getComments());
+            selectBoard.setContent(community.getContent());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag1(community.getTag1());
-            selectBoard.setTag2(community.getTag2());
+            selectBoard.setTag(gsonObj.toJson(community.getTag()));
             selectBoard.setUserCode(community.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             communityRepository.save(selectBoard);
@@ -65,8 +66,7 @@ public class CommunityService {
                 .id(community.getId())
                 .title(community.getTitle())
                 .content(community.getContent())
-                .tag1(community.getTag1())
-                .tag2(community.getTag2())
+                .tag(gsonObj.fromJson(community.getTag(), List.class))
                 .view(community.getView())
                 .userCode(community.getUserCode())
                 .createDate(community.getCreatedAt())
@@ -109,7 +109,7 @@ public class CommunityService {
     }
 
     public List<BoardListDto> searchPostsByTag(String tag){
-        List<Community> boardList = communityRepository.findByTag1OrTag2(tag, tag);
+        List<Community> boardList = communityRepository.findByTagContaining(tag);
 
         return boardList.stream().map(BoardListDto::ofCommunity).collect(Collectors.toList());
     }
@@ -135,8 +135,7 @@ public class CommunityService {
                     .id(community.getId())
                     .title(community.getTitle())
                     .content(community.getContent())
-                    .tag1(community.getTag1())
-                    .tag2(community.getTag2())
+                    .tag(gsonObj.fromJson(community.getTag(), List.class))
                     .view(community.getView())
                     .recommend(community.getRecommend())
                     .userCode(community.getUserCode())

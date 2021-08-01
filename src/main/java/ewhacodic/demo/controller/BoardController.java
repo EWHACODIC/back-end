@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/post")
 public class BoardController {
 
@@ -95,8 +94,8 @@ public class BoardController {
 
     //7. 게시글 수정
     @PatchMapping(value="/edit")
-    public ResponseEntity<String> update(@RequestBody Board board){
-        boardService.updatePost(board);
+    public ResponseEntity<String> update(@RequestBody BoardDto boardDto){
+        boardService.updatePost(boardDto);
         return ResponseEntity.ok("ok");
     }
 

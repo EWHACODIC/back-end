@@ -1,5 +1,6 @@
 package ewhacodic.demo.service;
 
+import com.google.gson.Gson;
 import ewhacodic.demo.domain.Board;
 import ewhacodic.demo.domain.BoardComment;
 import ewhacodic.demo.domain.UserInfo;
@@ -32,6 +33,7 @@ public class BoardService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
     private final BoardCommentRepository boardCommentRepository;
+    private Gson gsonObj = new Gson();
 
     public BoardService(
             UserRepository userRepository,
@@ -48,17 +50,16 @@ public class BoardService {
     }
 
     @Transactional
-    public void updatePost(Board board) {
-        Optional<Board> originalBoard = boardRepository.findById(board.getId());
+    public void updatePost(BoardDto boardDto) {
+        Optional<Board> originalBoard = boardRepository.findById(boardDto.getId());
 
         originalBoard.ifPresent(selectBoard -> {
-            selectBoard.setId(board.getId());
-            selectBoard.setTitle(board.getTitle());
-            selectBoard.setComments(board.getComments());
+            selectBoard.setId(boardDto.getId());
+            selectBoard.setTitle(boardDto.getTitle());
+            selectBoard.setContent(boardDto.getContent());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag1(board.getTag1());
-            selectBoard.setTag2(board.getTag2());
-            selectBoard.setUserCode(board.getUserCode());
+            selectBoard.setTag(gsonObj.toJson(boardDto.getTag()));
+            selectBoard.setUserCode(boardDto.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             boardRepository.save(selectBoard);
         });
@@ -73,8 +74,7 @@ public class BoardService {
                 .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .tag1(board.getTag1())
-                .tag2(board.getTag2())
+                .tag(gsonObj.fromJson(board.getTag(), List.class))
                 .view(board.getView())
                 .userCode(board.getUserCode())
                 .createDate(board.getCreatedAt())
@@ -118,7 +118,7 @@ public class BoardService {
     }
 
     public List<BoardListDto> searchPostsByTag(String tag){
-        List<Board> boardList = boardRepository.findByTag1OrTag2(tag, tag);
+        List<Board> boardList = boardRepository.findByTagContaining(tag);
 
         return boardList.stream().map(BoardListDto::of).collect(toList());
     }
@@ -144,8 +144,7 @@ public class BoardService {
                     .id(board.getId())
                     .title(board.getTitle())
                     .content(board.getContent())
-                    .tag1(board.getTag1())
-                    .tag2(board.getTag2())
+                    .tag(gsonObj.fromJson(board.getTag(), List.class))
                     .view(board.getView())
                     .recommend(board.getRecommend())
                     .userCode(board.getUserCode())

@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface TechRepository extends JpaRepository<Tech, Long> {
     List<Tech> findByTitleContaining(String keyword);
-    List<Tech> findByTag1OrTag2(String tag1, String tag2);
+    List<Tech> findByTagContaining(String tag);
 }

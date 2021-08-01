@@ -95,7 +95,7 @@ public class QnaController {
 
     //7. 게시글 수정
     @PatchMapping(value="/edit")
-    public ResponseEntity<String> update(@RequestBody Qna qna){
+    public ResponseEntity<String> update(@RequestBody BoardDto qna){
         qnaService.updatePost(qna);
         return ResponseEntity.ok("ok");
     }

@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface CommunityRepository extends JpaRepository<Community, Long> {
     List<Community> findByTitleContaining(String keyword);
-    List<Community> findByTag1OrTag2(String tag1, String tag2);
+    List<Community> findByTagContaining(String tag);
 }
