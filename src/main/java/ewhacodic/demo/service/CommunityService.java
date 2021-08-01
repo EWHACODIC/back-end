@@ -42,15 +42,15 @@ public class CommunityService {
     }
 
     @org.springframework.transaction.annotation.Transactional
-    public void updatePost(Community community) {
+    public void updatePost(BoardDto community) {
         Optional<Community> originalBoard = communityRepository.findById(community.getId());
 
         originalBoard.ifPresent(selectBoard -> {
             selectBoard.setId(community.getId());
             selectBoard.setTitle(community.getTitle());
-            selectBoard.setComments(community.getComments());
+            selectBoard.setContent(community.getContent());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(community.getTag());
+            selectBoard.setTag(gsonObj.toJson(community.getTag()));
             selectBoard.setUserCode(community.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             communityRepository.save(selectBoard);

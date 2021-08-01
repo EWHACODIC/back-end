@@ -41,16 +41,16 @@ public class QnaService {
         qnaRepository.save(boardDto.toQna());
     }
 
-    @org.springframework.transaction.annotation.Transactional
-    public void updatePost(Qna qna) {
+    @Transactional
+    public void updatePost(BoardDto qna) {
         Optional<Qna> originalBoard = qnaRepository.findById(qna.getId());
 
         originalBoard.ifPresent(selectBoard -> {
             selectBoard.setId(qna.getId());
             selectBoard.setTitle(qna.getTitle());
-            selectBoard.setComments(qna.getComments());
+            selectBoard.setContent(qna.getContent());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(qna.getTag());
+            selectBoard.setTag(gsonObj.toJson(qna.getTag()));
             selectBoard.setUserCode(qna.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             qnaRepository.save(selectBoard);

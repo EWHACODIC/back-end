@@ -92,7 +92,7 @@ public class TechController {
 
     //7. 게시글 수정
     @PatchMapping(value = "/edit")
-    public ResponseEntity<String> update(@RequestBody Tech tech) {
+    public ResponseEntity<String> update(@RequestBody BoardDto tech) {
         techService.updatePost(tech);
         return ResponseEntity.ok("ok");
     }

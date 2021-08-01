@@ -46,15 +46,15 @@ public class TechService {
     }
 
     @org.springframework.transaction.annotation.Transactional
-    public void updatePost(Tech tech) {
+    public void updatePost(BoardDto tech) {
         Optional<Tech> originalBoard = techRepository.findById(tech.getId());
 
         originalBoard.ifPresent(selectBoard -> {
             selectBoard.setId(tech.getId());
             selectBoard.setTitle(tech.getTitle());
-            selectBoard.setComments(tech.getComments());
+            selectBoard.setContent(tech.getContent());
             selectBoard.setModifiedAt(LocalDateTime.now());
-            selectBoard.setTag(tech.getTag());
+            selectBoard.setTag(gsonObj.toJson(tech.getTag()));
             selectBoard.setUserCode(tech.getUserCode());
             selectBoard.setComments(selectBoard.getComments());
             techRepository.save(selectBoard);
