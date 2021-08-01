@@ -26,7 +26,7 @@ public class GithubInfoController {
         githubInfoDto.setRepoName(userService.loadUserByUsername(userName).getRepoName());
 
         long commits = githubInfoService.CommitCount(githubInfoDto);
-        githubInfoDto.setCommits(commits); // DB에 넣어주고 //이것만 갱신할 수 있는 방법은?
+        githubInfoDto.setCommits(commits); 
         githubInfoService.save(githubInfoDto);
 
         return commits;
@@ -36,8 +36,7 @@ public class GithubInfoController {
     public List<CommitDto> getRankedCommitDto() {
         return githubInfoService.getRankDtoList();
     }
-
-
+    
     @GetMapping("/api/rank/{userName}")
     public CommitDto getRank(@PathVariable("userName") String userName) {
         return githubInfoService.getRankDto(userName);
