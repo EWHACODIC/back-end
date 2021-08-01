@@ -45,9 +45,7 @@
 - `Spring security` : 회원가입&로그인 기능
 - `spring-context-support` , `javax.mail` : 메일 전송(이화인 인증 기능)
 - `json-simple` , `gson` : json 파싱(Github API로 이용자별 커밋 수 얻어오기)
-- `spring-boot-starter-data-redis`, 
-`spring-boot-starter-cache` ,
-`embedded-redis` : 랭킹 기능을 위한 사용자 데이터 관리
+
 
 - - -
 
