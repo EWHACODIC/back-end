@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -29,6 +30,11 @@ public class UserController {
     public String signup(UserInfoDto infoDto) { // 회원 추가
         userService.save(infoDto);
         return "redirect:/login";
+    }
+    @GetMapping("/current_username")
+    @ResponseBody
+    public String currentUserName(Principal principal) {
+        return principal.getName();
     }
     @GetMapping(value = "/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {

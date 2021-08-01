@@ -36,4 +36,11 @@ public class GithubInfoController {
     public List<CommitDto> getRankedCommitDto() {
         return githubInfoService.getRankDtoList();
     }
+
+
+    @GetMapping("/api/rank/{userName}")
+    public CommitDto getRank(@PathVariable("userName") String userName) {
+        return githubInfoService.getRankDto(userName);
+    }
+
 }
